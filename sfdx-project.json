@@ -5,8 +5,8 @@
             "default": true
         },
         {
-            "path": "Base",
-            "package": "Base",
+            "path": "BasePackage",
+            "package": "BasePackage",
             "versionName": "ver 0.1",
             "versionNumber": "0.1.0.NEXT",
             "default": false
@@ -19,7 +19,7 @@
             "default": false,
             "dependencies": [
                 {
-                    "package": "Base",
+                    "package": "BasePackage",
                     "versionNumber": "0.1.0.LATEST"
                 }
             ]
@@ -32,7 +32,7 @@
             "default": false,
             "dependencies": [
                 {
-                    "package": "Base",
+                    "package": "BasePackage",
                     "versionNumber": "0.1.0.LATEST"
                 }
             ]
@@ -45,7 +45,7 @@
             "default": false,
             "dependencies": [
                 {
-                    "package": "Base",
+                    "package": "BasePackage",
                     "versionNumber": "0.1.0.LATEST"
                 }
             ]
@@ -58,7 +58,7 @@
             "default": false,
             "dependencies": [
                 {
-                    "package": "Base",
+                    "package": "BasePackage",
                     "versionNumber": "0.1.0.LATEST"
                 }
             ]
@@ -77,6 +77,8 @@
         "Backend2@0.1.0-1": "04t5f000000Y8R2AAK",
         "LWC": "0Ho5f000000XZAgCAO",
         "LWC@0.1.0-1": "04t5f000000Y8R7AAK",
-        "Experience@0.1.0-1": "04t5f000000Y8RHAA0"
+        "Experience@0.1.0-1": "04t5f000000Y8RHAA0",
+        "BasePackage": "0Ho5f000000k9bNCAQ",
+        "BasePackage@0.1.0-1": "04t5f000000TxecAAC"
     }
 }
