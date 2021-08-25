@@ -1,0 +1,71 @@
+### Custom Field List
+
+### Purpose
+The user object will be used both for instructors and for associates, utilizing the Role Hierarchy as shown below:
+* supervisor
+    * instructor
+        * [Associate](/revaturelabs/AchievementUnlocked/wiki/Associate-(Custom-Object))
+
+### Structure
+
+### Role
+* The supervisor will be in charge of creating new Programs and certifications, optionally also in charge of a specific cohort
+    * Cohort - access to all cohorts under his, role hierarchy
+        * Program - Read
+        * Start Date - Read/Edit
+        * End Date - Read/edit (auto generated but can be changed)
+    * Program - Read/Edit/Delete
+        * Name of Technology - Read/Edit
+        * Length of Training - Read/Edit
+        * Supervisor - Read/Edit
+    * Assignment - Read/Edit/Delete
+        * Voucher Code - Read/Edit
+        * Voucher Type - Read/Edit
+        * Status - Read/Edit
+        * Certification - Read/Edit
+        * Assigned To - Read/Edit
+        * Expiration Date - Read
+    * Associate - Create/Read/Edit/Delete
+        * First Name - Read/Edit
+        * Last Name - Read/Edit
+        * NickName - Read
+        * FullName - Read/Edit
+        * User - Read
+        * 
+    * Certification - Create/Read/Edit/Delete
+    * Attempts - Read/Edit/Delete
+    * Categories - Create/Read/Edit/Delete
+
+
+* The Instructor will be in charge of a specific cohort
+    * Cohort - Edit/view
+    * Program - view - their specific program
+    * Assignment - Create/Read/Edit/Delete
+    * Associate - Read/Edit
+    * Certification - Read only
+    * Attempts - Read/Edit/Delete
+    * Categories - Read Only
+
+The associate will be the trainee
+    * Cohort - view
+    * Program - view - their specific program
+    * Assignment - Read Only
+    * Associate - Read Only
+    * Certification - Read only
+    * Attempts - Read*
+    * Categories - Read/Edit
+
+### Access Requirements
+The supervisor should be able to see create/change/destroy anything on the entire role hierarchy, able to dismiss associates, assign certifications, etc as they see fit
+
+The instructor should only be able to control their own cohort, with an option to view (not edit) other cohorts for CQ
+
+The associate should only be able to view and to a limited degree edit their own information, they should not have access to anyone elses page
+
+### Related Experience Site Pages
+
+
+
+
+
+

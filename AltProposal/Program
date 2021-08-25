@@ -1,0 +1,23 @@
+### Custom Field List
+* Name of Technology - Text
+* Length of Training - Integer
+* Supervisor - User Lookup
+
+### Purpose
+Records all the information related to the training program including associated certifications, number of weeks in training, and an associated supervisor
+
+### Record Types
+
+### Page Layouts
+
+### Related Lists
+* Certifications
+* Cohorts
+
+### Structure
+
+### List Views
+
+### Related Experience Site Pages
+
+
