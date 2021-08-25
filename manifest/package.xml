@@ -21,11 +21,6 @@
         <name>ApexTrigger</name>
     </types>
     <types>
-        <members>Custom: Associate</members>
-        <members>Custom: Executive</members>
-        <members>Custom: Instructor</members>
-        <members>Custom: Sales</members>
-        <members>Custom: Staging</members>
         <members>Admin</members>
         <name>Profile</name>
     </types>
@@ -33,7 +28,7 @@
         <members>Account</members>
         <members>User</members>
         <members>*</members>
-        <name>Object</name>
+        <name>CustomObject</name>
     </types>
     <types>
         <members>*</members>
@@ -54,6 +49,10 @@
     <types>
         <members>*</members>
         <name>StaticResource</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>PermissionSetGroup</name>
     </types>
     <version>52.0</version>
 </Package>
