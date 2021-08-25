@@ -2,7 +2,7 @@
     "packageDirectories": [
         {
             "path": "force-app",
-            "default": false
+            "default": true
         },
         {
             "path": "Base",
@@ -16,8 +16,13 @@
             "package": "Backend2",
             "versionName": "ver 0.1",
             "versionNumber": "0.1.0.NEXT",
-            "default": true,
-            "dependencies": ["Base"]
+            "default": false,
+            "dependencies": [
+                {
+                    "package": "Base",
+                    "versionNumber": "0.1.0.LATEST"
+                }
+            ]
         },
         {
             "path": "D3",
@@ -25,7 +30,12 @@
             "versionName": "ver 0.1",
             "versionNumber": "0.1.0.NEXT",
             "default": false,
-            "dependencies": ["Base"]
+            "dependencies": [
+                {
+                    "package": "Base",
+                    "versionNumber": "0.1.0.LATEST"
+                }
+            ]
         },
         {
             "path": "Experience",
@@ -33,7 +43,25 @@
             "versionName": "ver 0.1",
             "versionNumber": "0.1.0.NEXT",
             "default": false,
-            "dependencies": ["Base"]
+            "dependencies": [
+                {
+                    "package": "Base",
+                    "versionNumber": "0.1.0.LATEST"
+                }
+            ]
+        },
+        {
+            "path": "LWC",
+            "package": "LWC",
+            "versionName": "ver 0.1",
+            "versionNumber": "0.1.0.NEXT",
+            "default": false,
+            "dependencies": [
+                {
+                    "package": "Base",
+                    "versionNumber": "0.1.0.LATEST"
+                }
+            ]
         }
     ],
     "name": "AchievementUnlocked",
@@ -44,6 +72,11 @@
         "Base": "0Ho5f000000XZAMCA4",
         "Backend2": "0Ho5f000000XZARCA4",
         "D3": "0Ho5f000000XZAWCA4",
-        "Experience": "0Ho5f000000XZAbCAO"
+        "Experience": "0Ho5f000000XZAbCAO",
+        "Base@0.1.0-1": "04t5f000000Y8QsAAK",
+        "Backend2@0.1.0-1": "04t5f000000Y8R2AAK",
+        "LWC": "0Ho5f000000XZAgCAO",
+        "LWC@0.1.0-1": "04t5f000000Y8R7AAK",
+        "Experience@0.1.0-1": "04t5f000000Y8RHAA0"
     }
 }
