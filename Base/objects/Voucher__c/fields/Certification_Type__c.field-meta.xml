@@ -21,6 +21,26 @@
                 <default>false</default>
                 <label>PD1</label>
             </value>
+            <value>
+                <fullName>Advanced ADM</fullName>
+                <default>false</default>
+                <label>Advanced ADM</label>
+            </value>
+            <value>
+                <fullName>PD2</fullName>
+                <default>false</default>
+                <label>PD2</label>
+            </value>
+            <value>
+                <fullName>Platform App Builder</fullName>
+                <default>false</default>
+                <label>Platform App Builder</label>
+            </value>
+            <value>
+                <fullName>JS Developer 1</fullName>
+                <default>false</default>
+                <label>JS Developer 1</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
