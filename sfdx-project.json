@@ -1,0 +1,49 @@
+{
+    "packageDirectories": [
+        {
+            "path": "force-app",
+            "default": false
+        },
+        {
+            "path": "Base",
+            "package": "Base",
+            "versionName": "ver 0.1",
+            "versionNumber": "0.1.0.NEXT",
+            "default": false
+        },
+        {
+            "path": "Backend2",
+            "package": "Backend2",
+            "versionName": "ver 0.1",
+            "versionNumber": "0.1.0.NEXT",
+            "default": true,
+            "dependencies": ["Base"]
+        },
+        {
+            "path": "D3",
+            "package": "D3",
+            "versionName": "ver 0.1",
+            "versionNumber": "0.1.0.NEXT",
+            "default": false,
+            "dependencies": ["Base"]
+        },
+        {
+            "path": "Experience",
+            "package": "Experience",
+            "versionName": "ver 0.1",
+            "versionNumber": "0.1.0.NEXT",
+            "default": false,
+            "dependencies": ["Base"]
+        }
+    ],
+    "name": "AchievementUnlocked",
+    "namespace": "",
+    "sfdcLoginUrl": "https://login.salesforce.com",
+    "sourceApiVersion": "52.0",
+    "packageAliases": {
+        "Base": "0Ho5f000000XZAMCA4",
+        "Backend2": "0Ho5f000000XZARCA4",
+        "D3": "0Ho5f000000XZAWCA4",
+        "Experience": "0Ho5f000000XZAbCAO"
+    }
+}

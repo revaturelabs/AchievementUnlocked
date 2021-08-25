@@ -37,12 +37,10 @@ $RECYCLE.BIN/
 # Local environment variables
 .env
 
-# Any random things we don't need in the repo
+.vscode/
 .eslintignore
 .forceignore
 .prettierignore
 .prettierrc
-.swift-sfdc.json
 jest.config.js
-sfdx-project.json
-package.json
+README.md
