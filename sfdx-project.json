@@ -9,14 +9,14 @@
             "package": "Base",
             "versionName": "ver 0.1",
             "versionNumber": "0.1.0.NEXT",
-            "default": true
+            "default": false
         },
         {
             "path": "Backend2",
             "package": "Backend2",
             "versionName": "ver 0.1",
             "versionNumber": "0.1.0.NEXT",
-            "default": false,
+            "default": true,
             "dependencies": ["Base"]
         },
         {
