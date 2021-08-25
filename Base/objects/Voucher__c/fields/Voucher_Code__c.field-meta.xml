@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Voucher_Code__c</fullName>
     <caseSensitive>false</caseSensitive>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <label>Voucher Code</label>
     <length>128</length>
