@@ -44,3 +44,4 @@ $RECYCLE.BIN/
 .prettierrc
 jest.config.js
 README.md
+sfdx-project.json
