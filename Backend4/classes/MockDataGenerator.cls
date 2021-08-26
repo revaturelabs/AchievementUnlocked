@@ -3,11 +3,30 @@
 // Mock Data generator V4
 // 
 // for creating random but valid records
-// note: for testing context use only, not for demonstration purposes
+// 
 //
 // created on 8/16/2021
-// last edited 8/25/2021
-//
+// last edited 8/26/2021
+// 
+// Use:
+// MockDataGenerator gen = new MockDataGenerator();
+// gen.generate();
+// 
+// data:
+// gen.accountList // list of accounts
+// gen.contactList // list of contacts
+// gen.voucherList // list of vouchers
+// gen.cohortList  // list of cohorts
+// gen.associateList // list of associates
+// gen.attemptList // list of attempts
+// gen.assignedVouchers // list of assigned vouchers
+// 
+// methods:
+// gen.getRandomObject()
+// ((Voucher__c)gen.getRandomObject(gen.voucherList)) // returns a random voucher
+// 
+// vouchers come in assigned and unassigned, only an assigned voucher will have attempts attached
+// no vouchers of matching certification and type will be assigned to the same associate
 //
 ////////////////////////////////
 
@@ -21,6 +40,10 @@ public class MockDataGenerator {
     public integer numOfItems = 30;
     public integer numOfParties = 30;
     public integer numOfQuests = 30;
+    public integer numOfAssociates = 10;
+    public integer numOfVouchers = 10;
+    public integer numOfCohorts = 2;
+    public integer numOfAttempts = 10;
 
     public List<String> firstNames = new List<String>{'Liam', 'Noah', 'Oliver', 'Elijah', 'William', 'James', 'Benjamin', 'Lucas', 'Henry', 'Alexander', 'Mason', 'Michael', 'Ethan', 'Daniel', 'Jacob', 'Logan', 'Jackson', 'Levi', 'Sebastian', 'Mateo', 'Jack', 'Owen', 'Theodore', 'Aiden', 'Samuel', 'Joseph', 'John', 'David'};
     public List<String> lastNames = new List<String>{'Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez', 'Hernandez', 'Lopez', 'Gonzalez', 'Wilson', 'Anderson', 'Thomas', 'Taylor', 'Moore', 'Jackson', 'Martin', 'Lee'};
@@ -39,17 +62,132 @@ public class MockDataGenerator {
     public List<Contact> contactList = new List<Contact>();
     public List<Voucher__c> voucherList = new List<Voucher__c>();
     public List<Cohort__c> cohortList = new List<Cohort__c>();
+    public List<Associate__c> associateList = new List<Associate__c>();
+    public List<Attempt__c> attemptList = new List<Attempt__c>();
+    public List<Voucher__c> assignedVouchers = new List<Voucher__c>();
     
     public void generate(){
         generateAccounts(numOfAccounts);
         generateContacts(numOfContacts);
+        generateAssociates(numOfAssociates);
+        generateCohorts(numOfCohorts);
+        generateVouchers(numOfVouchers);
+        assignVouchers();
+        generateAttempts(numOfAttempts);
         
+    }
+
+    public void assignVouchers(){
+        integer vouchersToAssign = rollDice(voucherList.size());
+        for (integer index = 0; index < vouchersToAssign; index++){
+            Voucher__c curVoucher = ((Voucher__c) getRandomObject(voucherList));
+            while (assignedVouchers.contains(curVoucher)){
+            	curVoucher = ((Voucher__c) getRandomObject(voucherList));                
+            }
+            Associate__c curAssociate = ((Associate__c) getRandomObject(associateList));
+            while ( duplicateVoucher(curVoucher, curAssociate) ){
+            	curAssociate = ((Associate__c) getRandomObject(associateList));             
+            }
+            curVoucher.Associate__c = curAssociate.Id;
+            assignedVouchers.add(curVoucher);
+        }
+        database.update(assignedVouchers);
+    }
+    
+    public boolean duplicateVoucher(Voucher__c curVoucher, Associate__c curAssociate){
+        for (Voucher__c indexVoucher : assignedVouchers){
+            if (indexVoucher.Associate__c == curAssociate.id && indexVoucher.Certification_Type__c == curVoucher.Certification_Type__c && indexVoucher.Voucher_Type__c == curVoucher.Voucher_Type__c ){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void generateAttempts(integer maxAttempts){
+        for (integer index = 0; index < maxAttempts; index++){
+            Attempt__c curAttempt = new Attempt__c();
+            Voucher__c curVoucher = ((Voucher__c) getRandomObject(assignedVouchers));
+            curAttempt.Voucher__c = curVoucher.id;
+            curAttempt.Attempt_Type__c = curVoucher.Voucher_Type__c ;
+
+            if (curVoucher.Certification_Type__c == 'ADM' ){
+
+                curAttempt.Configuration_and_Setup__c = rollDice(100) ;
+                curAttempt.Data_and_Analytics_Management__c = rollDice(100);
+                curAttempt.Object_Manager_and_Lightning_App_Builder__c = rollDice(100);
+                curAttempt.Productivity_and_Collaboration__c = rollDice(100);
+                curAttempt.Sales_and_Marketing_Applications__c = rollDice(100);
+                curAttempt.Service_and_Support_Applications__c = rollDice(100);
+                curAttempt.Workflow_Process_Automation__c = rollDice(100);
+
+            } else if (curVoucher.Certification_Type__c == 'PD1' ){
+                curAttempt.Salesforce_Fundamentals__c = rollDice(100);
+                curAttempt.Data_Modeling_and_Management__c = rollDice(100);
+                curAttempt.Process_Automation_and_Logic__c = rollDice(100);
+                curAttempt.User_Interface__c = rollDice(100);
+                curAttempt.Testing_Debugging_and_Deployment__c = rollDice(100);
+                
+            } else if (curVoucher.Certification_Type__c == 'Advanced ADM'){           
+                curAttempt.Security_and_Access__c = rollDice(100);
+                curAttempt.Extending_Custom_Objects_and_Application__c = rollDice(100);
+                curAttempt.Auditing_and_Monitoring__c = rollDice(100);
+                curAttempt.Sales_Cloud_Applications__c = rollDice(100);
+                curAttempt.Service_Cloud_Applications__c = rollDice(100);
+                curAttempt.Data_Management__c = rollDice(100);
+                curAttempt.Content_Management__c = rollDice(100);
+                curAttempt.Change_Management__c = rollDice(100);
+                curAttempt.Analytics_Reports_and_Dashboards__c = rollDice(100);
+                curAttempt.Process_Automation__c = rollDice(100);
+                
+            } else if (curVoucher.Certification_Type__c == 'PD2'){
+                curAttempt.Salesforce_Fundamentals__c = rollDice(100);
+                curAttempt.Data_Modeling_and_Management__c = rollDice(100);
+                curAttempt.Process_Automation_and_Logic__c = rollDice(100);
+                curAttempt.User_Interface__c = rollDice(100);
+                curAttempt.Performance__c = rollDice(100);
+                curAttempt.Integration__c = rollDice(100);
+                curAttempt.Testing__c = rollDice(100);
+                curAttempt.Debug_and_Deployment_Tools__c = rollDice(100);
+                
+            } else if (curVoucher.Certification_Type__c == 'Platform App Builder'){
+                curAttempt.Salesforce_Fundamentals__c = rollDice(100);
+                curAttempt.Data_Modeling_and_Management__c = rollDice(100);
+                curAttempt.Business_Logic_and_Process_Automation__c = rollDice(100);
+                curAttempt.User_Interface__c = rollDice(100);
+                curAttempt.App_Deployment__c = rollDice(100);
+                
+            } else if (curVoucher.Certification_Type__c == 'JS Developer 1'){
+                curAttempt.Variables_Types_and_Collections__c = rollDice(100);
+                curAttempt.Objects_Functions_and_Classes__c = rollDice(100);
+                curAttempt.Browser_and_Events__c = rollDice(100);
+                curAttempt.Debugging_and_Error_Handling__c = rollDice(100);
+                curAttempt.Asynchronous_Programming__c = rollDice(100);
+                curAttempt.Server_Side_JavaScript__c = rollDice(100);
+                curAttempt.Testing__c = rollDice(100);
+            }
+            attemptList.add(curAttempt);
+        }
+        Database.insert(attemptList);
+    }
+    
+    public void generateAssociates(integer maxAssociates){
+        for(integer index = 0; index < maxAssociates; index++){
+            Associate__c curAssociate = new Associate__c();
+            curAssociate.Account__c = ((Account) getRandomObject(AccountList)).id;
+            curAssociate.Current_Status__c = getSelection( new List<String>{'Training'} ); // , 'Staging', 'Selected', 'Released' 
+            curAssociate.Employment_Start_Date__c = Date.today() - 50;
+            curAssociate.First_Name__c = getSelection(firstNames);
+            curAssociate.Last_Name__c = getSelection(lastNames);
+            curAssociate.Email__c = genEmail(curAssociate.First_Name__c + ' ' + curAssociate.Last_Name__c);
+            associateList.add(curAssociate);
+        }
+        database.insert(associateList);
     }
     
     public void generateCohorts(integer maxCohorts){
         for(integer index = 0; index < maxCohorts; index++){
             Cohort__c curCohort = new Cohort__c();
-			curCohort.Start_Date__c = Date.today() - 50;
+            curCohort.Start_Date__c = Date.today() - 50;
             curCohort.End_Date__c = Date.today() + 20;
             cohortList.add(curCohort);
         }
@@ -70,7 +208,7 @@ public class MockDataGenerator {
             curVoucher.Status__c = 'Unused';
             curVoucher.Voucher_Code__c = GenGibNumbers(20);
             curVoucher.Voucher_Type__c = vType;
-			voucherList.add(curVoucher);
+            voucherList.add(curVoucher);
         }        
         database.insert(voucherList);
         
@@ -81,7 +219,7 @@ public class MockDataGenerator {
         integer month = integer.valueof(8 );
         integer day =  integer.valueof(Math.random() * 28 + 1);
         Date myDate = Date.newInstance(year, month ,day );
-		return myDate;
+        return myDate;
     }
     
     public String getPostal(){
@@ -94,8 +232,8 @@ public class MockDataGenerator {
     }
     
     public String genEmail(String name){
-		String[] splitStr = name.split(' ');
-		String newStr = '';
+        String[] splitStr = name.split(' ');
+        String newStr = '';
         for(String s: splitStr){
             newStr = newStr + s;
         }
@@ -120,7 +258,7 @@ public class MockDataGenerator {
         }
         database.insert(contactList);
         system.debug(contactList);
-    }	    
+    }       
 
     public void generateAccounts(integer maxAccounts){
         for(integer cur = 0; cur < maxAccounts; cur++){
@@ -140,29 +278,26 @@ public class MockDataGenerator {
         return getSelection(Adverbs) + ' ' + getSelection(Adjectives) + ' ' + getSelection(Nouns);
     }
     
-    public string getFullName(){
-        return getSelection(firstNames) + ' ' + getSelection(lastNames);
-    }
     
     public string GenGibNumbers(integer length){
-		//selects the length of the name, min 3, max 15
+        //selects the length of the name, min 3, max 15
         //integer length = Integer.valueof((Math.random()*maxNameLength))+3;
-		//selects if the vowels are the even letters or not
-	    final string nums = '123456789';
-	    final string zero = '0';
+        //selects if the vowels are the even letters or not
+        final string nums = '123456789';
+        final string zero = '0';
 
         integer even = Integer.valueof((Math.random()*2));
         string pokeName = '';
 
         //loops over the length of the name
         for(integer pos = 0; pos < length; pos++){
-			string letter = '';
-			//if the pos mod 2 doesn't match even then use a random consanant, else use a random vowel
+            string letter = '';
+            //if the pos mod 2 doesn't match even then use a random consanant, else use a random vowel
             if (Math.mod(pos, 2) != even){
-				integer selection = Integer.valueof((Math.random()*nums.length()));
+                integer selection = Integer.valueof((Math.random()*nums.length()));
                 letter = nums.substring(selection, selection+1);
             }else{
-				integer selection = Integer.valueof((Math.random()*zero.length()));
+                integer selection = Integer.valueof((Math.random()*zero.length()));
                 letter = zero.substring(selection, selection+1);                
             }
             pokeName += letter;
@@ -170,28 +305,5 @@ public class MockDataGenerator {
         return pokeName;
     }
     
-	public string GenGibberish(integer length){
-		//selects the length of the name, min 3, max 15
-        //integer length = Integer.valueof((Math.random()*maxNameLength))+3;
-		//selects if the vowels are the even letters or not
-
-        integer even = Integer.valueof((Math.random()*2));
-        string pokeName = '';
-
-        //loops over the length of the name
-        for(integer pos = 0; pos < length; pos++){
-			string letter = '';
-			//if the pos mod 2 doesn't match even then use a random consanant, else use a random vowel
-            if (Math.mod(pos, 2) != even){
-				integer selection = Integer.valueof((Math.random()*cons.length()));
-                letter = cons.substring(selection, selection+1);
-            }else{
-				integer selection = Integer.valueof((Math.random()*vowels.length()));
-                letter = vowels.substring(selection, selection+1);                
-            }
-            pokeName += letter;
-        }
-        return pokeName;
-    }
         
 }
