@@ -2,6 +2,8 @@
 //
 // Mock Data Generator Test class
 // 
+// also tests voucher assignment triggers
+// 
 //  Code Coverage: 88%
 //  
 //  Created on: 8/26/2021
