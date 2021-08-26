@@ -59,5 +59,17 @@
         <members>*</members>
         <name>CustomTab</name>
     </types>
+     <types>
+        <members>*</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>ApprovalProcess</name>
+    </types>
+    <types>
+        <members>Attempt__c</members>
+        <name>Workflow</name>
+    </types>
     <version>52.0</version>
 </Package>
