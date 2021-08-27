@@ -1,0 +1,69 @@
+<template>
+    <!--main title and revature logo-->
+    <div class="slds-grid slds-gutters">
+  <div class="slds-col">
+    <span>Revature Logo</span>
+  </div>
+  <div class="slds-col">
+    <!--title subject to change-->
+    <span>Welcome/Title</span>
+  </div>
+</div>
+<!--bar for navigation-->
+<br/><br/>
+<!--Badges for admin and Developer side by side-->
+ <div class="slds-grid slds-gutters">
+  <div style="text-align:center;" class="slds-col">
+    <span>Admin</span>
+    <p>Cert Logo</p>
+    <lightning-button variant="brand" label={clickedButtonAdmin} title="Show" onclick={handleClickAdmin} class="slds-m-left_x-small"></lightning-button>
+  </div>
+  <div style="text-align:center;" class="slds-col">
+    <span>Developer</span>
+    <p>Cert Logo</p>
+    <lightning-button variant="brand" label={clickedButtonDeveloper} title="Show" onclick={handleClickDeveloper} class="slds-m-left_x-small"></lightning-button>
+  </div>
+</div>
+
+<!--area to show cert name, vouchers, buttons for register exam and log an attempt
+    and past attempts once the button is clicked-->
+    <template if:true={boolVisibleAdmin}>
+        <!--Cert name and Vouchers-->
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+                <lightning-card  title="Cert Name">
+                    <p class="slds-p-horizontal_small">Status:</p>
+                    <p class="slds-p-horizontal_small">Attempt Due date: </p>
+                    <p slot="footer"></p>
+                </lightning-card>
+            </div>
+            <div class="slds-col">
+            <lightning-card  title="Vouchers">
+                    <p class="slds-p-horizontal_small">Focus on Force Voucher code: </p>
+                    <p class="slds-p-horizontal_small">Salesforce Voucher Code: </p>
+                    <p slot="footer"></p>
+                </lightning-card>
+            </div>
+        </div>
+        <!--Register and log an attempt button
+            And past events-->
+            <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+                <lightning-button variant="Neutral" label="Register for exam" title="Register for exam" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+                <lightning-button variant="Neutral" label="Log an Attempt Button" title="Log an Attempt Button"  onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+            </div>
+            <div class="slds-col">
+            <lightning-card  title="Practice Attempts (Practice or Real)">
+                    <p class="slds-p-horizontal_small">attempt place holder </p>
+                    <p class="slds-p-horizontal_small">attempt placeholder </p>
+                    <p slot="footer"></p>
+                </lightning-card>
+            </div>
+        </div>
+    </template>
+
+
+    <template if:true={boolVisibleDeveloper}>
+        <div>Developer</div>
+    </template>
+</template>
