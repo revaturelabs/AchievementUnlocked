@@ -31,7 +31,14 @@
         <name>CustomObject</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Associate</members>
+        <members>CEO</members>
+        <members>CTO</members>
+        <members>Instructor</members>
+        <members>Lead Instructor</members>
+        <members>Manager of Technology</members>
+        <members>Sales Associate</members>
+        <members>Staging Manager</members>
         <name>Role</name>
     </types>    
     <types>
