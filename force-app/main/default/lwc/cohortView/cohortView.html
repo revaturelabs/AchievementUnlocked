@@ -1,0 +1,8 @@
+<template>
+    <lightning-card>
+        <c-cohort-list oncohortselected={handleSelection}></c-cohort-list>
+    </lightning-card>
+    <lightning-card>
+        <c-associate-list if:true={cohortId} cohort-id={cohortId}></c-associate-list>
+    </lightning-card>
+</template>

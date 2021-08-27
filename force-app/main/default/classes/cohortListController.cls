@@ -1,6 +1,6 @@
 public with sharing class cohortListController {
     @AuraEnabled(cacheable=true)
-    public static List<Associate__c> getAssociates() {
-        return [SELECT First_Name__c, Last_Name__C FROM Associate__c];
+    public static List<Cohort__c> getCohorts() {
+        return [SELECT Start_Date__c FROM Cohort__c];
     }
 }
