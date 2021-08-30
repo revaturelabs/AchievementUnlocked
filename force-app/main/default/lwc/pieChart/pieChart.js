@@ -66,12 +66,6 @@ export default class PieChart extends LightningElement {
 	// @type: <bool> whether d3 successfully initialized or not
     d3Initialized = false;
 
-	// @desc : generate an array from 0 to n-1
-	// @n    : <number>
-	range(n) {
-		return [...Array(n).keys()];
-	}
-
 	// @desc : set an error message on failure
 	setError(message) {
 		this.hasError = true;
@@ -99,8 +93,14 @@ export default class PieChart extends LightningElement {
 	// @data         : <array>
 	// @colors       : <array>
 	renderLegend(chartWrapper, data, colors) {
+
+		// delete any old legend
+		chartWrapper.select('#legend')
+			.remove();
+
 		// append labels
-		const legend = chartWrapper.append('g');
+		const legend = chartWrapper.append('g')
+			.attr('id', 'legend');
 		const labelWidth = 10;
 		const labelHeight = 10;
 		const legendTitle = 'Legend';
@@ -136,7 +136,7 @@ export default class PieChart extends LightningElement {
 		.attr('transform', `translate(${this.width / 2 - 120},20)`)
 		.append('text')
 			.text(this.title)
-			.attr('class', 'title');
+			.classed('title', true);
 	}
 
 	// @desc         : render the chart onto its wrapper
@@ -173,7 +173,7 @@ export default class PieChart extends LightningElement {
 			.data(pie(data))
 			.enter()
 			.append("g")
-			.attr("class", "arc");
+			.classed("arc", true);
 		
 		arc.append("path")
 			.attr("d", path)

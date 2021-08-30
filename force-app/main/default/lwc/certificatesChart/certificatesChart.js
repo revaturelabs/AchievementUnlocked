@@ -5,7 +5,12 @@ import associatesWithCerts from '@salesforce/apex/CertificatesChartController.as
 import associatesWithoutCerts from '@salesforce/apex/CertificatesChartController.associatesWithoutCerts';
 import associatesWithSpecificCert from '@salesforce/apex/CertificatesChartController.associatesWithSpecificCert';
 import associatesWithoutSpecificCert from '@salesforce/apex/CertificatesChartController.associatesWithoutSpecificCert';
-
+/*
+import associatesInCohortWithCerts from '@salesforce/apex/CertificatesChartController.associatesInCohortWithCerts';
+import associatesInCohortWithoutCerts from '@salesforce/apex/CertificatesChartController.associatesInCohortWithoutCerts';
+import associatesInCohortWithSpecificCert from '@salesforce/apex/CertificatesChartController.associatesInCohortWithSpecificCert';
+import associatesInCohortWithoutSpecificCert from '@salesforce/apex/CertificatesChartController.associatesInCohortWithoutSpecificCert';
+*/
 import getCertTypes from '@salesforce/apex/CertificatesChartController.getCertTypes';
 import getCohortNames from '@salesforce/apex/CertificatesChartController.getCohortNames';
 
@@ -54,8 +59,6 @@ export default class CertificatesChart extends LightningElement {
 	// @desc : <string> the selected cohort
 	selectedCohort = defaultCohortValue;
 
-
-
 	// @desc    : converts a list of strings into a data structure that can
 	//          : be used in a lightning-combobox
 	// @returns : <array>
@@ -66,52 +69,63 @@ export default class CertificatesChart extends LightningElement {
 		}));
 	}
 
-	// @desc : onchange event handler for changing cert combobox
-	async changeCert(event) {
-		this.selectedCert = event.target.value;
+	// @desc : update the chart
+	async onchange() {
 		const certType = (this.selectedCert === defaultCertValue) ? null : this.selectedCert;
 		const cohortName = (this.selectedCohort === defaultCohortValue) ? null : this.selectedCohort;
 		const [numberWithCerts, numberWithoutCerts] = await this.loadCertsData(certType, cohortName);
 		this.chartData = this.serializeData(numberWithCerts, numberWithoutCerts);
 	}
 
-	// @desc : onchange handler for changing cohort combobox
-	async changeCohort(event) {
+	// @desc  : onchange event handler for changing cert combobox
+	// @event : <event>
+	changeCert(event) {
+		this.selectedCert = event.target.value;
+		this.onchange();
+	}
+
+	// @desc  : onchange handler for changing cohort combobox
+	// @event : <event>
+	changeCohort(event) {
 		this.selectedCohort = event.target.value;
-		const certType = (this.selectedCert === defaultCertValue) ? null : this.selectedCert;
-		const cohortName = (this.selectedCohort === defaultCohortValue) ? null : this.selectedCohort;
-		const [numberWithCerts, numberWithoutCerts] = await this.loadCertsData(certType, cohortName);
-		this.chartData = this.serializeData(numberWithCerts, numberWithoutCerts);
+		this.onchange();
 	}
 
 	// @desc : serialize the with / without data for the cart
 	serializeData(numberWithCerts, numberWithoutCerts) {
 		return JSON.stringify([
 			{
-				label: 'Associates with one or more certifications',
+				label: 'Associates with certification',
 				total: numberWithCerts
 			},
 			{
-				label: 'Associates without any certifications',
+				label: 'Associates without certification',
 				total: numberWithoutCerts
 			}
 		]);
 	}
 
-	// @desc     : load the cert data and load it into the chartData variable
-	// @certType : <string> the certification type
-	// @returns  : <array> [numberWithCerts, numberWithoutCerts]
+	// @desc       : load the cert data and load it into the chartData variable
+	// @certType   : <string> the certification type (optional)
+	// @cohortName : <string> name of specific cohort (optional)
+	// @returns    : <array> [numberWithCerts, numberWithoutCerts]
 	async loadCertsData (certType, cohortName){
 		let numberWithCerts;
 		let numberWithoutCerts;
-		
+
 		if(certType && cohortName) {
-			// TODO
+			/*
+			numberWithCerts = await associatesInCohortWithSpecificCert({ cohortName, certType});
+			numberWithoutCerts = await associatesInCohortWithoutSpecificCert({ cohortName, certType});
+			*/
 		} else if(certType && !cohortName) {
 			numberWithCerts = await associatesWithSpecificCert({ certType });
 			numberWithoutCerts = await associatesWithoutSpecificCert({ certType });
 		} else if(!certType && cohortName) {
-			// TODO
+			/*
+			numberWithCerts = await associatesInCohortWithCerts({ cohortName });
+			numberWithoutCerts = await associatesInCohortWithoutCerts({ cohortName });
+			*/
 		} else if(!certType && !cohortName) {
 			numberWithCerts = await associatesWithCerts();
 			numberWithoutCerts = await associatesWithoutCerts();
@@ -125,12 +139,12 @@ export default class CertificatesChart extends LightningElement {
 		const certTypes = await getCertTypes();
 		this.certTypes = this.toComboboxOptions([defaultCertValue, ...certTypes]);
 
-		// set the chart data
-		const [numberWithCerts, numberWithoutCerts] = await this.loadCertsData();
-		this.chartData = this.serializeData(numberWithCerts, numberWithoutCerts);
-		
 		// set the cohort names
 		const cohorts = await getCohortNames();
 		this.cohorts = this.toComboboxOptions([defaultCohortValue, ...cohorts]);
+
+		// set the chart data
+		const [numberWithCerts, numberWithoutCerts] = await this.loadCertsData();
+		this.chartData = this.serializeData(numberWithCerts, numberWithoutCerts);
 	}
 }
