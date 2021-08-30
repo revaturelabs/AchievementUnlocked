@@ -1,7 +1,6 @@
 <template>
-<lightning-datatable
-    key-field="Id"
-    data={associates.data}
-    columns={columns}>
-</lightning-datatable>
+    
+    <c-staged-list onassociateselected={handleSelection}></c-staged-list>
+    <c-vouchers-list if:true={vrecord} vrecord={vrecord}></c-vouchers-list>
+    <c-attempt-list if:true={vrecord} vrecord={vrecord}></c-attempt-list>
 </template>

@@ -1,18 +1,11 @@
-import { LightningElement, wire } from 'lwc';
-import getAssociateList from '@salesforce/apex/stagingViewController.getAssociateList';
+import { LightningElement, wire, api } from 'lwc';
 
-const columns = [
-    { label: 'First Name', fieldName: 'First_Name__c' },
-    { label: 'Last Name', fieldName: 'Last_Name__c' },
-    { label: 'Status', fieldName: 'Current_Status__c' },
-    { label: 'Voucher', fieldName: 'Vouchers__r.Name' },
-];
-export default class ApexDatatableExample extends LightningElement {
+export default class StagingDatatable extends LightningElement {
 
-    error;
-    columns = columns;
+    vrecord;
+    handleSelection( event ) {
 
-     @wire(getAssociateList)
-    associates;
+        this.vrecord = event.detail;
 
+    }
 }
