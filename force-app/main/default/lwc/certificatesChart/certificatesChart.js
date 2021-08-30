@@ -9,7 +9,7 @@ import associatesWithoutSpecificCert from '@salesforce/apex/CertificatesChartCon
 import getCertTypes from '@salesforce/apex/CertificatesChartController.getCertTypes';
 import getCohortNames from '@salesforce/apex/CertificatesChartController.getCohortNames';
 
-// default label for combobox
+// default label for comboboxes
 const defaultCertValue = 'All';
 const defaultCohortValue = 'All';
 

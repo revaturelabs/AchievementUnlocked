@@ -1,31 +1,33 @@
 <template>
 	<lightning-card title={title}>
+		<div class="handle-overflow">
 
 
-		<lightning-combobox
-			value={selectedCohort}
-			options={cohorts}
-			label={cohortLabel}
-			onchange={changeCohort}
-			class="slds-p-around_small"
-		></lightning-combobox>
+			<lightning-combobox
+				value={selectedCohort}
+				options={cohorts}
+				label={cohortLabel}
+				onchange={changeCohort}
+				class="slds-p-around_small"
+			></lightning-combobox>
 
-		<lightning-combobox
-			value={selectedCert}
-			options={certTypes}
-			label={certLabel}
-			onchange={changeCert}
-			class="slds-p-around_small"
-		></lightning-combobox>
+			<lightning-combobox
+				value={selectedCert}
+				options={certTypes}
+				label={certLabel}
+				onchange={changeCert}
+				class="slds-p-around_small"
+			></lightning-combobox>
 
-		<div class='flex-center-horizontal'>
-			<c-pie-chart
-				chart-data={chartData} 
-				value={value} 
-				label={label}
-				width={width}
-				height={height}
-			></c-pie-chart>
+			<div class='flex-center-horizontal'>
+				<c-pie-chart
+					chart-data={chartData} 
+					value={value} 
+					label={label}
+					width={width}
+					height={height}
+				></c-pie-chart>
+			</div>
 		</div>
 	</lightning-card>
 </template>
