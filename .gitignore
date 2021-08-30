@@ -46,3 +46,4 @@ sfdx-project.json
 jest.config.js
 README.md
 sfdx-project.json
+package-lock.json
