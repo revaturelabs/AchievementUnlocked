@@ -1,3 +1,11 @@
+<!--
+
+
+ADD PLATFORM APP BUILDER TO PAGE
+
+
+-->
+
 <template>
   <!--main title and revature logo-->
   <div>
@@ -44,13 +52,13 @@
       <div>
         <img
           style="max-width: 30%; height: auto; border-radius: 50%"
-          src="{admLogo}"
+          src="{advancedAdmLogo}"
         />
         <lightning-button
           variant="brand"
-          label="{clickedButtonAdm}"
+          label="{clickedButtonAdvancedAdm}"
           title="Show"
-          onclick="{handleClickAdm}"
+          onclick="{handleClickAdvancedAdm}"
           class="slds-m-left_x-small"
         ></lightning-button>
       </div>
@@ -64,9 +72,9 @@
         />
         <lightning-button
           variant="brand"
-          label="{clickedButtonAdm}"
+          label="{clickedButtonJavascr}"
           title="Show"
-          onclick="{handleClickAdm}"
+          onclick="{handleClickJavascr}"
           class="slds-m-left_x-small"
         ></lightning-button>
       </div>
@@ -80,9 +88,9 @@
         />
         <lightning-button
           variant="brand"
-          label="{clickedButtonAdm}"
+          label="{clickedButtonPd1}"
           title="Show"
-          onclick="{handleClickAdm}"
+          onclick="{handleClickPd1}"
           class="slds-m-left_x-small"
         ></lightning-button>
       </div>
@@ -96,9 +104,9 @@
         />
         <lightning-button
           variant="brand"
-          label="{clickedButtonAdm}"
+          label="{clickedButtonPd2}"
           title="Show"
-          onclick="{handleClickAdm}"
+          onclick="{handleClickPd2}"
           class="slds-m-left_x-small"
         ></lightning-button>
       </div>
@@ -113,16 +121,18 @@
     <!--Cert name and Vouchers-->
     <div class="slds-grid slds-gutters">
       <div class="slds-col slds-size_1-of-2">
-        <lightning-card title="Cert Name">
-          <p class="slds-p-horizontal_small">Status:</p>
-          <p class="slds-p-horizontal_small">Attempt Due date:</p>
-          <p slot="footer"></p>
-        </lightning-card>
+        <p><b>Administrator</b></p>
+        <lightning-datatable
+          data="{certAdm.data}"
+          columns="{certColumns}"
+          key-field="id"
+        >
+        </lightning-datatable>
       </div>
       <div class="slds-col slds-size_1-of-2">
         <p><b>Vouchers</b></p>
         <lightning-datatable
-          data="{voucher.data}"
+          data="{voucherAdm.data}"
           columns="{voucherColumns}"
           key-field="id"
         >
@@ -131,13 +141,14 @@
     </div>
     <!--Register and log an attempt button
             And past events-->
+    <br />
     <div class="slds-grid slds-gutters">
       <div class="slds-col slds-size_1-of-2">
         <lightning-button
           variant="Neutral"
           label="Register for exam"
           title="Register for exam"
-          onclick="{handleClick}"
+          onclick="{handleClickRegister}"
           class="slds-m-left_x-small"
         ></lightning-button>
         <lightning-button
@@ -149,11 +160,224 @@
         ></lightning-button>
       </div>
       <div class="slds-col slds-size_1-of-2">
-        <lightning-card title="Practice Attempts (Practice or Real)">
-          <p class="slds-p-horizontal_small">attempt place holder</p>
-          <p class="slds-p-horizontal_small">attempt placeholder</p>
-          <p slot="footer"></p>
-        </lightning-card>
+        <lightning-datatable
+          data="{attemptsAdm.data}"
+          columns="{attemptsColumns}"
+          key-field="id"
+        >
+        </lightning-datatable>
+      </div>
+    </div>
+  </template>
+  <!--Advanced ADM-->
+  <template if:true="{boolVisibleAdvancedAdm}">
+    <!--Cert name and Vouchers-->
+    <div class="slds-grid slds-gutters">
+      <div class="slds-col slds-size_1-of-2">
+        <p><b>Advanced Administrator</b></p>
+        <lightning-datatable
+          data="{certAdvAdm.data}"
+          columns="{certColumns}"
+          key-field="id"
+        >
+        </lightning-datatable>
+      </div>
+      <div class="slds-col slds-size_1-of-2">
+        <p><b>Vouchers</b></p>
+        <lightning-datatable
+          data="{voucherAdvAdm.data}"
+          columns="{voucherColumns}"
+          key-field="id"
+        >
+        </lightning-datatable>
+      </div>
+    </div>
+    <!--Register and log an attempt button
+            And past events-->
+    <br />
+    <div class="slds-grid slds-gutters">
+      <div class="slds-col slds-size_1-of-2">
+        <lightning-button
+          variant="Neutral"
+          label="Register for exam"
+          title="Register for exam"
+          onclick="{handleClickRegister}"
+          class="slds-m-left_x-small"
+        ></lightning-button>
+        <lightning-button
+          variant="Neutral"
+          label="Log an Attempt Button"
+          title="Log an Attempt Button"
+          onclick="{handleClick}"
+          class="slds-m-left_x-small"
+        ></lightning-button>
+      </div>
+      <div class="slds-col slds-size_1-of-2">
+        <lightning-datatable
+          data="{attemptsAdvAdm.data}"
+          columns="{attemptsColumns}"
+          key-field="id"
+        >
+        </lightning-datatable>
+      </div>
+    </div>
+  </template>
+  <!--JavaScript-->
+  <template if:true="{boolVisibleJavascr}">
+    <!--Cert name and Vouchers-->
+    <div class="slds-grid slds-gutters">
+      <div class="slds-col slds-size_1-of-2">
+        <p><b>JavaScript</b></p>
+        <lightning-datatable
+          data="{certJavascr.data}"
+          columns="{certColumns}"
+          key-field="id"
+        >
+        </lightning-datatable>
+      </div>
+      <div class="slds-col slds-size_1-of-2">
+        <p><b>Vouchers</b></p>
+        <lightning-datatable
+          data="{voucherJavascr.data}"
+          columns="{voucherColumns}"
+          key-field="id"
+        >
+        </lightning-datatable>
+      </div>
+    </div>
+    <!--Register and log an attempt button
+            And past events-->
+    <br />
+    <div class="slds-grid slds-gutters">
+      <div class="slds-col slds-size_1-of-2">
+        <lightning-button
+          variant="Neutral"
+          label="Register for exam"
+          title="Register for exam"
+          onclick="{handleClickRegister}"
+          class="slds-m-left_x-small"
+        ></lightning-button>
+        <lightning-button
+          variant="Neutral"
+          label="Log an Attempt Button"
+          title="Log an Attempt Button"
+          onclick="{handleClick}"
+          class="slds-m-left_x-small"
+        ></lightning-button>
+      </div>
+      <div class="slds-col slds-size_1-of-2">
+        <lightning-datatable
+          data="{attemptsJavascr.data}"
+          columns="{attemptsColumns}"
+          key-field="id"
+        >
+        </lightning-datatable>
+      </div>
+    </div>
+  </template>
+  <!--pd1-->
+  <template if:true="{boolVisiblePd1}">
+    <!--Cert name and Vouchers-->
+    <div class="slds-grid slds-gutters">
+      <div class="slds-col slds-size_1-of-2">
+        <p><b>Platform Developer I</b></p>
+        <lightning-datatable
+          data="{certPd1.data}"
+          columns="{certColumns}"
+          key-field="id"
+        >
+        </lightning-datatable>
+      </div>
+      <div class="slds-col slds-size_1-of-2">
+        <p><b>Vouchers</b></p>
+        <lightning-datatable
+          data="{voucherPd1.data}"
+          columns="{voucherColumns}"
+          key-field="id"
+        >
+        </lightning-datatable>
+      </div>
+    </div>
+    <!--Register and log an attempt button
+            And past events-->
+    <br />
+    <div class="slds-grid slds-gutters">
+      <div class="slds-col slds-size_1-of-2">
+        <lightning-button
+          variant="Neutral"
+          label="Register for exam"
+          title="Register for exam"
+          onclick="{handleClickRegister}"
+          class="slds-m-left_x-small"
+        ></lightning-button>
+        <lightning-button
+          variant="Neutral"
+          label="Log an Attempt Button"
+          title="Log an Attempt Button"
+          onclick="{handleClick}"
+          class="slds-m-left_x-small"
+        ></lightning-button>
+      </div>
+      <div class="slds-col slds-size_1-of-2">
+        <lightning-datatable
+          data="{attemptsPd1.data}"
+          columns="{attemptsColumns}"
+          key-field="id"
+        >
+        </lightning-datatable>
+      </div>
+    </div>
+  </template>
+  <!--pd2-->
+  <template if:true="{boolVisiblePd2}">
+    <!--Cert name and Vouchers-->
+    <div class="slds-grid slds-gutters">
+      <div class="slds-col slds-size_1-of-2">
+        <p><b>Platform Developer II</b></p>
+        <lightning-datatable
+          data="{certPd2.data}"
+          columns="{certColumns}"
+          key-field="id"
+        >
+        </lightning-datatable>
+      </div>
+      <div class="slds-col slds-size_1-of-2">
+        <p><b>Vouchers</b></p>
+        <lightning-datatable
+          data="{voucherPd2.data}"
+          columns="{voucherColumns}"
+          key-field="id"
+        >
+        </lightning-datatable>
+      </div>
+    </div>
+    <!--Register and log an attempt button
+            And past events-->
+    <br />
+    <div class="slds-grid slds-gutters">
+      <div class="slds-col slds-size_1-of-2">
+        <lightning-button
+          variant="Neutral"
+          label="Register for exam"
+          title="Register for exam"
+          onclick="{handleClickRegister}"
+          class="slds-m-left_x-small"
+        ></lightning-button>
+        <lightning-button
+          variant="Neutral"
+          label="Log an Attempt Button"
+          title="Log an Attempt Button"
+          onclick="{handleClick}"
+          class="slds-m-left_x-small"
+        ></lightning-button>
+      </div>
+      <div class="slds-col slds-size_1-of-2">
+        <lightning-datatable
+          data="{attemptsPd2.data}"
+          columns="{attemptsColumns}"
+          key-field="id"
+        >
+        </lightning-datatable>
       </div>
     </div>
   </template>
