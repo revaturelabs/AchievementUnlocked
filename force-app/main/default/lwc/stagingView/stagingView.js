@@ -2,6 +2,7 @@ import { LightningElement, wire, api } from 'lwc';
 
 export default class StagingDatatable extends LightningElement {
 
+<<<<<<< HEAD
     vrecord;
     status;
     page;
@@ -16,4 +17,6 @@ export default class StagingDatatable extends LightningElement {
         this.vrecord = event.detail;
 
     }
+=======
+>>>>>>> base-view
 }

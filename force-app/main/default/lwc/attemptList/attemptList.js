@@ -1,9 +1,10 @@
 import { LightningElement, wire, api } from 'lwc';
-import getAttemptList from '@salesforce/apex/stagingViewController.getAttemptList';
+import getAttempts from '@salesforce/apex/viewController.getAttempts';
 
 const columns = [
     { label: 'Name', fieldName: 'Name' },
     { label: 'Type', fieldName: 'Attempt_Type__c' },
+    { label: 'Passed', fieldName: 'Passed__c', type: 'boolean' },
 ];
 
 export default class AttemptsDatatable extends LightningElement {
@@ -11,7 +12,7 @@ export default class AttemptsDatatable extends LightningElement {
     error;
     columns = columns;
 
-    @api vrecord;
-    @wire(getAttemptList, {AssocID: '$vrecord'})
+    @api associateId;
+    @wire(getAttempts, {associateId: '$associateId'})
     attempts;
 }

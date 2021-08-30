@@ -1,10 +1,20 @@
 <template>
-    <lightning-card>
-        <lightning-datatable
-            data={associates.data}
-            columns={columns}
-            key-field="Id"
-            onrowaction={showVoucher}>
-        </lightning-datatable>
-    </lightning-card>
+    <div>
+        <p>{assocCount.size}</p>
+        <lightning-button-group>
+            <lightning-button label="First" onclick={handleFirst}></lightning-button>
+            <lightning-button label="Previous" onclick={handlePrev}></lightning-button>
+            <lightning-button label="Next" onclick={handleNext}></lightning-button>
+        </lightning-button-group>
+    <div>
+    <lightning-datatable
+        key-field="Id"
+        data={associates.data}
+        columns={columns}
+        hide-checkbox-column="true"
+        onrowaction={showInfo}
+        sorted-by={sortField}
+        sorted-direction={sortDirection}
+        onsort={updateColumnSorting}>
+    </lightning-datatable>
 </template>

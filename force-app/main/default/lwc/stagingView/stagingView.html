@@ -1,13 +1,3 @@
 <template>
-    <div>
-        <div>
-            <c-staged-list onassociateselected={handleSelection} status={status} page={page}></c-staged-list>
-        </div>
-        <div>
-            <c-vouchers-list if:true={vrecord} vrecord={vrecord}></c-vouchers-list>
-        </div>
-        <div>
-            <c-attempt-list if:true={vrecord} vrecord={vrecord}></c-attempt-list>
-        </div>
-    </div>
+    <c-base-view status={status} page={page}></c-base-view>   
 </template>
