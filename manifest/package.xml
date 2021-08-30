@@ -59,9 +59,7 @@
         <members>*</members>
         <name>CustomTab</name>
     </types>
-<<<<<<< Updated upstream
-=======
-     <types>
+    <types>
         <members>*</members>
         <name>Flow</name>
     </types>
@@ -77,6 +75,5 @@
         <members>Attempt__c</members>
         <name>Workflow</name>
     </types>
->>>>>>> Stashed changes
     <version>52.0</version>
 </Package>
