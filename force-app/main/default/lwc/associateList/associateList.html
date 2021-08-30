@@ -1,10 +1,9 @@
 <template>
-    <lightning-card>
-        <lightning-datatable
-            data={associates.data}
-            columns={columns}
-            key-field="Id"
-            onrowaction={showVoucher}>
-        </lightning-datatable>
-    </lightning-card>
+    <lightning-datatable
+        key-field="Id"
+        data={associates.data}
+        columns={columns}
+        hide-checkbox-column="true"
+        onrowaction={showInfo}>
+    </lightning-datatable>
 </template>

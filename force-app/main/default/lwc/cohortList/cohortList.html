@@ -1,9 +1,10 @@
 <template>
     <lightning-card>
         <lightning-datatable
+            key-field="Id"
             data={cohorts.data}
             columns={columns}
-            key-field="Id"
+            hide-checkbox-column="true"
             onrowaction={showCohort}>
         </lightning-datatable>
     </lightning-card>

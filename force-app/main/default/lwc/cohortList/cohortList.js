@@ -1,5 +1,5 @@
 import { LightningElement, api, wire } from 'lwc';
-import getCohorts from '@salesforce/apex/cohortListController.getCohorts';
+import getCohorts from '@salesforce/apex/viewController.getCohorts';
 
 const columns = [
     {label: 'Start Date', fieldName: 'Start_Date__c', type: 'button', typeAttributes: {variant: 'base', label: {fieldName: 'Start_Date__c'}}},
