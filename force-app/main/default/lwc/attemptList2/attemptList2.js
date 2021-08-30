@@ -1,5 +1,5 @@
 import { LightningElement, api, wire } from 'lwc';
-import getAttempts from '@salesforce/apex/attemptListController.getAttempts';
+import getAttempts from '@salesforce/apex/attemptList2Controller.getAttempts';
 
 
 const columns = [
