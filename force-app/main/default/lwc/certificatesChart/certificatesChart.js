@@ -51,6 +51,7 @@ export default class CertificatesChart extends LightningElement {
 	// @desc : <string> label for cohort combobox
 	cohortLabel = 'Select cohort';
 
+	// @desc : <string> the selected cohort
 	selectedCohort = defaultCohortValue;
 
 
@@ -69,12 +70,17 @@ export default class CertificatesChart extends LightningElement {
 	async changeCert(event) {
 		this.selectedCert = event.target.value;
 		const certType = (this.selectedCert === defaultCertValue) ? null : this.selectedCert;
-		const [numberWithCerts, numberWithoutCerts] = await this.loadCertsData(certType);
+		const cohortName = (this.selectedCohort === defaultCohortValue) ? null : this.selectedCohort;
+		const [numberWithCerts, numberWithoutCerts] = await this.loadCertsData(certType, cohortName);
 		this.chartData = this.serializeData(numberWithCerts, numberWithoutCerts);
 	}
 
 	async changeCohort(event) {
-
+		this.selectedCohort = event.target.value;
+		const certType = (this.selectedCert === defaultCertValue) ? null : this.selectedCert;
+		const cohortName = (this.selectedCohort === defaultCohortValue) ? null : this.selectedCohort;
+		// const [numberWithCerts, numberWithoutCerts] = await this.loadCertsData(certType, cohortName);
+		// this.chartData = this.serializeData(numberWithCerts, numberWithoutCerts);
 	}
 
 	// @desc : serialize the with / without data for the cart
@@ -94,16 +100,22 @@ export default class CertificatesChart extends LightningElement {
 	// @desc     : load the cert data and load it into the chartData variable
 	// @certType : <string> the certification type
 	// @returns  : <array> [numberWithCerts, numberWithoutCerts]
-	async loadCertsData (certType){
+	async loadCertsData (certType, cohortName){
 		let numberWithCerts;
 		let numberWithoutCerts;
-		if(!certType) {
-			numberWithCerts = await associatesWithCerts();
-			numberWithoutCerts = await associatesWithoutCerts();
-		} else {
+		
+		if(certType && cohortName) {
+			// TODO
+		} else if(certType && !cohortName) {
 			numberWithCerts = await associatesWithSpecificCert({ certType });
 			numberWithoutCerts = await associatesWithoutSpecificCert({ certType });
+		} else if(!certType && cohortName) {
+			// TODO
+		} else if(!certType && !cohortName) {
+			numberWithCerts = await associatesWithCerts();
+			numberWithoutCerts = await associatesWithoutCerts();
 		}
+
 		return [numberWithCerts, numberWithoutCerts];
 	}
 
