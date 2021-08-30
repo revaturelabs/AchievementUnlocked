@@ -457,7 +457,7 @@
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Associate Permissions</label>
-    <license>Salesforce</license>
+    <license>Customer Community Login</license>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
