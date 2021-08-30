@@ -1,4 +1,4 @@
-public with sharing class attemptListController {
+public with sharing class attemptList2Controller {
 
 
     @AuraEnabled(cacheable=true)

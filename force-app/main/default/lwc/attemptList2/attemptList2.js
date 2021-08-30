@@ -7,7 +7,7 @@ const columns = [
     {label: 'Passed', fieldName: 'Passed__c', type: 'boolean'},
 ];
 
-export default class AttemptList extends LightningElement {
+export default class AttemptList2 extends LightningElement {
     columns = columns;
     @api voucherId;
     @wire(getAttempts, {voucherId: '$voucherId'})
