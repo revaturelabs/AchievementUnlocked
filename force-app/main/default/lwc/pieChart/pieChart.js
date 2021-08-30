@@ -17,6 +17,13 @@ export default class PieChart extends LightningElement {
 	// @desc : to turn this into a donut chart, provide an inner radius
 	@api innerRadius = 0;
 
+	// @desc : <bool> whether or not there was an error,
+	//       : whether or not the error message should display
+	hasError = false;
+
+	// @desc : <string> the message associated with an error
+	errorMessage = '';
+
 	// @type: <string> private variable, stringified array of JSON objects
 	_chartData = JSON.stringify([
 		{states: "UP", percent: "80.00"},
@@ -65,6 +72,12 @@ export default class PieChart extends LightningElement {
 		return [...Array(n).keys()];
 	}
 
+	// @desc : set an error message on failure
+	setError(message) {
+		this.hasError = true;
+		this.errorMessage = message;
+	}
+
 	// @desc : load the d3 scripts then attempt to initialize the chart
     async renderedCallback() {
         if (this.d3Initialized) {
@@ -76,7 +89,7 @@ export default class PieChart extends LightningElement {
             await loadScript(this, D3Scale + '/d3scale');
 			this.d3Initialized = true;
         } catch(e){
-            console.error(e, 'd3 failed to load.'); 
+			this.setError('Error: Unable to load D3');
         }
     }
 
@@ -189,8 +202,20 @@ export default class PieChart extends LightningElement {
 
 	// @desc : renders the d3 chart onto the svg element
     initializeD3() {
-		const data = JSON.parse(this.chartData);
-		const colors = JSON.parse(this.colors);
+		let data, colors;
+		try {
+			data = JSON.parse(this.chartData);
+		} catch(e) {
+			this.setError('Error: Inappropriate graph data');
+			return;
+		}
+
+		try {
+			colors = JSON.parse(this.colors);
+		} catch(e) {
+			this.setError('Error: Inappropriate colors data');
+			return;
+		}
 
 		const chartWrapper = this.setupChartWrapper();
 		this.renderChart(chartWrapper, data, colors);

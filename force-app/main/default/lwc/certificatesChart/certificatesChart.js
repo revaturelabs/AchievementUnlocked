@@ -66,7 +66,7 @@ export default class CertificatesChart extends LightningElement {
 		}));
 	}
 
-	// @desc : onchange event handler for combobox
+	// @desc : onchange event handler for changing cert combobox
 	async changeCert(event) {
 		this.selectedCert = event.target.value;
 		const certType = (this.selectedCert === defaultCertValue) ? null : this.selectedCert;
@@ -75,12 +75,13 @@ export default class CertificatesChart extends LightningElement {
 		this.chartData = this.serializeData(numberWithCerts, numberWithoutCerts);
 	}
 
+	// @desc : onchange handler for changing cohort combobox
 	async changeCohort(event) {
 		this.selectedCohort = event.target.value;
 		const certType = (this.selectedCert === defaultCertValue) ? null : this.selectedCert;
 		const cohortName = (this.selectedCohort === defaultCohortValue) ? null : this.selectedCohort;
-		// const [numberWithCerts, numberWithoutCerts] = await this.loadCertsData(certType, cohortName);
-		// this.chartData = this.serializeData(numberWithCerts, numberWithoutCerts);
+		const [numberWithCerts, numberWithoutCerts] = await this.loadCertsData(certType, cohortName);
+		this.chartData = this.serializeData(numberWithCerts, numberWithoutCerts);
 	}
 
 	// @desc : serialize the with / without data for the cart

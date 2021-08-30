@@ -1,3 +1,7 @@
 <template>
-    <svg data-id={id}></svg>
+    <svg if:false={hasError} data-id={id}></svg>
+    
+    <div class="slds-text-color_error" if:true={hasError}>
+        {errorMessage}
+    </div>
 </template>
