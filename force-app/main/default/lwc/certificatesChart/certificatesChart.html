@@ -1,0 +1,21 @@
+<template>
+	<lightning-card title={title}>
+		<lightning-combobox
+			value={selected}
+			options={certTypes}
+			label={comboboxLabel}
+			onchange={onchange}
+			class='combobox-center'
+		></lightning-combobox>
+
+		<div class='flex-center-horizontal'>
+			<c-pie-chart
+				chart-data={chartData} 
+				value={value} 
+				label={label}
+				width={width}
+				height={height}
+			></c-pie-chart>
+		</div>
+	</lightning-card>
+</template>
