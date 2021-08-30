@@ -2,27 +2,21 @@
     "packageDirectories": [
         {
             "path": "force-app",
-            "default": true
+            "default": false
         },
         {
             "path": "BasePackage",
             "package": "BasePackage",
             "versionName": "ver 0.1",
             "versionNumber": "0.1.0.NEXT",
-            "default": false
+            "default": true
         },
         {
-            "path": "Backend4",
-            "package": "Backend4",
+            "path": "BasePackage",
+            "package": "BasePackage2",
             "versionName": "ver 0.1",
             "versionNumber": "0.1.0.NEXT",
-            "default": false,
-            "dependencies": [
-                {
-                    "package": "BasePackage",
-                    "versionNumber": "0.1.0.LATEST"
-                }
-            ]
+            "default": false
         }
     ],
     "name": "AchievementUnlocked",
@@ -30,8 +24,7 @@
     "sfdcLoginUrl": "https://login.salesforce.com",
     "sourceApiVersion": "52.0",
     "packageAliases": {
-        "BasePackage": "0Ho5f000000XZB0CAO",
-        "BasePackage@0.1.0-1": "04t5f000000YABHAA4",
-        "Backend4": "0Ho5f000000XZAqCAO"
+        "BasePackage2": "0Ho5f000000XZBPCA4",
+        "BasePackage2@0.1.0-1": "04t5f000000YCfQAAW"
     }
 }
