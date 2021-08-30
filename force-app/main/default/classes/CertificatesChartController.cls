@@ -4,7 +4,8 @@ public class CertificatesChartController {
     public static Integer associatesWithCerts() {
         List<AggregateResult> results = [SELECT COUNT_DISTINCT(Voucher__r.Associate__c) 
                                          FROM Attempt__c 
-                                         WHERE Passed__c = True];
+                                         WHERE Passed__c = True
+                                         AND Attempt_Type__c = 'Certification'];
         Integer certifiedAssociates = (Integer) results[0].get('expr0');
         return certifiedAssociates;
     }
@@ -23,6 +24,7 @@ public class CertificatesChartController {
         List<AggregateResult> results = [SELECT COUNT_DISTINCT(Voucher__r.Associate__c) 
                                          FROM Attempt__c 
                                          WHERE Passed__c = True 
+                                         AND Attempt_Type__c = 'Certification'
                                          AND Attempt__c.Voucher__r.Certification_Type__c = :certType];
         Integer certifiedAssociates = (Integer) results[0].get('expr0');
         return certifiedAssociates;
@@ -36,7 +38,28 @@ public class CertificatesChartController {
         Integer associatesWithoutCerts = numberOfAssociates - associatesWithSpecificCert(certType);
         return associatesWithoutCerts;
     }
+    /*
+    @AuraEnabled(cacheable=true)
+    public static List<String> associatesInCohortWithSpecificCert(String cohortName, String certType) {
+        List<AggregateResult> results = [SELECT COUNT_DISTINCT(Voucher__r.Associate__c) 
+                                         FROM Attempt__c 
+                                         WHERE Passed__c = True 
+                                         AND Attempt__c.Voucher__r.Certification_Type__c = :certType
+                                         AND Attempt__c.Voucher__r.Associate__r.Cohort__r.Name = :cohortName];
+        Integer certifiedAssociates = (Integer) results[0].get('expr0');
+        return certifiedAssociates;
+    }*/
     
+    /*
+    @AuraEnabled(cacheable=true)
+    public static List<String> associatesInCohortWithoutSpecificCert(String cohortName, String CertType) {
+        Integer numberOfAssociates = [SELECT COUNT() FROM Associate__c WHERE Associate__c.Cohort__r.Name = :cohortName];
+        Integer associatesWithoutCerts = numberOfAssociates - associatesInCohortWithSpecificCert(cohortName, certType);
+        return associatesWithoutCerts;
+    }
+	*/
+    
+    // @desc : retrieve a list of all possible certificate types
     @AuraEnabled(cacheable=true)
     public static List<String> getCertTypes() {
         Schema.DescribeFieldResult fieldResult = Voucher__c.Certification_Type__c.getDescribe();
@@ -45,7 +68,16 @@ public class CertificatesChartController {
         for(Schema.PicklistEntry entry: ple) {
             picklistLabels.add(entry.getLabel());
         }
-        System.debug(picklistLabels);
         return picklistLabels;
+    } 
+    
+    // @desc : retrieve all cohort Name values
+    @AuraEnabled(cacheable=true)
+    public static List<String> getCohortNames() {
+        List<String> cohortNames = new List<String>();
+        for(Cohort__c cohort: [SELECT Name FROM Cohort__c]) {
+            cohortNames.add(cohort.Name);
+        }
+        return cohortNames;        
     }
 }

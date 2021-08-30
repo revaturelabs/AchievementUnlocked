@@ -3,12 +3,15 @@ import { LightningElement } from 'lwc';
 /* apex methods */
 import associatesWithCerts from '@salesforce/apex/CertificatesChartController.associatesWithCerts';
 import associatesWithoutCerts from '@salesforce/apex/CertificatesChartController.associatesWithoutCerts';
-import getCertTypes from '@salesforce/apex/CertificatesChartController.getCertTypes';
 import associatesWithSpecificCert from '@salesforce/apex/CertificatesChartController.associatesWithSpecificCert';
 import associatesWithoutSpecificCert from '@salesforce/apex/CertificatesChartController.associatesWithoutSpecificCert';
 
+import getCertTypes from '@salesforce/apex/CertificatesChartController.getCertTypes';
+import getCohortNames from '@salesforce/apex/CertificatesChartController.getCohortNames';
+
 // default label for combobox
-const defaultComboboxValue = 'All';
+const defaultCertValue = 'All';
+const defaultCohortValue = 'All';
 
 export default class CertificatesChart extends LightningElement {
 
@@ -30,14 +33,27 @@ export default class CertificatesChart extends LightningElement {
 	// @desc : <number> width of chart
 	width = 300;
 
+
+	/* cert combobox */
 	// @desc : <array> list of certifications available to filter by
-	certTypes = this.toComboboxOptions([defaultComboboxValue]);
+	certTypes = this.toComboboxOptions([defaultCertValue]);
 
 	// @desc : <string> selected combobox value
-	selected = defaultComboboxValue;
+	selectedCert = defaultCertValue;
 
 	// @desc : <string> label for the combobox
-	comboboxLabel = 'Select certification'
+	certLabel = 'Select certification';
+
+	/* cohort combobox */
+	// @desc : <array> list of cohorts names 
+	cohorts = this.toComboboxOptions([defaultCohortValue]);
+
+	// @desc : <string> label for cohort combobox
+	cohortLabel = 'Select cohort';
+
+	selectedCohort = defaultCohortValue;
+
+
 
 	// @desc    : converts a list of strings into a data structure that can
 	//          : be used in a lightning-combobox
@@ -50,11 +66,15 @@ export default class CertificatesChart extends LightningElement {
 	}
 
 	// @desc : onchange event handler for combobox
-	async onchange(event) {
-		this.selected = event.target.value;
-		const certType = (this.selected === defaultComboboxValue) ? null : this.selected;
+	async changeCert(event) {
+		this.selectedCert = event.target.value;
+		const certType = (this.selectedCert === defaultCertValue) ? null : this.selectedCert;
 		const [numberWithCerts, numberWithoutCerts] = await this.loadCertsData(certType);
 		this.chartData = this.serializeData(numberWithCerts, numberWithoutCerts);
+	}
+
+	async changeCohort(event) {
+
 	}
 
 	// @desc : serialize the with / without data for the cart
@@ -88,9 +108,16 @@ export default class CertificatesChart extends LightningElement {
 	}
 
 	async connectedCallback() {
+		// set the cert types
 		const certTypes = await getCertTypes();
-		this.certTypes = this.toComboboxOptions([defaultComboboxValue, ...certTypes]);
+		this.certTypes = this.toComboboxOptions([defaultCertValue, ...certTypes]);
+
+		// set the chart data
 		const [numberWithCerts, numberWithoutCerts] = await this.loadCertsData();
 		this.chartData = this.serializeData(numberWithCerts, numberWithoutCerts);
+		
+		// set the cohort names
+		const cohorts = await getCohortNames();
+		this.cohorts = this.toComboboxOptions([defaultCohortValue, ...cohorts]);
 	}
 }

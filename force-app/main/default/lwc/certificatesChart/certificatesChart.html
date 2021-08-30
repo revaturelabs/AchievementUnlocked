@@ -1,10 +1,19 @@
 <template>
 	<lightning-card title={title}>
+		
 		<lightning-combobox
-			value={selected}
+			value={selectedCohort}
+			options={cohorts}
+			label={cohortLabel}
+			onchange={changeCohort}
+			class='combobox-center'
+		></lightning-combobox>
+
+		<lightning-combobox
+			value={selectedCert}
 			options={certTypes}
-			label={comboboxLabel}
-			onchange={onchange}
+			label={certLabel}
+			onchange={changeCert}
 			class='combobox-center'
 		></lightning-combobox>
 
