@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Weighted__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE( Voucher__r.Certification_Type__c, 
+      &quot;ADM&quot;, ( (Configuration_and_Setup__c * 0.2) +  
+             (Object_Manager_and_Lightning_App_Builder__c * 0.2) +
+             (Service_and_Support_Applications__c * 0.11) +
+             (Sales_and_Marketing_Applications__c * 0.12) + 
+             (Productivity_and_Collaboration__c * 0.07) + 
+             (Data_and_Analytics_Management__c *0.14) + 
+             (Workflow_Process_Automation__c * 0.16) ),  
+      &quot;PD1&quot;, ( (Salesforce_Fundamentals__c * 0.07) + 
+               (Data_Modeling_and_Management__c * 0.13) +
+               (Process_Automation_and_Logic__c * 0.4) +
+               (User_Interface__c * 0.23) +
+               (Testing_Debugging_and_Deployment__c * 0.17) ),
+      &quot;Advanced ADM&quot;, ( (Security_and_Access__c * 0.2) +
+                        (Extending_Custom_Objects_and_Application__c * 0.08) +
+                        (Auditing_and_Monitoring__c * 0.06) +
+                        (Sales_Cloud_Applications__c * 0.1) +
+                        (Service_Cloud_Applications__c * 0.1) +
+                        (Data_Management__c * 0.1) +
+                        (Content_Management__c * 0.03) +
+                        (Change_Management__c * 0.1) +
+                        (Analytics_Reports_and_Dashboards__c * 0.1) +
+                        (Process_Automation__c * 0.13) ),
+       &quot;PD2&quot;, ( (Salesforce_Fundamentals__c * 0.05) +
+                (Data_Modeling_and_Management__c * 0.06) + 
+                (Business_Logic_and_Process_Automation__c * 0.2) +
+                (User_Interface__c * 0.19) +
+                (Performance__c * 0.16) +
+                (Integration__c * 0.15) +
+                (Testing__c * 0.14) + 
+                (Debug_and_Deployment_Tools__c * 0.05) ),
+       &quot;Platform App Builder&quot;, ( (Salesforce_Fundamentals__c * 0.23) +
+                                 (Data_Modeling_and_Management__c * 0.22) +
+                                 (Business_Logic_and_Process_Automation__c * 0.28) +
+                                 (User_Interface__c * 0.17) +
+                                 (App_Deployment__c  * 0.1) ),
+       &quot;JS Developer 1&quot;, ( (Variables_Types_and_Collections__c * 0.23) +
+                           (Objects_Functions_and_Classes__c * 0.25) +
+                           (Browser_and_Events__c * 0.17) +
+                           (Debugging_and_Error_Handling__c * 0.07) +
+                           (Asynchronous_Programming__c * 0.13) +
+                           (Server_Side_JavaScript__c * 0.08) +
+                           (Testing__c *0.07) ),
+      0 )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Approx. Weighted Score</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Percent</type>
+</CustomField>
