@@ -1,6 +1,13 @@
 <template>
-    
-    <c-staged-list onassociateselected={handleSelection}></c-staged-list>
-    <c-vouchers-list if:true={vrecord} vrecord={vrecord}></c-vouchers-list>
-    <c-attempt-list if:true={vrecord} vrecord={vrecord}></c-attempt-list>
+    <div>
+        <div>
+            <c-staged-list onassociateselected={handleSelection} status={status} page={page}></c-staged-list>
+        </div>
+        <div>
+            <c-vouchers-list if:true={vrecord} vrecord={vrecord}></c-vouchers-list>
+        </div>
+        <div>
+            <c-attempt-list if:true={vrecord} vrecord={vrecord}></c-attempt-list>
+        </div>
+    </div>
 </template>
