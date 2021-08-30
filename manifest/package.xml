@@ -59,13 +59,17 @@
         <members>*</members>
         <name>CustomTab</name>
     </types>
-     <types>
+    <types>
         <members>*</members>
         <name>Flow</name>
     </types>
     <types>
         <members>*</members>
         <name>ApprovalProcess</name>
+    </types>
+    <types>
+        <members>Flow</members>
+        <name>Settings</name>
     </types>
     <types>
         <members>Attempt__c</members>
