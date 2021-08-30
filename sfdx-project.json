@@ -16,7 +16,13 @@
             "package": "Backend4",
             "versionName": "ver 0.1",
             "versionNumber": "0.1.0.NEXT",
-            "default": false
+            "default": false,
+            "dependencies": [
+                {
+                    "package": "BasePackage",
+                    "versionNumber": "0.1.0.LATEST"
+                }
+            ]
         }
     ],
     "name": "AchievementUnlocked",
@@ -24,9 +30,8 @@
     "sfdcLoginUrl": "https://login.salesforce.com",
     "sourceApiVersion": "52.0",
     "packageAliases": {
-        "BasePackage": "0Ho5f000000k9bNCAQ",
-        "BasePackage@0.1.0-1": "04t5f000000TxecAAC",
-        "Backend4": "0Ho5f000000XZAqCAO",
-        "BasePackage@0.1.0-2": "04t5f000000TyilAAC"
+        "BasePackage": "0Ho5f000000XZB0CAO",
+        "BasePackage@0.1.0-1": "04t5f000000YABHAA4",
+        "Backend4": "0Ho5f000000XZAqCAO"
     }
 }
