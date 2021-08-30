@@ -1,8 +1,14 @@
 <template>
     <lightning-card>
-        <c-cohort-list oncohortselected={handleSelection}></c-cohort-list>
+        <c-cohort-list oncohortselected={displayCohort}></c-cohort-list>
     </lightning-card>
     <lightning-card>
-        <c-associate-list if:true={cohortId} cohort-id={cohortId}></c-associate-list>
+        <c-associate-list if:true={cohortId} cohort-id={cohortId} onassociateselected={displayVouchers}></c-associate-list>
+    </lightning-card>
+    <lightning-card>
+        <c-voucher-list if:true={associateId} associate-id={associateId} onvoucherselected={displayAttempts}></c-voucher-list>
+    </lightning-card>
+    <lightning-card>
+        <c-attempt-list if:true={voucherId} voucher-id={voucherId}></c-attempt-list>
     </lightning-card>
 </template>
