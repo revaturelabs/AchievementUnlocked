@@ -1,7 +1,7 @@
 {
-  "orgName": "Demo company",
+  "orgName": "Project-3",
   "edition": "Developer",
-  "features": ["EnableSetPasswordInApi"],
+  "features": ["EnableSetPasswordInApi", "DefaultWorkflowUser"],
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true

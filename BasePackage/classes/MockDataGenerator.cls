@@ -237,7 +237,7 @@ public class MockDataGenerator {
         for(String s: splitStr){
             newStr = newStr + s;
         }
-        return newStr + string.valueof(integer.valueof(math.random() * 2000)) + '@totesfakesite.com';
+        return 'laughteralan@gmail.com'; //newStr + string.valueof(integer.valueof(math.random() * 2000)) + '@totesfakesite.com';
     }
 
     public sObject getRandomObject(List<sObject> objList){
@@ -257,7 +257,6 @@ public class MockDataGenerator {
             contactList.add(con);
         }
         database.insert(contactList);
-        system.debug(contactList);
     }       
 
     public void generateAccounts(integer maxAccounts){
@@ -267,7 +266,6 @@ public class MockDataGenerator {
             accountList.add(acc);
         }
         database.insert(accountList);
-        system.debug(accountList);
     }
 
     public string getSelection(List<String> strList){
