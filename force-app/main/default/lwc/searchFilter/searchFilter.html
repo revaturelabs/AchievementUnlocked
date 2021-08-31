@@ -8,29 +8,22 @@
             ></lightning-input>
             <section>
             </section>
-     <h1>Statuses</h1>
-
-     <template
-     for:each={statuses.data.values}
-     for:item="status"
- >
-     <lightning-input
-     key={status.value}
-     label={status.label}
-     data-filter="statuses"
-     data-value={status.value}
-     type="checkbox"
-     checked
-     onchange={handleCheckboxChange}
-     ></lightning-input>
-
-    </template>
-    </div>
-
-
-    
-
-</lightning-card>
-
-
+        <h1>Statuses</h1>
+        <template if:true={statuses.data}>
+            <template
+                for:each={statuses.data.values}
+                for:item="status">
+                <lightning-input
+                    key={status.value}
+                    label={status.label}
+                    data-filter="statuses"
+                    data-value={status.value}
+                    type="checkbox"
+                    checked
+                    >
+                </lightning-input>
+            </template>
+        </template>
+        </div>
+    </lightning-card>
 </template>

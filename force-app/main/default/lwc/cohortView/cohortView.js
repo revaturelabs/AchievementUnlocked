@@ -2,7 +2,7 @@ import {LightningElement} from 'lwc';
 
 export default class CohortView extends LightningElement {
 
-    cohortId;
+    cohortId = null;
     
     displayCohort(event) {
         this.cohortId = event.detail;

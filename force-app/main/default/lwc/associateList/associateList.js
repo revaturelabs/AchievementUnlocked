@@ -1,4 +1,6 @@
 import { LightningElement, api, wire } from 'lwc';
+import { subscribe, MessageContext } from 'lightning/messageService';
+import SEARCH_MESSAGE from '@salesforce/messageChannel/SearchMessage__c';
 import getAssociates from '@salesforce/apex/viewController.getAssociates';
 import getAssociateCount from '@salesforce/apex/viewController.getAssociateCount';
 
@@ -14,7 +16,8 @@ export default class AssociateList extends LightningElement {
     columns = columns;
     sortField;
     sortDirection;
-    @api status;
+    filters = {};
+    @api status = null;
     @api page;
     @api cohortId = null;
     @wire(getAssociates, {cohortId: '$cohortId', stat: '$status', sortingField: '$sortField', dir: '$sortDirection', pageNum: '$page'})
@@ -33,6 +36,26 @@ export default class AssociateList extends LightningElement {
             detail: event.detail.row.Id
         });
         this.dispatchEvent(sendId);
+    }
+
+    /** Load context for Lightning Messaging Service */
+    @wire(MessageContext) messageContext;
+
+    /** Subscription for ProductSelected Lightning message */
+    searchTermSubscription;
+
+    connectedCallback() {
+        // Subscribe to ProductSelected message
+        this.searchTermSubscription = subscribe(
+            this.messageContext,
+            SEARCH_MESSAGE,
+            (message) => this.handleSearchFilter(message.filters)
+        );
+    }
+
+    handleSearchFilter(filters){
+        this.filters = { ...message.filters };
+        this.page = 1;
     }
 
     updateColumnSorting(event) {

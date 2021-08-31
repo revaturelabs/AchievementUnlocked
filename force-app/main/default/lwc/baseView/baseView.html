@@ -1,5 +1,5 @@
 <template>
-    <c-associate-list cohort-id={cohortId} onassociateselected={showInfo} status={status} page={page}></c-associate-list>
+    <c-associate-list onassociateselected={showInfo} cohort-id={cohortId} status={status} page={page}></c-associate-list>
     <c-voucher-list if:true={associateId} associate-id={associateId}></c-voucher-list>
     <c-attempt-list if:true={associateId} associate-id={associateId}></c-attempt-list>
 </template>
