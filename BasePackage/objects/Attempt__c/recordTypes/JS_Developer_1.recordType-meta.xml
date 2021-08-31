@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>JS_Developer_1</fullName>
+    <active>true</active>
+    <label>JavaScript Developer I</label>
+    <picklistValues>
+        <picklist>Attempt_Type__c</picklist>
+        <values>
+            <fullName>Certification</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Practice</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

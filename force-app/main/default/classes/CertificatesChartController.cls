@@ -25,7 +25,7 @@ public class CertificatesChartController {
                                          FROM Attempt__c 
                                          WHERE Passed__c = True 
                                          AND Attempt_Type__c = 'Certification'
-                                         AND Attempt__c.Voucher__r.Certification_Type__c = :certType];
+                                         AND Voucher__r.Certification_Type__c = :certType];
         Integer certifiedAssociates = (Integer) results[0].get('expr0');
         return certifiedAssociates;
     }
@@ -39,21 +39,48 @@ public class CertificatesChartController {
         return associatesWithoutCerts;
     }
     /*
+    
+	// @desc : retrieve all associates within a cohort who have earned at least one certificate
+    @AuraEnabled(cacheable=true)
+    public static Integer associatesInCohortWithCerts(String cohortName) {
+        List<AggregateResult> results = [SELECT COUNT_DISTINCT(Voucher__r.Associate__c) 
+                                         FROM Attempt__c 
+                                         WHERE Passed__c = True
+                                         AND Attempt_Type__c = 'Certification'
+										 AND Voucher__r.Associate__r.Cohort__r.Name = :cohortName];
+        Integer certifiedAssociates = (Integer) results[0].get('expr0');
+        return certifiedAssociates;
+    }
+   
+    // @desc : retrieve number of associates in a cohort who have not earned any certification
+    @AuraEnabled(cacheable=true)
+    public static Integer associatesInCohortWithoutCerts(String cohortName) {
+        Integer numberOfAssociates = [SELECT COUNT() 
+										FROM Associate__c 
+										WHERE Cohort__r.Name = :cohortName];
+        Integer associatesWithoutCerts = numberOfAssociates - associatesInCohortWithCerts();
+        return associatesWithoutCerts;
+    }
+    
+	// @desc : retrieve the number of associates in a cohort who have earned a specific cert
     @AuraEnabled(cacheable=true)
     public static List<String> associatesInCohortWithSpecificCert(String cohortName, String certType) {
         List<AggregateResult> results = [SELECT COUNT_DISTINCT(Voucher__r.Associate__c) 
                                          FROM Attempt__c 
                                          WHERE Passed__c = True 
-                                         AND Attempt__c.Voucher__r.Certification_Type__c = :certType
-                                         AND Attempt__c.Voucher__r.Associate__r.Cohort__r.Name = :cohortName];
+                                         AND Voucher__r.Certification_Type__c = :certType
+                                         AND Voucher__r.Associate__r.Cohort__r.Name = :cohortName];
         Integer certifiedAssociates = (Integer) results[0].get('expr0');
         return certifiedAssociates;
     }*/
     
     /*
+    // @desc : retrieve the number of associates within a cohort who have not earned a specific cert
     @AuraEnabled(cacheable=true)
     public static List<String> associatesInCohortWithoutSpecificCert(String cohortName, String CertType) {
-        Integer numberOfAssociates = [SELECT COUNT() FROM Associate__c WHERE Associate__c.Cohort__r.Name = :cohortName];
+        Integer numberOfAssociates = [SELECT COUNT() 
+										FROM Associate__c 
+										WHERE Associate__c.Cohort__r.Name = :cohortName];
         Integer associatesWithoutCerts = numberOfAssociates - associatesInCohortWithSpecificCert(cohortName, certType);
         return associatesWithoutCerts;
     }
