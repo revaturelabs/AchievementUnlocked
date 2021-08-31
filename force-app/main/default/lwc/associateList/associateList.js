@@ -42,8 +42,6 @@ export default class AssociateList extends LightningElement {
 
     handleFirst(){
         this.page = 1;
-        console.log('cohortId: ' + this.cohortId);
-        console.log('associates: ' + JSON.stringify(this.associates));
     }
 
     handlePrev(){

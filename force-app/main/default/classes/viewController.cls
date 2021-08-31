@@ -8,13 +8,13 @@ public with sharing class viewController {
 
     // Returns a list of all associates
     @AuraEnabled(cacheable=true)
-    public static List<Associate__c> getAssociates() {
-        return getAssociates(null);
+    public static List<Associate__c> getAllAssociates() {
+        return getCohortAssociates(null);
     }
 
     // Returns a list of all associates belonging to a cohort identified by cohortId
     @AuraEnabled(cacheable=true)
-    public static List<Associate__c> getAssociates(Id cohortId) {
+    public static List<Associate__c> getCohortAssociates(Id cohortId) {
         String query = 'SELECT Id, Current_Status__c, First_Name__c, Last_Name__c, User__c, Cohort__c FROM Associate__c';
         if (cohortId != null) {
             query += ' WHERE Cohort__c = :cohortId';
@@ -23,7 +23,7 @@ public with sharing class viewController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<Associate__c> getAssociates(String stat, String sortingField, String dir, Integer pageNum) {
+    public static List<Associate__c> getStatusAssociates(String stat, String sortingField, String dir, Integer pageNum) {
         Integer ofst = (pageNum - 1) * 10;
         String associates = 'SELECT Id, Current_Status__c, First_Name__c, Last_Name__c, User__c, Cohort__c ' + 
         'FROM Associate__c ' + 
@@ -35,7 +35,7 @@ public with sharing class viewController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<Associate__c> getAssociates(Id cohortId, String stat, String sortingField, String dir, Integer pageNum) {
+    public static List<Associate__c> getAssociates(String cohortId, String stat, String sortingField, String dir, Integer pageNum) {
         Integer ofst = (pageNum - 1) * 10;
         String query = 'SELECT Id, Current_Status__c, First_Name__c, Last_Name__c, User__c, Cohort__c ' + 
         'FROM Associate__c ';

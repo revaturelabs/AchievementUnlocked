@@ -9,8 +9,7 @@ export default class BaseView extends LightningElement {
  
     constructor() {
         super();
-        this.page = '1';
-        console.log('baseview constructor cohortId: ' + this.cohortId);
+        this.page = 1;
     }
 
     showInfo(event) {
