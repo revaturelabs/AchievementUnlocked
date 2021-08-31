@@ -2,9 +2,17 @@
 public class TestCertificatesChartController {
 	@testSetup
     public static void setup() {
-        List<Associate__c> associates = new List<Associate__c>();
+		List<Cohort__c> cohorts = new List<Cohort__c>();
         for(Integer i = 0; i < 10; i++) {
-            associates.add(new Associate__c());
+            cohorts.add(new Cohort__c());
+        }        
+        insert cohorts;
+        
+        List<Associate__c> associates = new List<Associate__c>();
+        for(Integer i  =0; i < 10; i++) {
+            associates.add(new Associate__c(
+            	Cohort__c = cohorts[0].Id
+            ));
         }
         insert associates;
         
@@ -46,16 +54,6 @@ public class TestCertificatesChartController {
                 Passed__c = (Math.mod(i, 2) == 0)
             ));
         }
-        Cohort__c cohort = new Cohort__c();
-        insert cohort;
-        /*
-        associates = new List<Associate__c>();
-        for(Associate__c associate : [SELECT Cohort__c FROM Associate__c]) {
-            associate.Cohort__c = cohort.Id;
-            associates.add(associate);
-        }
-        insert associates;
-		*/
     }
     
     // positive test
@@ -107,11 +105,57 @@ public class TestCertificatesChartController {
         System.assertEquals(10, CertificatesChartController.associatesWithoutSpecificCert('PD1'));
     }
     
-    /*
-    @isTest static void testAssociatesInCohortWithCerts01() {
+    
+    @isTest 
+    public static void testAssociatesInCohortWithCerts01() {
         Cohort__c cohort = [SELECT Name FROM Cohort__c LIMIT 1];
         System.assertEquals(5, CertificatesChartController.associatesInCohortWithCerts(cohort.Name));
-    }*/
+    }
+    
+    @isTest
+    public static void testAssociatesInCohortWithCerts02() {
+        Cohort__c cohort = [SELECT Name FROM Cohort__c LIMIT 1];
+        System.assertNotEquals(10, CertificatesChartController.associatesInCohortWithCerts(cohort.Name));
+    }
+    
+    @isTest
+    public static void testAssociatesInCohortWithoutCerts01() {
+        Cohort__c cohort = [SELECT Name FROM Cohort__c LIMIT 1];
+        System.assertEquals(5, CertificatesChartController.associatesInCohortWithoutCerts(cohort.Name));
+    }
+    
+    @isTest
+    public static void testAssociatesInCohortWithoutCerts02() {
+        Cohort__c cohort = [SELECT Name FROM Cohort__c LIMIT 1];
+        System.assertNotEquals(10, CertificatesChartController.associatesInCohortWithoutCerts(cohort.Name));
+    }
+    
+    @isTest
+    public static void testAssociatesInCohortWithSpecificCert01() {
+        List<Cohort__c> cohorts = [SELECT Name FROM Cohort__c LIMIT 2];
+       	System.assertEquals(5, CertificatesChartController.associatesInCohortWithSpecificCert(cohorts[0].Name, 'ADM'));
+        System.assertEquals(0, CertificatesChartController.associatesInCohortWithSpecificCert(cohorts[1].Name, 'ADM'));
+    }
+    
+    @isTest
+    public static void testAssociatesInCohortWithSpecificCert02() {
+        List<Cohort__c> cohorts = [SELECT Name FROM Cohort__c LIMIT 2];
+       	System.assertNotEquals(10, CertificatesChartController.associatesInCohortWithSpecificCert(cohorts[0].Name, 'ADM'));
+        System.assertNotEquals(5, CertificatesChartController.associatesInCohortWithSpecificCert(cohorts[1].Name, 'ADM'));
+    }
+    
+    @isTest
+    public static void testAssociatesInCohortWithoutSpecificCert01() {
+        List<Cohort__c> cohorts = [SELECT Name FROM Cohort__c LIMIT 2];
+       	System.assertEquals(5, CertificatesChartController.associatesInCohortWithoutSpecificCert(cohorts[0].Name, 'ADM'));
+    }
+    
+        @isTest
+    public static void testAssociatesInCohortWithoutSpecificCert02() {
+        List<Cohort__c> cohorts = [SELECT Name FROM Cohort__c LIMIT 2];
+       	System.assertNotEquals(10, CertificatesChartController.associatesInCohortWithoutSpecificCert(cohorts[0].Name, 'ADM'));
+    }
+    
     
     // verify that the cert types are correct
     @isTest
