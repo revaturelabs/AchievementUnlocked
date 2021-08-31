@@ -38,7 +38,7 @@ public class CertificatesChartController {
         Integer associatesWithoutCerts = numberOfAssociates - associatesWithSpecificCert(certType);
         return associatesWithoutCerts;
     }
-    /*
+    
     
 	// @desc : retrieve all associates within a cohort who have earned at least one certificate
     @AuraEnabled(cacheable=true)
@@ -58,13 +58,13 @@ public class CertificatesChartController {
         Integer numberOfAssociates = [SELECT COUNT() 
 										FROM Associate__c 
 										WHERE Cohort__r.Name = :cohortName];
-        Integer associatesWithoutCerts = numberOfAssociates - associatesInCohortWithCerts();
+        Integer associatesWithoutCerts = numberOfAssociates - associatesInCohortWithCerts(cohortName);
         return associatesWithoutCerts;
     }
     
 	// @desc : retrieve the number of associates in a cohort who have earned a specific cert
     @AuraEnabled(cacheable=true)
-    public static List<String> associatesInCohortWithSpecificCert(String cohortName, String certType) {
+    public static Integer associatesInCohortWithSpecificCert(String cohortName, String certType) {
         List<AggregateResult> results = [SELECT COUNT_DISTINCT(Voucher__r.Associate__c) 
                                          FROM Attempt__c 
                                          WHERE Passed__c = True 
@@ -72,19 +72,21 @@ public class CertificatesChartController {
                                          AND Voucher__r.Associate__r.Cohort__r.Name = :cohortName];
         Integer certifiedAssociates = (Integer) results[0].get('expr0');
         return certifiedAssociates;
-    }*/
+    }
     
-    /*
+    
     // @desc : retrieve the number of associates within a cohort who have not earned a specific cert
     @AuraEnabled(cacheable=true)
-    public static List<String> associatesInCohortWithoutSpecificCert(String cohortName, String CertType) {
+    public static Integer associatesInCohortWithoutSpecificCert(String cohortName, String certType) {
         Integer numberOfAssociates = [SELECT COUNT() 
 										FROM Associate__c 
-										WHERE Associate__c.Cohort__r.Name = :cohortName];
+										WHERE Cohort__r.Name = :cohortName];
+        System.debug(cohortName);
+        System.debug(certType);
         Integer associatesWithoutCerts = numberOfAssociates - associatesInCohortWithSpecificCert(cohortName, certType);
         return associatesWithoutCerts;
     }
-	*/
+	
     
     // @desc : retrieve a list of all possible certificate types
     @AuraEnabled(cacheable=true)

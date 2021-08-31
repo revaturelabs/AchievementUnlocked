@@ -5,12 +5,11 @@ import associatesWithCerts from '@salesforce/apex/CertificatesChartController.as
 import associatesWithoutCerts from '@salesforce/apex/CertificatesChartController.associatesWithoutCerts';
 import associatesWithSpecificCert from '@salesforce/apex/CertificatesChartController.associatesWithSpecificCert';
 import associatesWithoutSpecificCert from '@salesforce/apex/CertificatesChartController.associatesWithoutSpecificCert';
-/*
 import associatesInCohortWithCerts from '@salesforce/apex/CertificatesChartController.associatesInCohortWithCerts';
 import associatesInCohortWithoutCerts from '@salesforce/apex/CertificatesChartController.associatesInCohortWithoutCerts';
 import associatesInCohortWithSpecificCert from '@salesforce/apex/CertificatesChartController.associatesInCohortWithSpecificCert';
 import associatesInCohortWithoutSpecificCert from '@salesforce/apex/CertificatesChartController.associatesInCohortWithoutSpecificCert';
-*/
+
 import getCertTypes from '@salesforce/apex/CertificatesChartController.getCertTypes';
 import getCohortNames from '@salesforce/apex/CertificatesChartController.getCohortNames';
 
@@ -73,6 +72,7 @@ export default class CertificatesChart extends LightningElement {
 	async onchange() {
 		const certType = (this.selectedCert === defaultCertValue) ? null : this.selectedCert;
 		const cohortName = (this.selectedCohort === defaultCohortValue) ? null : this.selectedCohort;
+		console.log(certType, cohortName);
 		const [numberWithCerts, numberWithoutCerts] = await this.loadCertsData(certType, cohortName);
 		this.chartData = this.serializeData(numberWithCerts, numberWithoutCerts);
 	}
@@ -114,22 +114,23 @@ export default class CertificatesChart extends LightningElement {
 		let numberWithoutCerts;
 
 		if(certType && cohortName) {
-			/*
-			numberWithCerts = await associatesInCohortWithSpecificCert({ cohortName, certType});
-			numberWithoutCerts = await associatesInCohortWithoutSpecificCert({ cohortName, certType});
-			*/
+			console.log(certType, cohortName);
+			numberWithCerts = await associatesInCohortWithSpecificCert({ cohortName, certType });
+			console.log(certType, cohortName);
+			numberWithoutCerts = await associatesInCohortWithoutSpecificCert({ cohortName, certType });
+			console.log(numberWithoutCerts);
 		} else if(certType && !cohortName) {
 			numberWithCerts = await associatesWithSpecificCert({ certType });
 			numberWithoutCerts = await associatesWithoutSpecificCert({ certType });
 		} else if(!certType && cohortName) {
-			/*
 			numberWithCerts = await associatesInCohortWithCerts({ cohortName });
 			numberWithoutCerts = await associatesInCohortWithoutCerts({ cohortName });
-			*/
 		} else if(!certType && !cohortName) {
 			numberWithCerts = await associatesWithCerts();
 			numberWithoutCerts = await associatesWithoutCerts();
 		}
+
+		console.log(numberWithCerts, numberWithoutCerts);
 
 		return [numberWithCerts, numberWithoutCerts];
 	}
