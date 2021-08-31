@@ -72,7 +72,6 @@ export default class CertificatesChart extends LightningElement {
 	async onchange() {
 		const certType = (this.selectedCert === defaultCertValue) ? null : this.selectedCert;
 		const cohortName = (this.selectedCohort === defaultCohortValue) ? null : this.selectedCohort;
-		console.log(certType, cohortName);
 		const [numberWithCerts, numberWithoutCerts] = await this.loadCertsData(certType, cohortName);
 		this.chartData = this.serializeData(numberWithCerts, numberWithoutCerts);
 	}
@@ -114,11 +113,8 @@ export default class CertificatesChart extends LightningElement {
 		let numberWithoutCerts;
 
 		if(certType && cohortName) {
-			console.log(certType, cohortName);
 			numberWithCerts = await associatesInCohortWithSpecificCert({ cohortName, certType });
-			console.log(certType, cohortName);
 			numberWithoutCerts = await associatesInCohortWithoutSpecificCert({ cohortName, certType });
-			console.log(numberWithoutCerts);
 		} else if(certType && !cohortName) {
 			numberWithCerts = await associatesWithSpecificCert({ certType });
 			numberWithoutCerts = await associatesWithoutSpecificCert({ certType });
@@ -130,8 +126,6 @@ export default class CertificatesChart extends LightningElement {
 			numberWithoutCerts = await associatesWithoutCerts();
 		}
 
-		console.log(numberWithCerts, numberWithoutCerts);
-
 		return [numberWithCerts, numberWithoutCerts];
 	}
 
@@ -140,7 +134,6 @@ export default class CertificatesChart extends LightningElement {
 		const certTypes = await getCertTypes();
 		this.certTypes = this.toComboboxOptions([defaultCertValue, ...certTypes]);
 
-		// set the cohort names
 		const cohorts = await getCohortNames();
 		this.cohorts = this.toComboboxOptions([defaultCohortValue, ...cohorts]);
 
