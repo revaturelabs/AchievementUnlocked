@@ -1,7 +1,10 @@
 <template>
     
     <div class="navBar">
-        <lightning-layout horizontal-align="center">
+        <lightning-layout horizontal-align="space">
+            <lightning-layout-item>
+                <img src={revLogo} />
+            </lightning-layout-item>
             <lightning-layout-item padding="around-small">
                 <h1 class="navButton" onclick={handleNavClick}>Home</h1>
             </lightning-layout-item>
