@@ -7,7 +7,7 @@ const columns = [
     { label: 'Passed', fieldName: 'Passed__c', type: 'boolean' },
 ];
 
-export default class AttemptsDatatable extends LightningElement {
+export default class AttemptList extends LightningElement {
 
     error;
     columns = columns;

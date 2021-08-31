@@ -6,5 +6,6 @@ export default class CohortView extends LightningElement {
     
     displayCohort(event) {
         this.cohortId = event.detail;
+        console.log('id: ' + this.cohortId);
     }
 }

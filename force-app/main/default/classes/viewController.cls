@@ -25,7 +25,7 @@ public with sharing class viewController {
     @AuraEnabled(cacheable=true)
     public static List<Associate__c> getAssociates(String stat, String sortingField, String dir, Integer pageNum) {
         Integer ofst = (pageNum - 1) * 10;
-        String associates = 'SELECT Id, Current_Status__c, First_Name__c, Last_Name__c, User__c ' + 
+        String associates = 'SELECT Id, Current_Status__c, First_Name__c, Last_Name__c, User__c, Cohort__c ' + 
         'FROM Associate__c ' + 
         'WHERE Current_Status__c = \'' + stat + '\' ' + 
         'ORDER BY ' + sortingField + ' ' + dir + ' ' + 
@@ -37,15 +37,29 @@ public with sharing class viewController {
     @AuraEnabled(cacheable=true)
     public static List<Associate__c> getAssociates(Id cohortId, String stat, String sortingField, String dir, Integer pageNum) {
         Integer ofst = (pageNum - 1) * 10;
-        String query = 'SELECT Id, Current_Status__c, First_Name__c, Last_Name__c, User__c ' + 
-        'FROM Associate__c ' + 
-        'WHERE Current_Status__c = \'' + stat + '\' ';
-        if (cohortId != null) {
-            query += ' AND Cohort__c = :cohortId ';
+        String query = 'SELECT Id, Current_Status__c, First_Name__c, Last_Name__c, User__c, Cohort__c ' + 
+        'FROM Associate__c ';
+        Boolean needAnd = false;
+        if (cohortId != null || stat != null) {
+            query += 'WHERE ';
+        } 
+        if (stat != null) {
+            query += 'Current_Status__c = \'' + stat + '\' ';
+            needAnd= true;
         }
-        query += 'ORDER BY ' + sortingField + ' ' + dir + ' ' + 
-        'LIMIT 10 ' + 
-        'OFFSET ' + ofst;
+        if (cohortId != null) {
+            if (needAnd) {
+                query += 'AND ';
+            }
+            query += 'Cohort__c = :cohortId ';
+        }
+        if (sortingField != null) {
+            query += 'ORDER BY ' + sortingField + ' ';
+            if (dir != null) {
+                query += dir + ' ';
+            }
+        }
+        query += 'LIMIT 10 ' + 'OFFSET ' + ofst;
         return Database.query(query);
     }
 
@@ -68,8 +82,10 @@ public with sharing class viewController {
     @AuraEnabled(cacheable=true)
     public static List<Associate__c> getAssociateCount(String stat) {
         String associates = 'SELECT COUNT() ' + 
-        'FROM Associate__c ' + 
-        'WHERE Current_Status__c = \'' + stat + '\'';
+        'FROM Associate__c ';
+        if (stat != null) {
+            associates += 'WHERE Current_Status__c = \'' + stat + '\'';
+        }       
         return Database.query(associates);
     }
 }

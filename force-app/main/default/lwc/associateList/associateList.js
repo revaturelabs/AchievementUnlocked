@@ -14,7 +14,7 @@ export default class AssociateList extends LightningElement {
     columns = columns;
     sortField;
     sortDirection;
-    @api status;
+    @api status = null;
     @api page;
     @api cohortId = null;
     @wire(getAssociates, {cohortId: '$cohortId', stat: '$status', sortingField: '$sortField', dir: '$sortDirection', pageNum: '$page'})
@@ -42,6 +42,8 @@ export default class AssociateList extends LightningElement {
 
     handleFirst(){
         this.page = 1;
+        console.log('cohortId: ' + this.cohortId);
+        console.log('associates: ' + JSON.stringify(this.associates));
     }
 
     handlePrev(){
