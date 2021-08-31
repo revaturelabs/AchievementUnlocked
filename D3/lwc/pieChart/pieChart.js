@@ -17,13 +17,6 @@ export default class PieChart extends LightningElement {
 	// @desc : to turn this into a donut chart, provide an inner radius
 	@api innerRadius = 0;
 
-	// @desc : <bool> whether or not there was an error,
-	//       : whether or not the error message should display
-	hasError = false;
-
-	// @desc : <string> the message associated with an error
-	errorMessage = '';
-
 	// @type: <string> private variable, stringified array of JSON objects
 	_chartData = JSON.stringify([
 		{states: "UP", percent: "80.00"},
@@ -62,6 +55,14 @@ export default class PieChart extends LightningElement {
 
 	// @type: <string> the array of colors for the chart to display
 	@api colors = JSON.stringify(['green', 'red', 'gray', 'blue', 'brown', 'orange', 'yellow', 'purple']);
+
+
+	// @desc : <bool> whether or not there was an error,
+	//       : whether or not the error message should display
+	hasError = false;
+
+	// @desc : <string> the message associated with an error
+	errorMessage = '';
 
 	// @type: <bool> whether d3 successfully initialized or not
     d3Initialized = false;
@@ -182,7 +183,8 @@ export default class PieChart extends LightningElement {
 		arc.append("text")
 			.attr("transform", (item) => `translate(${label.centroid(item)})`)
 			.text((item) => item.data[this.value])
-				.attr('fill', 'white');
+				.attr('font-size', '0.9rem')
+				.attr('fill', '#0D3B66');
 	}
 
 	// @desc : sets up the chart wrapper to be written to
