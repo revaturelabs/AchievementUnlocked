@@ -1,4 +1,4 @@
-import { LightningElement, track, wire } from "lwc";
+import { LightningElement, track, wire, api } from "lwc";
 import REVATURELOGO from "@salesforce/resourceUrl/RevatureLogo";
 import ADMLOGO from "@salesforce/resourceUrl/AdmLogo";
 import ADVANCEDADMLOGO from "@salesforce/resourceUrl/AdvancedAdmLogo";
@@ -24,6 +24,7 @@ import getPracticeAttemptsPd2 from "@salesforce/apex/ExperienceController.getPra
 import getPracticeAttemptsPab from "@salesforce/apex/ExperienceController.getPracticeAttemptsPab";
 import getCertStatusPab from "@salesforce/apex/ExperienceController.getCertStatusPab";
 import getVoucherPab from "@salesforce/apex/ExperienceController.getVoucherPab";
+import STATUS_FIELD from "@salesforce/schema/Voucher__c.Status__c";
 
 const voucherColumns = [
   { label: "Voucher Type", fieldName: "Voucher_Type__c", type: "picklist" },
@@ -52,7 +53,7 @@ export default class Certification_Page extends LightningElement {
   @track clickedButtonPd1 = "Show Pd1";
   @track clickedButtonPd2 = "Show Pd2";
   @track clickedButtonPab = "Show Pab";
-  @track clickedButtonPabCert = "Certification";
+  @track clickedButtonPabCert
   @track clickedButtonPabPra = "Practice";
   @track boolVisibleAdm = false;
   @track boolVisibleAdvancedAdm = false;
@@ -62,6 +63,7 @@ export default class Certification_Page extends LightningElement {
   @track boolVisiblePab = false;
   @track boolVisiblePabCert = true;
   @track boolVisiblePabPra = true;
+  @track modalPabCert = false;
 
 
   // static resources
@@ -120,6 +122,11 @@ export default class Certification_Page extends LightningElement {
   voucherPab;
   @wire(getCertStatusPab)
   certPab;
+
+  // field and specific ids for modal
+  statusField = STATUS_FIELD;
+  @api objectApiName;
+  //pab cert and practice vouchers ids
 
   //button clicks for badges
   // click event for adm
@@ -270,13 +277,12 @@ export default class Certification_Page extends LightningElement {
     }
   }
   // click event for Pab practice
-  handleClickPab(event) {
-    const label = event.target.label;
-    if (label === "Show Pab") {
-      
-    } else if (label === "Hide Pab") {
-      this.clickedButtonPab = "Show Pab";
-      this.boolVisiblePab = false;
+  handleClickPabCertMdl(event) {
+    this.modalPabCert = true;
     }
-  }
+
+    // close modals
+    closeModal() {
+      this.modalPabCert = false;
+    }
 }
