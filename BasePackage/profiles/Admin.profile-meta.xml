@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
+        <apexClass>AttemptTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>EmailManager</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -10,6 +14,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestMockDataGenerator</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>VoucherController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -329,7 +337,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Voucher__c.Eligible_By__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Voucher__c.Expiration_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Voucher__c.Max_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
