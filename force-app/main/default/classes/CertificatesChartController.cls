@@ -81,8 +81,6 @@ public class CertificatesChartController {
         Integer numberOfAssociates = [SELECT COUNT() 
 										FROM Associate__c 
 										WHERE Cohort__r.Name = :cohortName];
-        System.debug(cohortName);
-        System.debug(certType);
         Integer associatesWithoutCerts = numberOfAssociates - associatesInCohortWithSpecificCert(cohortName, certType);
         return associatesWithoutCerts;
     }
