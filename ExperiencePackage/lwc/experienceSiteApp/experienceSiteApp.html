@@ -1,51 +1,14 @@
 <template>
-    <h1 class="title"> This is the App</h1>
-    <template if:true={loggedIn}>
-        <div class="container">
-           <div>Website Container Will Go Here when logged In</div>
-        </div>
-    </template>
-    <template if:false={product}>
-        <div class="slds-form-element slds-align_absolute-center" >
-            <div class="slds-col slds-size_6-of-12" style="background-color:white;">
-                <form>
-                    <div class="slds-align_absolute-center slds-m-top_small slds-text-heading_large">
-                        <span>LOGIN</span>
-                    </div>
-                    
-                    <div class="slds-form-element__control">
-                        <lightning-input 
-                            onchange={handleInput}
-                            label="Email"
-                            placeholder="example@email.com"
-                            value={email}>
-                        </lightning-input>
-                    </div>
-                    <div class="slds-form-element__control">
-                        <lightning-input
-                            onchange={handleInput}
-                            label="Password"
-                            type="password"
-                            value={password}>
-                        </lightning-input>
-                    </div>
-                    
-                    <div class="slds-align_absolute-center" style="height:4rem">
-                        <lightning-button
-                            variant="brand"
-                            label="Login"
-                            onclick={handleLogin}>
-                        </lightning-button>
-                        
-                        <lightning-input 
-                                type="color"
-                                label="Color"
-                                value="#EEEEEE">
-                        </lightning-input>
-                    </div>
-                </form>
-            </div>
-        </div>
+    <div style={websiteBackground}>
+        <c-navigation-Bar onnavclick={handleNavClick}></c-navigation-Bar>
+        <template if:true={home}>
+            <div> Home Page Will Go Here</div>
+        </template>
+        <template if:true={certificationPage}>
+            <div> Certification Page Will Go Here</div>
+        </template>
+        <template if:true={attemptsPage} >
+            <div> Attempts Page Will GO Here</div>
+        </template>
     </div>
-    </template>
 </template>

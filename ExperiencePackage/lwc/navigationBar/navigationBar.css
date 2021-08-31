@@ -1,0 +1,9 @@
+.navBar {
+    height: 70px;
+    background-color: black;
+}
+
+.navButton {
+    font-size: 30px;
+    color:orange;
+}
