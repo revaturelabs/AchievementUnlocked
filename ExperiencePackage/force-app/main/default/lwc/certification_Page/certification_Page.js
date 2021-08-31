@@ -39,6 +39,26 @@ const certColumns = [
   { label: "Attempt Due Date", fieldName: "Due_Date__c", type: "Date" },
 ];
 
+// function to turn off other sections
+function turnOff() {
+  if (label === "Hide Adm") {
+    this.clickedButtonAdm = "Show Adm";
+    this.boolVisibleAdm = false;
+  } else if (label === "Hide Advanced Adm") {
+    this.clickedButtonAdvancedAdm = "Show Advanced Adm";
+    this.boolVisibleAdvancedAdm = false;
+  } else if (label === "Hide JavaScript") {
+    this.clickedButtonJavascr = "Show JavaScript";
+    this.boolVisibleJavascr = false;
+  } else if (label === "Hide Pd1") {
+    this.clickedButtonPd1 = "Show Pd1";
+    this.boolVisiblePd1 = false;
+  } else if (label === "Hide Pd2") {
+    this.clickedButtonPd2 = "Show Pd2";
+    this.boolVisiblePd2 = false;
+  }
+}
+
 export default class Certification_Page extends LightningElement {
   // things to track button clicks and bool values
   @track clickedButtonAdm = "Show Adm";
@@ -51,6 +71,7 @@ export default class Certification_Page extends LightningElement {
   @track boolVisibleJavascr = false;
   @track boolVisiblePd1 = false;
   @track boolVisiblePd2 = false;
+
 
   // static resources
   revatureLogo = REVATURELOGO;
@@ -105,7 +126,7 @@ export default class Certification_Page extends LightningElement {
   // click event for adm
   handleClickAdm(event) {
     const label = event.target.label;
-
+    turnOff();
     if (label === "Show Adm") {
       this.clickedButtonAdm = "Hide Adm";
       this.boolVisibleAdm = true;
@@ -117,7 +138,7 @@ export default class Certification_Page extends LightningElement {
   // click event for advanced adm
   handleClickAdvancedAdm(event) {
     const label = event.target.label;
-
+    turnOff();
     if (label === "Show Advanced Adm") {
       this.clickedButtonAdvancedAdm = "Hide Advanced Adm";
       this.boolVisibleAdvancedAdm = true;
@@ -129,7 +150,7 @@ export default class Certification_Page extends LightningElement {
   // click event for javascript
   handleClickJavascr(event) {
     const label = event.target.label;
-
+    turnOff();
     if (label === "Show JavaScript") {
       this.clickedButtonJavascr = "Hide JavaScript";
       this.boolVisibleJavascr = true;
@@ -141,7 +162,7 @@ export default class Certification_Page extends LightningElement {
   // click event for Pd1
   handleClickPd1(event) {
     const label = event.target.label;
-
+    turnOff();
     if (label === "Show Pd1") {
       this.clickedButtonPd1 = "Hide Pd1";
       this.boolVisiblePd1 = true;
@@ -153,7 +174,7 @@ export default class Certification_Page extends LightningElement {
   // click event for Pd2
   handleClickPd2(event) {
     const label = event.target.label;
-
+    turnOff();
     if (label === "Show Pd2") {
       this.clickedButtonPd2 = "Hide Pd2";
       this.boolVisiblePd2 = true;

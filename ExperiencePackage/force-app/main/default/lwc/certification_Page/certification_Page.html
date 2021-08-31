@@ -1,16 +1,8 @@
-<!--
-
-
-ADD PLATFORM APP BUILDER TO PAGE
-
-
--->
-
 <template>
   <!--main title and revature logo-->
   <div>
     <div style="max-width: 10%; height: auto">
-      <img src="{revatureLogo}" />
+      <img src={revatureLogo} />
     </div>
   </div>
   <div>
@@ -40,9 +32,9 @@ ADD PLATFORM APP BUILDER TO PAGE
         />
         <lightning-button
           variant="brand"
-          label="{clickedButtonAdm}"
+          label={clickedButtonAdm}
           title="Show"
-          onclick="{handleClickAdm}"
+          onclick={handleClickAdm}
           class="slds-m-left_x-small"
         ></lightning-button>
       </div>
@@ -52,13 +44,13 @@ ADD PLATFORM APP BUILDER TO PAGE
       <div>
         <img
           style="max-width: 30%; height: auto; border-radius: 50%"
-          src="{advancedAdmLogo}"
+          src={advancedAdmLogo}
         />
         <lightning-button
           variant="brand"
-          label="{clickedButtonAdvancedAdm}"
+          label={clickedButtonAdvancedAdm}
           title="Show"
-          onclick="{handleClickAdvancedAdm}"
+          onclick={handleClickAdvancedAdm}
           class="slds-m-left_x-small"
         ></lightning-button>
       </div>
@@ -68,13 +60,13 @@ ADD PLATFORM APP BUILDER TO PAGE
       <div>
         <img
           style="max-width: 40%; height: auto; border-radius: 50%"
-          src="{javascriptLogo}"
+          src={javascriptLogo}
         />
         <lightning-button
           variant="brand"
-          label="{clickedButtonJavascr}"
+          label={clickedButtonJavascr}
           title="Show"
-          onclick="{handleClickJavascr}"
+          onclick={handleClickJavascr}
           class="slds-m-left_x-small"
         ></lightning-button>
       </div>
@@ -88,9 +80,9 @@ ADD PLATFORM APP BUILDER TO PAGE
         />
         <lightning-button
           variant="brand"
-          label="{clickedButtonPd1}"
+          label={clickedButtonPd1}
           title="Show"
-          onclick="{handleClickPd1}"
+          onclick={handleClickPd1}
           class="slds-m-left_x-small"
         ></lightning-button>
       </div>
@@ -104,9 +96,9 @@ ADD PLATFORM APP BUILDER TO PAGE
         />
         <lightning-button
           variant="brand"
-          label="{clickedButtonPd2}"
+          label={clickedButtonPd2}
           title="Show"
-          onclick="{handleClickPd2}"
+          onclick={handleClickPd2}
           class="slds-m-left_x-small"
         ></lightning-button>
       </div>
@@ -117,14 +109,14 @@ ADD PLATFORM APP BUILDER TO PAGE
     and past attempts once the button is clicked-->
 
   <!--ADM-->
-  <template if:true="{boolVisibleAdm}">
+  <template if:true={boolVisibleAdm}>
     <!--Cert name and Vouchers-->
     <div class="slds-grid slds-gutters">
       <div class="slds-col slds-size_1-of-2">
         <p><b>Administrator</b></p>
         <lightning-datatable
-          data="{certAdm.data}"
-          columns="{certColumns}"
+          data={certAdm.data}
+          columns={certColumns}
           key-field="id"
         >
         </lightning-datatable>
@@ -132,8 +124,8 @@ ADD PLATFORM APP BUILDER TO PAGE
       <div class="slds-col slds-size_1-of-2">
         <p><b>Vouchers</b></p>
         <lightning-datatable
-          data="{voucherAdm.data}"
-          columns="{voucherColumns}"
+          data={voucherAdm.data}
+          columns={voucherColumns}
           key-field="id"
         >
         </lightning-datatable>
@@ -148,21 +140,21 @@ ADD PLATFORM APP BUILDER TO PAGE
           variant="Neutral"
           label="Register for exam"
           title="Register for exam"
-          onclick="{handleClickRegister}"
+          onclick={handleClickRegister}
           class="slds-m-left_x-small"
         ></lightning-button>
         <lightning-button
           variant="Neutral"
           label="Log an Attempt Button"
           title="Log an Attempt Button"
-          onclick="{handleClick}"
+          onclick={handleClick}
           class="slds-m-left_x-small"
         ></lightning-button>
       </div>
       <div class="slds-col slds-size_1-of-2">
         <lightning-datatable
-          data="{attemptsAdm.data}"
-          columns="{attemptsColumns}"
+          data={attemptsAdm.data}
+          columns={attemptsColumns}
           key-field="id"
         >
         </lightning-datatable>
@@ -170,14 +162,14 @@ ADD PLATFORM APP BUILDER TO PAGE
     </div>
   </template>
   <!--Advanced ADM-->
-  <template if:true="{boolVisibleAdvancedAdm}">
+  <template if:true={boolVisibleAdvancedAdm}>
     <!--Cert name and Vouchers-->
     <div class="slds-grid slds-gutters">
       <div class="slds-col slds-size_1-of-2">
         <p><b>Advanced Administrator</b></p>
         <lightning-datatable
-          data="{certAdvAdm.data}"
-          columns="{certColumns}"
+          data={certAdvAdm.data}
+          columns={certColumns}
           key-field="id"
         >
         </lightning-datatable>
@@ -185,8 +177,8 @@ ADD PLATFORM APP BUILDER TO PAGE
       <div class="slds-col slds-size_1-of-2">
         <p><b>Vouchers</b></p>
         <lightning-datatable
-          data="{voucherAdvAdm.data}"
-          columns="{voucherColumns}"
+          data={voucherAdvAdm.data}
+          columns={voucherColumns}
           key-field="id"
         >
         </lightning-datatable>
@@ -201,21 +193,21 @@ ADD PLATFORM APP BUILDER TO PAGE
           variant="Neutral"
           label="Register for exam"
           title="Register for exam"
-          onclick="{handleClickRegister}"
+          onclick={handleClickRegister}
           class="slds-m-left_x-small"
         ></lightning-button>
         <lightning-button
           variant="Neutral"
           label="Log an Attempt Button"
           title="Log an Attempt Button"
-          onclick="{handleClick}"
+          onclick={handleClick}
           class="slds-m-left_x-small"
         ></lightning-button>
       </div>
       <div class="slds-col slds-size_1-of-2">
         <lightning-datatable
-          data="{attemptsAdvAdm.data}"
-          columns="{attemptsColumns}"
+          data={attemptsAdvAdm.data}
+          columns={attemptsColumns}
           key-field="id"
         >
         </lightning-datatable>
@@ -223,14 +215,14 @@ ADD PLATFORM APP BUILDER TO PAGE
     </div>
   </template>
   <!--JavaScript-->
-  <template if:true="{boolVisibleJavascr}">
+  <template if:true={boolVisibleJavascr}>
     <!--Cert name and Vouchers-->
     <div class="slds-grid slds-gutters">
       <div class="slds-col slds-size_1-of-2">
         <p><b>JavaScript</b></p>
         <lightning-datatable
-          data="{certJavascr.data}"
-          columns="{certColumns}"
+          data={certJavascr.data}
+          columns={certColumns}
           key-field="id"
         >
         </lightning-datatable>
@@ -238,8 +230,8 @@ ADD PLATFORM APP BUILDER TO PAGE
       <div class="slds-col slds-size_1-of-2">
         <p><b>Vouchers</b></p>
         <lightning-datatable
-          data="{voucherJavascr.data}"
-          columns="{voucherColumns}"
+          data={voucherJavascr.data}
+          columns={voucherColumns}
           key-field="id"
         >
         </lightning-datatable>
@@ -254,21 +246,21 @@ ADD PLATFORM APP BUILDER TO PAGE
           variant="Neutral"
           label="Register for exam"
           title="Register for exam"
-          onclick="{handleClickRegister}"
+          onclick={handleClickRegister}
           class="slds-m-left_x-small"
         ></lightning-button>
         <lightning-button
           variant="Neutral"
           label="Log an Attempt Button"
           title="Log an Attempt Button"
-          onclick="{handleClick}"
+          onclick={handleClick}
           class="slds-m-left_x-small"
         ></lightning-button>
       </div>
       <div class="slds-col slds-size_1-of-2">
         <lightning-datatable
-          data="{attemptsJavascr.data}"
-          columns="{attemptsColumns}"
+          data={attemptsJavascr.data}
+          columns={attemptsColumns}
           key-field="id"
         >
         </lightning-datatable>
@@ -276,14 +268,14 @@ ADD PLATFORM APP BUILDER TO PAGE
     </div>
   </template>
   <!--pd1-->
-  <template if:true="{boolVisiblePd1}">
+  <template if:true={boolVisiblePd1}>
     <!--Cert name and Vouchers-->
     <div class="slds-grid slds-gutters">
       <div class="slds-col slds-size_1-of-2">
         <p><b>Platform Developer I</b></p>
         <lightning-datatable
-          data="{certPd1.data}"
-          columns="{certColumns}"
+          data={certPd1.data}
+          columns={certColumns}
           key-field="id"
         >
         </lightning-datatable>
@@ -291,8 +283,8 @@ ADD PLATFORM APP BUILDER TO PAGE
       <div class="slds-col slds-size_1-of-2">
         <p><b>Vouchers</b></p>
         <lightning-datatable
-          data="{voucherPd1.data}"
-          columns="{voucherColumns}"
+          data={voucherPd1.data}
+          columns={voucherColumns}
           key-field="id"
         >
         </lightning-datatable>
@@ -307,21 +299,21 @@ ADD PLATFORM APP BUILDER TO PAGE
           variant="Neutral"
           label="Register for exam"
           title="Register for exam"
-          onclick="{handleClickRegister}"
+          onclick={handleClickRegister}
           class="slds-m-left_x-small"
         ></lightning-button>
         <lightning-button
           variant="Neutral"
           label="Log an Attempt Button"
           title="Log an Attempt Button"
-          onclick="{handleClick}"
+          onclick={handleClick}
           class="slds-m-left_x-small"
         ></lightning-button>
       </div>
       <div class="slds-col slds-size_1-of-2">
         <lightning-datatable
-          data="{attemptsPd1.data}"
-          columns="{attemptsColumns}"
+          data={attemptsPd1.data}
+          columns={attemptsColumns}
           key-field="id"
         >
         </lightning-datatable>
@@ -329,14 +321,14 @@ ADD PLATFORM APP BUILDER TO PAGE
     </div>
   </template>
   <!--pd2-->
-  <template if:true="{boolVisiblePd2}">
+  <template if:true={boolVisiblePd2}>
     <!--Cert name and Vouchers-->
     <div class="slds-grid slds-gutters">
       <div class="slds-col slds-size_1-of-2">
         <p><b>Platform Developer II</b></p>
         <lightning-datatable
-          data="{certPd2.data}"
-          columns="{certColumns}"
+          data={certPd2.data}
+          columns={certColumns}
           key-field="id"
         >
         </lightning-datatable>
@@ -344,8 +336,8 @@ ADD PLATFORM APP BUILDER TO PAGE
       <div class="slds-col slds-size_1-of-2">
         <p><b>Vouchers</b></p>
         <lightning-datatable
-          data="{voucherPd2.data}"
-          columns="{voucherColumns}"
+          data={voucherPd2.data}
+          columns={voucherColumns}
           key-field="id"
         >
         </lightning-datatable>
@@ -360,21 +352,21 @@ ADD PLATFORM APP BUILDER TO PAGE
           variant="Neutral"
           label="Register for exam"
           title="Register for exam"
-          onclick="{handleClickRegister}"
+          onclick={handleClickRegister}
           class="slds-m-left_x-small"
         ></lightning-button>
         <lightning-button
           variant="Neutral"
           label="Log an Attempt Button"
           title="Log an Attempt Button"
-          onclick="{handleClick}"
+          onclick={handleClick}
           class="slds-m-left_x-small"
         ></lightning-button>
       </div>
       <div class="slds-col slds-size_1-of-2">
         <lightning-datatable
-          data="{attemptsPd2.data}"
-          columns="{attemptsColumns}"
+          data={attemptsPd2.data}
+          columns={attemptsColumns}
           key-field="id"
         >
         </lightning-datatable>
