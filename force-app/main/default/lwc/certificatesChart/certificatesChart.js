@@ -37,6 +37,17 @@ export default class CertificatesChart extends LightningElement {
 	// @desc : <number> width of chart
 	width = 300;
 
+	// @desc : <object> mapping of colors
+	colorPallet = {
+		'Eton Blue': '#8CC7A1',
+		'Chinese Violet': '#816E94'
+	}
+
+	// @desc : <string> colors for the chart
+	colors = JSON.stringify([
+		this.colorPallet['Eton Blue'],
+		this.colorPallet['Chinese Violet']
+	]);
 
 	/* cert combobox */
 	// @desc : <array> list of certifications available to filter by
@@ -108,7 +119,7 @@ export default class CertificatesChart extends LightningElement {
 	// @certType   : <string> the certification type (optional)
 	// @cohortName : <string> name of specific cohort (optional)
 	// @returns    : <array> [numberWithCerts, numberWithoutCerts]
-	async loadCertsData (certType, cohortName){
+	async loadCertsData (certType, cohortName) {
 		let numberWithCerts;
 		let numberWithoutCerts;
 
