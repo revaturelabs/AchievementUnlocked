@@ -5,6 +5,7 @@ import ADVANCEDADMLOGO from "@salesforce/resourceUrl/AdvancedAdmLogo";
 import JAVASCRIPTLOGO from "@salesforce/resourceUrl/JavscriptDevLogo";
 import PD1 from "@salesforce/resourceUrl/Pd1Logo";
 import PD2 from "@salesforce/resourceUrl/Pd2Logo";
+import PAB from "@salesforce/resourceUrl/platformappbuilder";
 import getVoucherAdm from "@salesforce/apex/ExperienceController.getVoucherAdm";
 import getPracticeAttemptsAdm from "@salesforce/apex/ExperienceController.getPracticeAttemptsAdm";
 import getCertStatusAdm from "@salesforce/apex/ExperienceController.getCertStatusAdm";
@@ -20,6 +21,9 @@ import getVoucherPd1 from "@salesforce/apex/ExperienceController.getVoucherPd1";
 import getVoucherPd2 from "@salesforce/apex/ExperienceController.getVoucherPd2";
 import getCertStatusPd2 from "@salesforce/apex/ExperienceController.getCertStatusPd2";
 import getPracticeAttemptsPd2 from "@salesforce/apex/ExperienceController.getPracticeAttemptsPd2";
+import getPracticeAttemptsPab from "@salesforce/apex/ExperienceController.getPracticeAttemptsPab";
+import getCertStatusPab from "@salesforce/apex/ExperienceController.getCertStatusPab";
+import getVoucherPab from "@salesforce/apex/ExperienceController.getVoucherPab";
 
 const voucherColumns = [
   { label: "Voucher Type", fieldName: "Voucher_Type__c", type: "picklist" },
@@ -32,32 +36,13 @@ const attemptsColumns = [
 ];
 const certColumns = [
   {
-    label: "Cerification Status",
+    label: "Certification Status",
     fieldName: "Certification_Status__c",
     type: "picklist",
   },
   { label: "Attempt Due Date", fieldName: "Due_Date__c", type: "Date" },
 ];
 
-// function to turn off other sections
-function turnOff() {
-  if (label === "Hide Adm") {
-    this.clickedButtonAdm = "Show Adm";
-    this.boolVisibleAdm = false;
-  } else if (label === "Hide Advanced Adm") {
-    this.clickedButtonAdvancedAdm = "Show Advanced Adm";
-    this.boolVisibleAdvancedAdm = false;
-  } else if (label === "Hide JavaScript") {
-    this.clickedButtonJavascr = "Show JavaScript";
-    this.boolVisibleJavascr = false;
-  } else if (label === "Hide Pd1") {
-    this.clickedButtonPd1 = "Show Pd1";
-    this.boolVisiblePd1 = false;
-  } else if (label === "Hide Pd2") {
-    this.clickedButtonPd2 = "Show Pd2";
-    this.boolVisiblePd2 = false;
-  }
-}
 
 export default class Certification_Page extends LightningElement {
   // things to track button clicks and bool values
@@ -66,11 +51,17 @@ export default class Certification_Page extends LightningElement {
   @track clickedButtonJavascr = "Show JavaScript";
   @track clickedButtonPd1 = "Show Pd1";
   @track clickedButtonPd2 = "Show Pd2";
+  @track clickedButtonPab = "Show Pab";
+  @track clickedButtonPabCert = "Certification";
+  @track clickedButtonPabPra = "Practice";
   @track boolVisibleAdm = false;
   @track boolVisibleAdvancedAdm = false;
   @track boolVisibleJavascr = false;
   @track boolVisiblePd1 = false;
   @track boolVisiblePd2 = false;
+  @track boolVisiblePab = false;
+  @track boolVisiblePabCert = true;
+  @track boolVisiblePabPra = true;
 
 
   // static resources
@@ -80,6 +71,7 @@ export default class Certification_Page extends LightningElement {
   javascriptLogo = JAVASCRIPTLOGO;
   Pd1Logo = PD1;
   Pd2Logo = PD2;
+  pablogo = PAB;
 
   // logic for data tables
   // tie content to columns
@@ -121,15 +113,31 @@ export default class Certification_Page extends LightningElement {
   voucherPd2;
   @wire(getCertStatusPd2)
   certPd2;
+  // tie content to Pab
+  @wire(getPracticeAttemptsPab)
+  attemptsPab;
+  @wire(getVoucherPab)
+  voucherPab;
+  @wire(getCertStatusPab)
+  certPab;
 
   //button clicks for badges
   // click event for adm
   handleClickAdm(event) {
     const label = event.target.label;
-    turnOff();
     if (label === "Show Adm") {
       this.clickedButtonAdm = "Hide Adm";
       this.boolVisibleAdm = true;
+      this.clickedButtonAdvancedAdm = "Show Advanced Adm";
+      this.boolVisibleAdvancedAdm = false;
+      this.clickedButtonJavascr = "Show JavaScript";
+      this.boolVisibleJavascr = false;
+      this.clickedButtonPd1 = "Show Pd1";
+      this.boolVisiblePd1 = false;
+      this.clickedButtonPd2 = "Show Pd2";
+      this.boolVisiblePd2 = false;
+      this.clickedButtonPab = "Show Pab";
+      this.boolVisiblePab = false;
     } else if (label === "Hide Adm") {
       this.clickedButtonAdm = "Show Adm";
       this.boolVisibleAdm = false;
@@ -138,10 +146,19 @@ export default class Certification_Page extends LightningElement {
   // click event for advanced adm
   handleClickAdvancedAdm(event) {
     const label = event.target.label;
-    turnOff();
     if (label === "Show Advanced Adm") {
       this.clickedButtonAdvancedAdm = "Hide Advanced Adm";
       this.boolVisibleAdvancedAdm = true;
+      this.clickedButtonAdm = "Show Adm";
+      this.boolVisibleAdm = false;
+      this.clickedButtonJavascr = "Show JavaScript";
+      this.boolVisibleJavascr = false;
+      this.clickedButtonPd1 = "Show Pd1";
+      this.boolVisiblePd1 = false;
+      this.clickedButtonPd2 = "Show Pd2";
+      this.boolVisiblePd2 = false;
+      this.clickedButtonPab = "Show Pab";
+      this.boolVisiblePab = false;
     } else if (label === "Hide Advanced Adm") {
       this.clickedButtonAdvancedAdm = "Show Advanced Adm";
       this.boolVisibleAdvancedAdm = false;
@@ -150,10 +167,19 @@ export default class Certification_Page extends LightningElement {
   // click event for javascript
   handleClickJavascr(event) {
     const label = event.target.label;
-    turnOff();
     if (label === "Show JavaScript") {
       this.clickedButtonJavascr = "Hide JavaScript";
       this.boolVisibleJavascr = true;
+      this.clickedButtonAdm = "Show Adm";
+      this.boolVisibleAdm = false;
+      this.clickedButtonAdvancedAdm = "Show Advanced Adm";
+      this.boolVisibleAdvancedAdm = false;
+      this.clickedButtonPd1 = "Show Pd1";
+      this.boolVisiblePd1 = false;
+      this.clickedButtonPd2 = "Show Pd2";
+      this.boolVisiblePd2 = false;
+      this.clickedButtonPab = "Show Pab";
+      this.boolVisiblePab = false;
     } else if (label === "Hide JavaScript") {
       this.clickedButtonJavascr = "Show JavaScript";
       this.boolVisibleJavascr = false;
@@ -162,10 +188,19 @@ export default class Certification_Page extends LightningElement {
   // click event for Pd1
   handleClickPd1(event) {
     const label = event.target.label;
-    turnOff();
     if (label === "Show Pd1") {
       this.clickedButtonPd1 = "Hide Pd1";
       this.boolVisiblePd1 = true;
+      this.clickedButtonAdm = "Show Adm";
+      this.boolVisibleAdm = false;
+      this.clickedButtonAdvancedAdm = "Show Advanced Adm";
+      this.boolVisibleAdvancedAdm = false;
+      this.clickedButtonJavascr = "Show JavaScript";
+      this.boolVisibleJavascr = false;
+      this.clickedButtonPd2 = "Show Pd2";
+      this.boolVisiblePd2 = false;
+      this.clickedButtonPab = "Show Pab";
+      this.boolVisiblePab = false;
     } else if (label === "Hide Pd1") {
       this.clickedButtonPd1 = "Show Pd1";
       this.boolVisiblePd1 = false;
@@ -174,13 +209,74 @@ export default class Certification_Page extends LightningElement {
   // click event for Pd2
   handleClickPd2(event) {
     const label = event.target.label;
-    turnOff();
     if (label === "Show Pd2") {
       this.clickedButtonPd2 = "Hide Pd2";
       this.boolVisiblePd2 = true;
+      this.clickedButtonAdm = "Show Adm";
+      this.boolVisibleAdm = false;
+      this.clickedButtonAdvancedAdm = "Show Advanced Adm";
+      this.boolVisibleAdvancedAdm = false;
+      this.clickedButtonJavascr = "Show JavaScript";
+      this.boolVisibleJavascr = false;
+      this.clickedButtonPd1 = "Show Pd1";
+      this.boolVisiblePd1 = false;
+      this.clickedButtonPab = "Show Pab";
+      this.boolVisiblePab = false;
     } else if (label === "Hide Pd2") {
       this.clickedButtonPd2 = "Show Pd2";
       this.boolVisiblePd2 = false;
+    }
+  }
+  // click event for Pab
+  handleClickPab(event) {
+    const label = event.target.label;
+    if (label === "Show Pab") {
+      this.clickedButtonPab = "Hide Pab";
+      this.boolVisiblePab = true;
+      this.clickedButtonPd2 = "Show Pd2";
+      this.boolVisiblePd2 = false;
+      this.clickedButtonAdm = "Show Adm";
+      this.boolVisibleAdm = false;
+      this.clickedButtonAdvancedAdm = "Show Advanced Adm";
+      this.boolVisibleAdvancedAdm = false;
+      this.clickedButtonJavascr = "Show JavaScript";
+      this.boolVisibleJavascr = false;
+      this.clickedButtonPd1 = "Show Pd1";
+      this.boolVisiblePd1 = false;
+    } else if (label === "Hide Pab") {
+      this.clickedButtonPab = "Show Pab";
+      this.boolVisiblePab = false;
+    }
+  }
+  // click event for Pab cert
+  handleClickPab(event) {
+    const label = event.target.label;
+    if (label === "Show Pab") {
+      this.clickedButtonPab = "Hide Pab";
+      this.boolVisiblePab = true;
+      this.clickedButtonPd2 = "Show Pd2";
+      this.boolVisiblePd2 = false;
+      this.clickedButtonAdm = "Show Adm";
+      this.boolVisibleAdm = false;
+      this.clickedButtonAdvancedAdm = "Show Advanced Adm";
+      this.boolVisibleAdvancedAdm = false;
+      this.clickedButtonJavascr = "Show JavaScript";
+      this.boolVisibleJavascr = false;
+      this.clickedButtonPd1 = "Show Pd1";
+      this.boolVisiblePd1 = false;
+    } else if (label === "Hide Pab") {
+      this.clickedButtonPab = "Show Pab";
+      this.boolVisiblePab = false;
+    }
+  }
+  // click event for Pab practice
+  handleClickPab(event) {
+    const label = event.target.label;
+    if (label === "Show Pab") {
+      
+    } else if (label === "Hide Pab") {
+      this.clickedButtonPab = "Show Pab";
+      this.boolVisiblePab = false;
     }
   }
 }
