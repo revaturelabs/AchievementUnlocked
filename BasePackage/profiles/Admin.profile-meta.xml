@@ -182,6 +182,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Attempt__c.Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Attempt__c.Debug_and_Deployment_Tools__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -376,31 +381,34 @@
         <readable>true</readable>
     </fieldPermissions>
     <layoutAssignments>
-        <layout>Attempt__c-ADM Attempt Layout</layout>
+        <layout>Associate__c-Associate Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Attempt__c-ADM Attempt Layout</layout>
         <recordType>Attempt__c.ADM</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Attempt__c-ADM Attempt Layout</layout>
+        <layout>Attempt__c-Advanced ADM Attempt Layout</layout>
         <recordType>Attempt__c.Advanced_ADM</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Attempt__c-ADM Attempt Layout</layout>
+        <layout>Attempt__c-JS Developer 1 Attempt Layout</layout>
         <recordType>Attempt__c.JS_Developer_1</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Attempt__c-ADM Attempt Layout</layout>
+        <layout>Attempt__c-PD1 Attempt Layout</layout>
         <recordType>Attempt__c.PD1</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Attempt__c-ADM Attempt Layout</layout>
+        <layout>Attempt__c-PD2 Attempt Layout</layout>
         <recordType>Attempt__c.PD2</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Attempt__c-ADM Attempt Layout</layout>
+        <layout>Attempt__c-Platform App Builder Attempt Layout</layout>
         <recordType>Attempt__c.Platform_App_Builder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Cohort__c-Cohort Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Voucher__c-Voucher Layout</layout>
@@ -442,50 +450,50 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>Attempt__c.ADM</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Attempt__c.Advanced_ADM</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Attempt__c.JS_Developer_1</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Attempt__c.PD1</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Attempt__c.PD2</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Attempt__c.Platform_App_Builder</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <tabVisibilities>
         <tab>Associate__c</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Attempt__c</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Cohort__c</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Voucher__c</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <userLicense>Salesforce</userLicense>
     <userPermissions>
