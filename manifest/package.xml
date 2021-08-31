@@ -79,6 +79,19 @@
         <name>Settings</name>
     </types>
     <types>
+        <members>Attempt__c-Attempt Layout</members>
+        <members>Attempt__c-ADM Attempt Layout</members>
+        <members>Attempt__c-Advanced ADM Attempt Layout</members>
+        <members>Attempt__c-JS Developer 1 Attempt Layout</members>
+        <members>Attempt__c-Advanced ADM Attempt Layout</members>
+        <members>Attempt__c-Platform App Builder Attempt Layout</members>
+        <members>Attempt__c-PD1 Attempt Layout</members>
+        <members>Attempt__c-PD2 Attempt Layout</members>
+        <members>Associate__c-Associate Layout</members>
+        <members>Cohort__c-Cohort Layout</members>
+        <members>Voucher__c-Voucher Layout</members>
+        <name>Layout</name>
+    <types>
         <members>Attempt__c</members>
         <name>Workflow</name>
     </types>

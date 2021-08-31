@@ -211,11 +211,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Associate__c.Password__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Associate__c.Release_Reason__c</field>
         <readable>false</readable>
@@ -289,6 +284,11 @@
         <editable>true</editable>
         <field>Attempt__c.Data_and_Analytics_Management__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Attempt__c.Date__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
