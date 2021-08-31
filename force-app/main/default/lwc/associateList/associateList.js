@@ -20,9 +20,9 @@ export default class AssociateList extends LightningElement {
     @api status = null;
     @api page;
     @api cohortId = null;
-    @wire(getAssociates, {cohortId: '$cohortId', stat: '$status', sortingField: '$sortField', dir: '$sortDirection', pageNum: '$page'})
+    @wire(getAssociates, {cohortId: '$cohortId', filters: '$filters', sortingField: '$sortField', dir: '$sortDirection', pageNum: '$page'})
     associates;
-    @wire(getAssociateCount, {stat: '$status'})
+    @wire(getAssociateCount, {stat: '$filters'})
     assocCount;
 
     constructor() {
