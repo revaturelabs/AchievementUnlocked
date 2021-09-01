@@ -1,10 +1,99 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-    
+    <types>
+        <members>*</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>ApexComponent</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>ApexPage</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>ApexTestSuite</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>ApexTrigger</name>
+    </types>
+    <types>
+        <members>Admin</members>
+        <name>Profile</name>
+    </types>
+    <types>
+        <members>Account</members>
+        <members>User</members>
+        <members>*</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>Associate</members>
+        <members>CEO</members>
+        <members>CTO</members>
+        <members>Instructor</members>
+        <members>Lead Instructor</members>
+        <members>Manager of Technology</members>
+        <members>Sales Associate</members>
+        <members>Staging Manager</members>
+        <name>Role</name>
+    </types>    
+    <types>
+        <members>*</members>
+        <members>Lead_Trainer_Permissions</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>LightningComponentBundle</name>
+    </types>
     <types>
         <members>*</members>
         <name>StaticResource</name>
     </types>
-    
+    <types>
+        <members>*</members>
+        <name>PermissionSetGroup</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>CustomTab</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>ApprovalProcess</name>
+    </types>
+    <types>
+        <members>Flow</members>
+        <name>Settings</name>
+    </types>
+    <types>
+        <members>Attempt__c-Attempt Layout</members>
+        <members>Attempt__c-ADM Attempt Layout</members>
+        <members>Attempt__c-Advanced ADM Attempt Layout</members>
+        <members>Attempt__c-JS Developer 1 Attempt Layout</members>
+        <members>Attempt__c-Advanced ADM Attempt Layout</members>
+        <members>Attempt__c-Platform App Builder Attempt Layout</members>
+        <members>Attempt__c-PD1 Attempt Layout</members>
+        <members>Attempt__c-PD2 Attempt Layout</members>
+        <members>Associate__c-Associate Layout</members>
+        <members>Cohort__c-Cohort Layout</members>
+        <members>Voucher__c-Voucher Layout</members>
+        <name>Layout</name>
+    <types>
+        <members>Attempt__c</members>
+        <name>Workflow</name>
+    </types>
     <version>52.0</version>
 </Package>
