@@ -1,0 +1,18 @@
+<template>
+    <lightning-card title="Average Topic Scores per Cohort">
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-2">
+                <h2>Cohort</h2>
+                <lightning-combobox label="Cohort" class="cohortSelector" options={cohortNames} onchange={changeInput}></lightning-combobox>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+                <h2>Certification Type</h2>
+                <lightning-combobox label="Certification Type" class="examSelector" options={examTypes} onchange={changeInput}></lightning-combobox>
+            </div>
+        </div>
+        <div class="radarChart">
+            <!--This is where the Radar Chart is rendered out.-->
+        </div>
+        <div class="visualization"></div>
+    </lightning-card>
+</template>

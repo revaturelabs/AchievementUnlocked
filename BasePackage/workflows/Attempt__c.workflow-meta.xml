@@ -52,7 +52,7 @@
     </fieldUpdates>
     <tasks>
         <fullName>Approve_Certification_Attempt</fullName>
-        <assignedTo>test-tfszxcabnf0w@example.com</assignedTo>
+        <assignedTo>icepaynalu@cunning-moose-ev2oka.com</assignedTo>
         <assignedToType>user</assignedToType>
         <dueDateOffset>1</dueDateOffset>
         <notifyAssignee>false</notifyAssignee>
@@ -63,7 +63,7 @@
     </tasks>
     <tasks>
         <fullName>Please_approve_certification_attempt</fullName>
-        <assignedTo>test-tfszxcabnf0w@example.com</assignedTo>
+        <assignedTo>icepaynalu@cunning-moose-ev2oka.com</assignedTo>
         <assignedToType>user</assignedToType>
         <dueDateOffset>10</dueDateOffset>
         <notifyAssignee>false</notifyAssignee>
@@ -75,7 +75,7 @@
     </tasks>
     <tasks>
         <fullName>Update_Voucher</fullName>
-        <assignedTo>test-tfszxcabnf0w@example.com</assignedTo>
+        <assignedTo>icepaynalu@cunning-moose-ev2oka.com</assignedTo>
         <assignedToType>user</assignedToType>
         <description>Update the Parent Voucher.Certified to be true</description>
         <dueDateOffset>10</dueDateOffset>
@@ -87,7 +87,7 @@
     </tasks>
     <tasks>
         <fullName>Verify_Cert_Attempt</fullName>
-        <assignedTo>test-tfszxcabnf0w@example.com</assignedTo>
+        <assignedTo>icepaynalu@cunning-moose-ev2oka.com</assignedTo>
         <assignedToType>user</assignedToType>
         <dueDateOffset>10</dueDateOffset>
         <notifyAssignee>false</notifyAssignee>
