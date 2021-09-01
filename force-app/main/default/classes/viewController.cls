@@ -34,17 +34,33 @@ public with sharing class viewController {
         return Database.query(associates);
     }
 
+    public class Filters {
+        @AuraEnabled
+        public String searchKey { get; set; }
+        @AuraEnabled
+        public String[] statuses { get; set; }
+    }
+
     @AuraEnabled(cacheable=true)
-    public static List<Associate__c> getAssociates(String cohortId, String stat, String sortingField, String dir, Integer pageNum) {
+    public static List<Associate__c> getAssociates(String cohortId, Filters filters, String sortingField, String dir, Integer pageNum) {
         Integer ofst = (pageNum - 1) * 10;
         String query = 'SELECT Id, Current_Status__c, First_Name__c, Last_Name__c, User__c, Cohort__c ' + 
         'FROM Associate__c ';
         Boolean needAnd = false;
-        if (cohortId != null || stat != null) {
+        if (cohortId != null || filters.statuses != null || filters.searchKey != null) {
             query += 'WHERE ';
-        } 
-        if (stat != null) {
-            query += 'Current_Status__c = \'' + stat + '\' ';
+        }
+        if (!String.isEmpty(filters.searchKey)) {
+            String key = '%' + filters.searchKey + '%';
+            query += 'Last_Name__c LIKE :key ';
+            needAnd= true;
+        }
+        if (filters.statuses != null) {
+            if (needAnd) {
+                query += 'AND ';
+            }
+            String[] statuses = filters.statuses;
+            query += 'Current_Status__c IN : statuses ';
             needAnd= true;
         }
         if (cohortId != null) {
