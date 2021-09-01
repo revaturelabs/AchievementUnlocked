@@ -20,5 +20,5 @@ public with sharing class dataGrabber {
         }
         return cohorts;
     }
-
+    
 }
