@@ -2,7 +2,7 @@ import { LightningElement, api, wire } from 'lwc';
 import { loadScript, loadStyle } from 'lightning/platformResourceLoader';
 import { getPicklistValues, getObjectInfo } from 'lightning/uiObjectInfoApi';
 import getCerts from '@salesforce/apex/dataGrabber.getCerts';
-import getCohorts from '@salesforce/apex/dataGrabber.getCerts';
+import getCohorts from '@salesforce/apex/dataGrabber.getCohorts';
 import Voucher__c from '@salesforce/schema/Voucher__c';
 import Certification_Type__c from '@salesforce/schema/Voucher__c.Certification_Type__c';
 import D3 from '@salesforce/resourceUrl/d3';
@@ -27,7 +27,16 @@ export default class CarloTest extends LightningElement {
     addOptions(stringList) {
         let myMap = stringList.map((str)=>({
             label: str,
-            value:str
+            value: str
+        }));
+        console.log("myMap rendered, with the following value: " + myMap);
+        return myMap;
+    }
+
+    addOptions2(stringList) {
+        let myMap = stringList.map((str)=>({
+            label: str,
+            value: str
         }));
         console.log("myMap rendered, with the following value: " + myMap);
         return myMap;
@@ -35,6 +44,9 @@ export default class CarloTest extends LightningElement {
 
     //Sample data
     data = [
+        
+        // THE FIRST VALUE is the score for the INDIVIDUAL cohort
+        // It's cyan!
         [
             {axis: "Security and Integration", value: 0.75},
             {axis: "SOQL", value: 0.90},
@@ -42,6 +54,9 @@ export default class CarloTest extends LightningElement {
             {axis: "API and Integration", value: 0.65},
             {axis: "Triggers", value: 0.62}
         ],
+
+        // THE SECOND VALUE is the score for the OVERALL AVERAGE
+        // It's pink!
         [
             {axis: "Security and Integration", value: 0.62},
             {axis: "SOQL", value: 0.56},
@@ -103,12 +118,17 @@ export default class CarloTest extends LightningElement {
 
         //getting the cohort names
         const cohorts = await getCohorts();
-        this.cohortNames = this.toComboBoxOptions([...cohorts])
+        this.cohortNames = this.addOptions2([...cohorts])
+        console.log("cohortNames is equal to " + this.cohortNames);
+    }
 
+    @api changeInput() {
+        this.selectedCohort = this.template.querySelector('.cohortSelector').value;
+        this.selectedExam = this.template.querySelector('.examSelector').value;
+        console.log("selectedCohort is " + this.selectedCohort + " and selectedExam is " + this.selectedExam);
     }
 
     renderTestJS() {
-
 
         const mySvg = d3
             .select(this.template.querySelector(".visualization"))
@@ -125,8 +145,7 @@ export default class CarloTest extends LightningElement {
             .attr("y1", 0)
             .attr("x2", 200)
             .attr("y2", 200)
-
-        
+ 
     } //renderTestJS closing bracket
     
     radarChart(id, data, options) {
