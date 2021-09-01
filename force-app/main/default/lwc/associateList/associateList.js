@@ -5,9 +5,9 @@ import getAssociates from '@salesforce/apex/viewController.getAssociates';
 import getAssociateCount from '@salesforce/apex/viewController.getAssociateCount';
 
 const columns = [
-    { label: 'First Name', fieldName: 'First_Name__c' },
-    { label: 'Last Name', fieldName: 'Last_Name__c' },
-    { label: 'Status', fieldName: 'Current_Status__c' },
+    { label: 'First Name', fieldName: 'First_Name__c', sortable: true},
+    { label: 'Last Name', fieldName: 'Last_Name__c', sortable: true},
+    { label: 'Status', fieldName: 'Current_Status__c', sortable: true},
     { type: 'button', typeAttributes: { variant: 'base', label: 'View' },}
 ];
 
@@ -20,9 +20,9 @@ export default class AssociateList extends LightningElement {
     @api status = null;
     @api page;
     @api cohortId = null;
-    @wire(getAssociates, {cohortId: '$cohortId', stat: '$status', sortingField: '$sortField', dir: '$sortDirection', pageNum: '$page'})
+    @wire(getAssociates, {cohortId: '$cohortId', filters: '$filters', sortingField: '$sortField', dir: '$sortDirection', pageNum: '$page'})
     associates;
-    @wire(getAssociateCount, {stat: '$status'})
+    @wire(getAssociateCount, {stat: '$filters'})
     assocCount;
 
     constructor() {
@@ -49,11 +49,11 @@ export default class AssociateList extends LightningElement {
         this.searchTermSubscription = subscribe(
             this.messageContext,
             SEARCH_MESSAGE,
-            (message) => this.handleSearchFilter(message.filters)
+            (message) => this.handleSearchFilter(message)
         );
     }
 
-    handleSearchFilter(filters){
+    handleSearchFilter(message){
         this.filters = { ...message.filters };
         this.page = 1;
     }
