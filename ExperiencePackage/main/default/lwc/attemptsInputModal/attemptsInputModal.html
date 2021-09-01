@@ -1,0 +1,26 @@
+<template>
+  <div role="dialog" class="slds-modal slds-fade-in-open ">
+    <div class="slds-modal__container">
+        <!--Modal Box Header Start-->
+        <header class="slds-modal__header">
+            <h1 class="slds-text-heading--medium" >Log an Attempt</h1>
+        </header>
+        <!--Modal Box Header End-->
+         
+        <!--Modal Box Content Start-->
+        <div class="slds-modal__content slds-p-around--medium">
+            <div>content will go in here, easy money</div>
+        </div>
+        <!--Modal Box Content End-->
+         
+        <!--Modal Box Button Start-->
+        <footer class="slds-modal__footer">
+
+            <lightning-button variant="success" label="Submit Attempt" title="Successful action" onclick={handleSubmit} class="slds-m-left_x-small"></lightning-button>
+            <lightning-button variant="destructive" label="Cancel" title="Cancel action" onclick={handleCancel} class="slds-m-left_x-small"></lightning-button>
+        </footer>
+        <!--Modal Box Button End-->
+    </div>
+</div>
+<div class="slds-backdrop slds-backdrop--open"></div> 
+</template>
