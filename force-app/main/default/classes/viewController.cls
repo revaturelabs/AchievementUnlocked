@@ -47,21 +47,23 @@ public with sharing class viewController {
         String query = 'SELECT Id, Current_Status__c, First_Name__c, Last_Name__c, User__c, Cohort__c ' + 
         'FROM Associate__c ';
         Boolean needAnd = false;
-        if (cohortId != null || filters.statuses != null || filters.searchKey != null) {
+        if (cohortId != null || (filters != null && (filters.statuses != null || filters.searchKey != null))) {
             query += 'WHERE ';
         }
-        if (!String.isEmpty(filters.searchKey)) {
-            String key = '%' + filters.searchKey + '%';
-            query += 'Last_Name__c LIKE :key ';
-            needAnd= true;
-        }
-        if (filters.statuses != null) {
-            if (needAnd) {
-                query += 'AND ';
+        if (filters != null) {
+            if (!String.isEmpty(filters.searchKey)) {
+                String key = '%' + filters.searchKey + '%';
+                query += 'Last_Name__c LIKE :key ';
+                needAnd= true;
             }
-            String[] statuses = filters.statuses;
-            query += 'Current_Status__c IN : statuses ';
-            needAnd= true;
+            if (filters.statuses != null) {
+                if (needAnd) {
+                    query += 'AND ';
+                }
+                String[] statuses = filters.statuses;
+                query += 'Current_Status__c IN : statuses ';
+                needAnd= true;
+            }
         }
         if (cohortId != null) {
             if (needAnd) {
