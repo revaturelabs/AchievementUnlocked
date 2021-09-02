@@ -7,9 +7,9 @@ import REVATURE_LOGO from '@salesforce/resourceUrl/RevatureLogo';
 import ADM_LOGO from '@salesforce/resourceUrl/AdmLogo';
 
 import ACCOUNT_OBJECT from '@salesforce/schema/Account';
-    import NAME_FIELD from '@salesforce/schema/Account.Name';
-    import REVENUE_FIELD from '@salesforce/schema/Account.AnnualRevenue';
-    import INDUSTRY_FIELD from '@salesforce/schema/Account.Industry';
+import NAME_FIELD from '@salesforce/schema/Account.Name';
+import REVENUE_FIELD from '@salesforce/schema/Account.AnnualRevenue';
+import INDUSTRY_FIELD from '@salesforce/schema/Account.Industry';
 
 /*
 import ASSOCIATE_OBJECT from '@salesforce/schema/Associate';
@@ -39,7 +39,8 @@ export default class Homepage extends LightningElement{
         this.dispatchEvent(toastEvent);
     }
 
-    @api recordId;
+    @api 
+    recordId;
     @wire(getRecord, { recordId: '$recordId', fields: [NAME_FIELD] })
     account;
     

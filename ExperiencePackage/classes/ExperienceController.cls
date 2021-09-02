@@ -40,7 +40,7 @@ public with sharing class ExperienceController {
     return [
       SELECT
         Id,
-        Certification_Status__c,
+        Certified__c,
         Due_Date__c,
         Associate__r.User__c,
         Voucher_Type__c,
@@ -95,7 +95,7 @@ public with sharing class ExperienceController {
     return [
       SELECT
         Id,
-        Certification_Status__c,
+        Certified__c,
         Due_Date__c,
         Associate__r.User__c,
         Voucher_Type__c,
@@ -149,7 +149,7 @@ public with sharing class ExperienceController {
     return [
       SELECT
         Id,
-        Certification_Status__c,
+        Certified__c,
         Due_Date__c,
         Associate__r.User__c,
         Voucher_Type__c,
@@ -203,7 +203,7 @@ public with sharing class ExperienceController {
     return [
       SELECT
         Id,
-        Certification_Status__c,
+        Certified__c,
         Due_Date__c,
         Associate__r.User__c,
         Voucher_Type__c,
@@ -257,7 +257,7 @@ public with sharing class ExperienceController {
     return [
       SELECT
         Id,
-        Certification_Status__c,
+        Certified__c,
         Due_Date__c,
         Associate__r.User__c,
         Voucher_Type__c,
@@ -311,7 +311,7 @@ public with sharing class ExperienceController {
     return [
       SELECT
         Id,
-        Certification_Status__c,
+        Certified__c,
         Due_Date__c,
         Associate__r.User__c,
         Voucher_Type__c,

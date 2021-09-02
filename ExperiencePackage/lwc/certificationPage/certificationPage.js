@@ -38,7 +38,7 @@ const attemptsColumns = [
 const certColumns = [
   {
     label: "Certification Status",
-    fieldName: "Certification_Status__c",
+    fieldName: "Certified__c__c",
     type: "picklist",
   },
   { label: "Attempt Due Date", fieldName: "Due_Date__c", type: "Date" },
@@ -47,23 +47,23 @@ const certColumns = [
 
 export default class Certification_Page extends LightningElement {
   // things to track button clicks and bool values
-  @track clickedButtonAdm = "Show Adm";
-  @track clickedButtonAdvancedAdm = "Show Advanced Adm";
-  @track clickedButtonJavascr = "Show JavaScript";
-  @track clickedButtonPd1 = "Show Pd1";
-  @track clickedButtonPd2 = "Show Pd2";
-  @track clickedButtonPab = "Show Pab";
-  @track clickedButtonPabCert
-  @track clickedButtonPabPra = "Practice";
-  @track boolVisibleAdm = false;
-  @track boolVisibleAdvancedAdm = false;
-  @track boolVisibleJavascr = false;
-  @track boolVisiblePd1 = false;
-  @track boolVisiblePd2 = false;
-  @track boolVisiblePab = false;
-  @track boolVisiblePabCert = true;
-  @track boolVisiblePabPra = true;
-  @track modalPabCert = false;
+   clickedButtonAdm = "Show Adm";
+  clickedButtonAdvancedAdm = "Show Advanced Adm";
+  clickedButtonJavascr = "Show JavaScript";
+  clickedButtonPd1 = "Show Pd1";
+  clickedButtonPd2 = "Show Pd2";
+  clickedButtonPab = "Show Pab";
+  clickedButtonPabCert
+  clickedButtonPabPra = "Practice";
+  boolVisibleAdm = false;
+  boolVisibleAdvancedAdm = false;
+  boolVisibleJavascr = false;
+  boolVisiblePd1 = false;
+  boolVisiblePd2 = false;
+  boolVisiblePab = false;
+  boolVisiblePabCert = true;
+  boolVisiblePabPra = true;
+  modalPabCert = false;
 
 
   // static resources
