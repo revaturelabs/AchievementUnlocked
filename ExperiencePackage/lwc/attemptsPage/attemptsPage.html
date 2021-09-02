@@ -1,0 +1,32 @@
+<template>
+    
+    <div class="slds-m-vertical_medium">
+        <lightning-card>
+            <h1 class="slds-text-heading_small">Hello, {userName}!</h1>
+        </lightning-card>
+    </div>
+
+    <lightning-card title="Attempts" icon-name="utility:page">
+        <div style="height: 300px;">
+
+            <div class="filterBtn">
+                <lightning-button 
+                    variant="brand"
+                    label="Certification: All"
+                    icon-name="utility:picklist_type"
+                    icon-position="left"
+                    onclick={handleFilterClick}>
+                </lightning-button>
+            </div>
+
+            <lightning-datatable
+                key-field="id"
+                data={attempts}
+                columns={columns}
+                hide-checkbox-column="true">
+            </lightning-datatable>
+
+        </div>
+    </lightning-card>
+
+</template>
