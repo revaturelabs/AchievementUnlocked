@@ -1,0 +1,21 @@
+<template>
+    <div>
+        <p>{assocCount.size}</p>
+        <lightning-button-group>
+            <lightning-button label="First" onclick={handleFirst}></lightning-button>
+            <lightning-button label="Previous" onclick={handlePrev}></lightning-button>
+            <lightning-button label="Next" onclick={handleNext}></lightning-button>
+        </lightning-button-group>
+    </div>
+    <lightning-datatable
+        key-field="Id"
+        data={associates.data}
+        columns={columns}
+        onrowaction={showInfo}
+        sorted-by={sortField}
+        sorted-direction={sortDirection}
+        onsort={updateColumnSorting}
+        onrowselection={rowsSelected}>
+    </lightning-datatable>
+
+</template>
