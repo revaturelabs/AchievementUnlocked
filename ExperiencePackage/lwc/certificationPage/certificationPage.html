@@ -1,11 +1,6 @@
 <template>
   <!--main title and revature logo-->
   <div>
-    <div style="max-width: 10%; height: auto">
-      <img src={revatureLogo} />
-    </div>
-  </div>
-  <div>
     <p style="text-align: center"><b>Welcome/Title</b></p>
   </div>
   <!--bar for navigation-->
@@ -519,5 +514,9 @@
             </div>
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <template if:true={inputAttemptsModal} >
+        <c-attempts-Input-Modal></c-attempts-Input-Modal>
     </template>
 </template>
