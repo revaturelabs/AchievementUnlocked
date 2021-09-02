@@ -1,3 +1,11 @@
+/*
+Name: Carlo Mejia
+Project: Achievement Unlocked -- Radar Chart
+Version: 1.0.0
+Description: This is a radar chart that displays the average scores of each cohort in various categories seen in Salesforce
+    certification exams. It pulls from the "Attempts" Custom Object and displays data in the form of an SVG. It also features
+    the ability to view overall average scores in each category among all cohorts.
+*/
 import { LightningElement, api, wire, track } from 'lwc';
 import { loadScript, loadStyle } from 'lightning/platformResourceLoader';
 import { getPicklistValues, getObjectInfo } from 'lightning/uiObjectInfoApi';
@@ -11,7 +19,7 @@ import D3Scale from '@salesforce/resourceUrl/d3scale';
     
 export default class CarloTest extends LightningElement {
     
-    //the data that people search up
+    //the data you can search up
     @api cohortNames = [];
     @api examTypes = [];
     @api selectedCohort = '';
@@ -34,13 +42,7 @@ export default class CarloTest extends LightningElement {
         return myMap;
     }
 
-    addOptions2(stringList) {
-        let myMap = stringList.map((str)=>({
-            label: str,
-            value: str
-        }));
-        return myMap;
-    }
+    //The sample data that shows up when you first render the component
     cohortData = [
         {axis: "Security and Integration", value: 0.1},
         {axis: "API and External", value: 0.1},
@@ -57,13 +59,16 @@ export default class CarloTest extends LightningElement {
     ]
 
     //The ultimate source of data!
-    data = [this.cohortData
-        //this.averageData
-    ];
+    //The radar chart will always look at this array when determining what to render.
+    //By default, it only has this.cohortData, but if you set this.showAverage to true, it will include this.averageData as well.
+    data = [this.cohortData];
 
     d3Initialized = false;
     loadedRadar = 0;
 
+    //This thing runs multiple times. If it had its way, it would create MULTIPLE radar charts at once. What a pain!
+    //That's why we use loadedRadar - it automatically increases once the function is called.
+    //If loadedRadar has a value greater than zero, the function won't render any more radar charts.
     async renderedCallback() {
     if (this.loadedRadar < 1) {
         if (this.d3Initialized) {
@@ -105,6 +110,7 @@ export default class CarloTest extends LightningElement {
     } else {console.log ("loadedRadar is " + this.loadedRadar)}
     } //renderedCallback closing bracket
 
+    //This function will add all available certification types/cohorts to the comboboxes in the UI.
     async connectedCallback() {
         //setting the certification types
         const certTypes = await getCerts();
@@ -112,7 +118,7 @@ export default class CarloTest extends LightningElement {
 
         //getting the cohort names
         const cohorts = await getCohorts();
-        this.cohortNames = this.addOptions2([...cohorts])
+        this.cohortNames = this.addOptions([...cohorts])
     }
 
     //This function sets showAverage to true or false -- whatever it isn't!
@@ -138,6 +144,8 @@ export default class CarloTest extends LightningElement {
     }
 
     //A function that changes the data according to whatever the Apex finds
+    //This one is a little clunky, since everything is hard-coded.
+    //Most dynamic solutions ended up messing with the radar chart function..
     changeData() {
         getScoresbyCohort({ jCohort: this.selectedCohort, jAttempt: this.selectedExam, jAverage: false })
             .then((result) => {
@@ -228,11 +236,11 @@ export default class CarloTest extends LightningElement {
             .catch((error)=>{
                 console.log(error);
             }).then(()=> {
+        //If this.showAverage is true, we want to run another Apex call, this time getting the average scores, rather than the cohort scores.
         if (this.showAverage == true) {
             console.log("showAverage is true, so we'll render the averages on the chart.");
             getScoresbyCohort({ jCohort: this.selectedCohort, jAttempt: this.selectedExam, jAverage: true })
             .then((result) => {
-                //This will show the scores for a single cohort -- the one that you had selected on the UI.
                 if (this.selectedExam == "ADM") {
                     this.averageData = [
                         {axis: "Configuration & Setup", value: result[0].expr0/100},
@@ -322,6 +330,7 @@ export default class CarloTest extends LightningElement {
         
     }
     
+    //This is the function that creates the radar chart itself.
     radarChart(id, data, options) {
 
         //default configuration
@@ -368,9 +377,6 @@ export default class CarloTest extends LightningElement {
         //-----------------------------------
         // *** CREATING THE CONTAINER SVG ***
         //-----------------------------------
-        
-        //Reset by removing whatever SVG element has the same ID
-        //this.template.querySelector(".radar"+id).remove();
 
         //Create the SVG
         let svg = d3
@@ -431,7 +437,7 @@ export default class CarloTest extends LightningElement {
             .attr("dy", "0.4em")
             .style("font-size", "10px")
             .attr("fill", "#737373")
-            .text(function(d,i){return Format(maxValue*d/cfg.levels);});
+            .text(function(d,i){return 100*maxValue*d/cfg.levels.toFixed(2)+"%";});
 
         // -------------------------
         // *** CREATING THE AXES ***
@@ -469,11 +475,12 @@ export default class CarloTest extends LightningElement {
         // *** DRAWING THE BLOBS! ***
         // ---------------------------
 
-        // Might need to change this one
+        // Determining the positions and angles to place the keypoints at
         let radarLine = d3.lineRadial()
             .radius(function(d){return rScale(d.value);})
             .angle((d, i) => {return i*angleSlice;});
 
+        // Curving the lines to make it a little better-looking. If you want to, of course.
         if(cfg.roundStrokes == true) {
             let tension = 0.5;
             radarLine.curve(d3.curveCardinalClosed.tension(tension));
@@ -552,7 +559,7 @@ export default class CarloTest extends LightningElement {
                 let newY = parseFloat(d3.select(this).attr("cy")-10);
                 tooltip.attr("x", newX)
                     .attr("y", newY)
-                    .text(i.value*100+"%")
+                    .text((i.value*100).toFixed(2)+"%")
                     .style("font-size", 20)
                     .style("text-align", "center")
                     .transition().duration(200)
@@ -567,6 +574,7 @@ export default class CarloTest extends LightningElement {
                 .attr("class", "tooltip")
                 .style("opacity", 0)
 
+            //This function wraps up text, splitting it into different lines and preventing it from going out of bounds.
             function wrap(text, width) {
 	            text.each(function() {
 		            var text = d3.select(this),
