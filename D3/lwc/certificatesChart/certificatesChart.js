@@ -18,8 +18,12 @@ const defaultCertValue = "All";
 const defaultCohortValue = "All";
 
 export default class CertificatesChart extends LightningElement {
+
   // @desc : <string> the stringified array of objects used to populate the chart
-  chartData = "[]";
+  chartData = '[]';
+
+  // @desc : <object> caches the results of Apex API calls
+  cachedChartData = {}
 
   // @desc : <string> the label for each piece of data
   label = "label";
@@ -54,7 +58,7 @@ export default class CertificatesChart extends LightningElement {
   @wire(getCertTypes)
   getCertTypes({data, error}) {
     if(!error && data) {
-      this.certTypes = this.toComboboxOptions([defaultCertValue, ...data])
+      this.certTypes = this.toComboboxOptions([defaultCertValue, ...data]);
     }
   }
 
@@ -92,15 +96,27 @@ export default class CertificatesChart extends LightningElement {
     }));
   }
 
+  // @desc       : creates an index for our cache
+  // @cohortName : <string>
+  // @certType   : <string>
+  // @returns    : <string>
+  toCacheIndex(cohortName, certType) {
+    return `${cohortName},${certType}`;
+  }
+
   // @desc : update the chart
   async onchange() {
     const certType = (this.selectedCert === defaultCertValue) ? null : this.selectedCert;
     const cohortName = (this.selectedCohort === defaultCohortValue) ? null : this.selectedCohort;
-    const [numberWithCerts, numberWithoutCerts] = await this.loadCertsData(
-      certType,
-      cohortName
-    );
+    const cacheIndex = this.toCacheIndex(cohortName, certType);
+    if(this.cachedChartData[cacheIndex]) {
+      this.chartData = this.cachedChartData[cacheIndex];
+      return;
+    }
+
+    const [numberWithCerts, numberWithoutCerts] = await this.loadCertsData(certType, cohortName);
     this.chartData = this.serializeData(numberWithCerts, numberWithoutCerts);
+    this.cachedChartData[cacheIndex] = this.chartData;
   }
 
   // @desc  : onchange event handler for changing cert combobox
@@ -161,6 +177,8 @@ export default class CertificatesChart extends LightningElement {
     try {
       const [numberWithCerts, numberWithoutCerts] = await this.loadCertsData();
       this.chartData = this.serializeData(numberWithCerts, numberWithoutCerts);
+      const cacheIndex = this.toCacheIndex(null, null);
+      this.cachedChartData[cacheIndex] = this.chartData;
     } catch(err) {
       this.chartData = this.serializeData(0, 0);
     }
