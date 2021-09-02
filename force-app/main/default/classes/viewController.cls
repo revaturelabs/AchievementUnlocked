@@ -82,26 +82,50 @@ public with sharing class viewController {
     // Returns a list of all vouchers belonging to an associate identified by associateId
     @AuraEnabled(cacheable=true)
     public static List<Voucher__c> getVouchers(Id associateId) {
-        return [SELECT Id, Name, Certification_Type__c, Status__c, Associate__c, Associate__r.Id 
+        return [SELECT Id, Name, Certification_Type__c, Status__c, Associate__c, Voucher_Type__c 
         FROM Voucher__c
-        WHERE Associate__c =: associateId];
+        WHERE Associate__c =: associateId
+        ORDER BY Certification_Type__c];
     }
 
     // Returns a list of all attempts made by an associate identified by associateId
     @AuraEnabled(cacheable=true)
     public static List<Attempt__c> getAttempts(Id associateId) {
-        return [SELECT Id, Name, Attempt_Type__c, Voucher__c, Passed__c, Voucher__r.Associate__c 
+        return [SELECT Id, Name, Attempt_Type__c, Voucher__c, Passed__c, Voucher__r.Associate__c,  Voucher__r.Name, Voucher__r.Certification_Type__c 
         FROM Attempt__c
-        WHERE Voucher__r.Associate__c =: associateId];
+        WHERE Voucher__r.Associate__c =: associateId
+        ORDER BY Voucher__r.Certification_Type__c];
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<Associate__c> getAssociateCount(String stat) {
+    public static List<Attempt__c> getCertifications(Id associateId) {
+        return [SELECT Id, Attempt_Type__c, Voucher__c, Passed__c, Voucher__r.Associate__c, Voucher__r.Certification_Type__c 
+        FROM Attempt__c
+        WHERE Voucher__r.Associate__c =: associateId AND Passed__c = true
+        ORDER BY Voucher__r.Certification_Type__c];
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static Integer getAssociateCount(Filters filters) {
+        Boolean needAnd = false;
         String associates = 'SELECT COUNT() ' + 
         'FROM Associate__c ';
-        if (stat != null) {
-            associates += 'WHERE Current_Status__c = \'' + stat + '\'';
-        }       
-        return Database.query(associates);
+        if (filters.statuses != null || filters.searchKey != null) {
+            associates += 'WHERE ';        
+        }
+        if (!String.isEmpty(filters.searchKey)) {
+            String key = '%' + filters.searchKey + '%';
+            associates += 'Last_Name__c LIKE :key ';
+            needAnd= true;
+        }
+        if (filters.statuses != null) {
+            if (needAnd) {
+                associates += 'AND ';
+            }
+            String[] statuses = filters.statuses;
+            associates += 'Current_Status__c IN : statuses ';
+            needAnd= true;
+        }
+        return Database.countQuery(associates);
     }
 }
