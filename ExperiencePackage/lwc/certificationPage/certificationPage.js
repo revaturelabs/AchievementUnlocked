@@ -44,16 +44,15 @@ const certColumns = [
   { label: "Attempt Due Date", fieldName: "Due_Date__c", type: "Date" },
 ];
 
-
 export default class Certification_Page extends LightningElement {
   // things to track button clicks and bool values
-   clickedButtonAdm = "Show Adm";
+  clickedButtonAdm = "Show Adm";
   clickedButtonAdvancedAdm = "Show Advanced Adm";
   clickedButtonJavascr = "Show JavaScript";
   clickedButtonPd1 = "Show Pd1";
   clickedButtonPd2 = "Show Pd2";
   clickedButtonPab = "Show Pab";
-  clickedButtonPabCert
+  clickedButtonPabCert;
   clickedButtonPabPra = "Practice";
   boolVisibleAdm = false;
   boolVisibleAdvancedAdm = false;
@@ -65,6 +64,9 @@ export default class Certification_Page extends LightningElement {
   boolVisiblePabPra = true;
   modalPabCert = false;
 
+  // Attempts Modal for Inputting an Attempt
+  inputAttemptsModal;
+  currentVoucherType;
 
   // static resources
   revatureLogo = REVATURELOGO;
@@ -145,6 +147,7 @@ export default class Certification_Page extends LightningElement {
       this.boolVisiblePd2 = false;
       this.clickedButtonPab = "Show Pab";
       this.boolVisiblePab = false;
+      this.currentVoucherType = "Adm";
     } else if (label === "Hide Adm") {
       this.clickedButtonAdm = "Show Adm";
       this.boolVisibleAdm = false;
@@ -166,6 +169,7 @@ export default class Certification_Page extends LightningElement {
       this.boolVisiblePd2 = false;
       this.clickedButtonPab = "Show Pab";
       this.boolVisiblePab = false;
+      this.currentVoucherType = "Advanced Adm";
     } else if (label === "Hide Advanced Adm") {
       this.clickedButtonAdvancedAdm = "Show Advanced Adm";
       this.boolVisibleAdvancedAdm = false;
@@ -187,6 +191,7 @@ export default class Certification_Page extends LightningElement {
       this.boolVisiblePd2 = false;
       this.clickedButtonPab = "Show Pab";
       this.boolVisiblePab = false;
+      this.currentVoucherType = "Javascript";
     } else if (label === "Hide JavaScript") {
       this.clickedButtonJavascr = "Show JavaScript";
       this.boolVisibleJavascr = false;
@@ -208,6 +213,7 @@ export default class Certification_Page extends LightningElement {
       this.boolVisiblePd2 = false;
       this.clickedButtonPab = "Show Pab";
       this.boolVisiblePab = false;
+      this.currentVoucherType = "PD1";
     } else if (label === "Hide Pd1") {
       this.clickedButtonPd1 = "Show Pd1";
       this.boolVisiblePd1 = false;
@@ -229,6 +235,7 @@ export default class Certification_Page extends LightningElement {
       this.boolVisiblePd1 = false;
       this.clickedButtonPab = "Show Pab";
       this.boolVisiblePab = false;
+      this.currentVoucherType = "PD2";
     } else if (label === "Hide Pd2") {
       this.clickedButtonPd2 = "Show Pd2";
       this.boolVisiblePd2 = false;
@@ -250,27 +257,7 @@ export default class Certification_Page extends LightningElement {
       this.boolVisibleJavascr = false;
       this.clickedButtonPd1 = "Show Pd1";
       this.boolVisiblePd1 = false;
-    } else if (label === "Hide Pab") {
-      this.clickedButtonPab = "Show Pab";
-      this.boolVisiblePab = false;
-    }
-  }
-  // click event for Pab cert
-  handleClickPab(event) {
-    const label = event.target.label;
-    if (label === "Show Pab") {
-      this.clickedButtonPab = "Hide Pab";
-      this.boolVisiblePab = true;
-      this.clickedButtonPd2 = "Show Pd2";
-      this.boolVisiblePd2 = false;
-      this.clickedButtonAdm = "Show Adm";
-      this.boolVisibleAdm = false;
-      this.clickedButtonAdvancedAdm = "Show Advanced Adm";
-      this.boolVisibleAdvancedAdm = false;
-      this.clickedButtonJavascr = "Show JavaScript";
-      this.boolVisibleJavascr = false;
-      this.clickedButtonPd1 = "Show Pd1";
-      this.boolVisiblePd1 = false;
+      this.currentVoucherType = "Platform App Builder";
     } else if (label === "Hide Pab") {
       this.clickedButtonPab = "Show Pab";
       this.boolVisiblePab = false;
@@ -279,10 +266,19 @@ export default class Certification_Page extends LightningElement {
   // click event for Pab practice
   handleClickPabCertMdl(event) {
     this.modalPabCert = true;
-    }
+  }
 
-    // close modals
-    closeModal() {
-      this.modalPabCert = false;
-    }
+  // close modals
+  closeModal() {
+    this.modalPabCert = false;
+  }
+
+  showAttemptsInputModal() {
+    console.log("hi got in here");
+    this.inputAttemptsModal = true;
+  }
+
+  closeAttemptInputModal() {
+    this.inputAttemptsModal = false;
+  }
 }
