@@ -3,7 +3,7 @@ public with sharing class viewController {
     // Returns a list of all cohorts
     @AuraEnabled(cacheable=true)
     public static List<Cohort__c> getCohorts() {
-        return [SELECT Start_Date__c FROM Cohort__c];
+        return [SELECT Start_Date__c, End_Date__c FROM Cohort__c];
     }
 
     // Returns a list of all associates
