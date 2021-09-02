@@ -177,6 +177,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Associate__c.Cohort__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Associate__c.Current_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
