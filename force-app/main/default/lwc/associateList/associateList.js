@@ -17,18 +17,31 @@ export default class AssociateList extends LightningElement {
     sortField;
     sortDirection;
     filters = {};
+    count;
     @api status = null;
     @api page;
     @api cohortId = null;
+    
     @wire(getAssociates, {cohortId: '$cohortId', filters: '$filters', sortingField: '$sortField', dir: '$sortDirection', pageNum: '$page'})
     associates;
-    @wire(getAssociateCount, {stat: '$filters'})
-    assocCount;
+    
+    @wire(getAssociateCount, {filters: '$filters'})
+    wiredFunction({ error, data }) {
+        if (data) {
+            this.count = data;
+            console.log(JSON.stringify(data));
+        } else if (error) {
+            console.log(error);
+        }
+    }
+
 
     constructor() {
         super();
         this.sortField = 'Last_Name__c';
         this.sortDirection = 'ASC';
+        this.count = 0;
+        this.page = 1;
     }
 
     showInfo(event) {
@@ -37,6 +50,8 @@ export default class AssociateList extends LightningElement {
         });
         this.dispatchEvent(sendId);
     }
+
+    
 
     /** Load context for Lightning Messaging Service */
     @wire(MessageContext) messageContext;
@@ -56,6 +71,7 @@ export default class AssociateList extends LightningElement {
     handleSearchFilter(message){
         this.filters = { ...message.filters };
         this.page = 1;
+        
     }
 
     updateColumnSorting(event) {
@@ -65,19 +81,22 @@ export default class AssociateList extends LightningElement {
 
     handleFirst(){
         this.page = 1;
+        
     }
 
     handlePrev(){
         if(this.page > 1){
-            currentPage = this.page;
+            let currentPage = this.page;
             this.page = currentPage - 1;
+            
         }
     }
 
     handleNext(){
-        if(((this.page -1) * 10) + 10 < this.assocCount){
-            currentPage = this.page;
+        if((this.page * 10) < this.count){
+            let currentPage = this.page;
             this.page = currentPage + 1;
+            
         }
     }
 }

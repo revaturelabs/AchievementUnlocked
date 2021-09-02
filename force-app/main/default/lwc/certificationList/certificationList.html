@@ -1,16 +1,16 @@
 <template>
-    <lightning-card title="Attempts">
-        <template if:true={flatAttempts}>
-            <template if:true={flatAttempts.length}>
+    <lightning-card title="Certifications">
+        <template if:true={flatCerts}>
+            <template if:true={flatCerts.length}>
                 <lightning-datatable
                     key-field="Id"
-                    data={flatAttempts}
+                    data={flatCerts}
                     columns={columns}
                     hide-checkbox-column="true">
                 </lightning-datatable>
             </template>
-            <template if:false={flatAttempts.length}>       
-                <p>This associate has made no attempts!</p>
+            <template if:false={flatCerts.length}>       
+                <p>This associate has no certifications!</p>
             </template>
         </template>
     </lightning-card>

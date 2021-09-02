@@ -8,7 +8,7 @@
             ></lightning-input>
             <section>
             </section>
-        <h1>Statuses</h1>
+        <h1>Status</h1>
         <template if:true={statuses.data}>
             <template
                 for:each={statuses.data.values}
@@ -18,6 +18,23 @@
                     label={status.label}
                     data-filter="statuses"
                     data-value={status.value}
+                    type="checkbox"
+                    checked
+                    onchange={handleCheckboxChange}>
+                </lightning-input>
+            </template>
+        </template>
+        <br/>
+        <h1>Certifications</h1>
+        <template if:true={certs.data}>
+            <template
+                for:each={certs.data.values}
+                for:item="cert">
+                <lightning-input
+                    key={cert.value}
+                    label={cert.label}
+                    data-filter="certs"
+                    data-value={cert.value}
                     type="checkbox"
                     checked
                     onchange={handleCheckboxChange}>

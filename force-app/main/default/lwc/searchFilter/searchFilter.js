@@ -1,6 +1,7 @@
 import { LightningElement,wire } from 'lwc';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 import STATUS_FIELD from '@salesforce/schema/Associate__c.Current_Status__c';
+import CERT_FIELD from '@salesforce/schema/Voucher__c.Certification_Type__c';
 import { publish, MessageContext } from 'lightning/messageService';
 import SEARCH_MESSAGE from '@salesforce/messageChannel/SearchMessage__c';
 
@@ -31,6 +32,12 @@ export default class SearchFilter extends LightningElement {
     })
     statuses;
 
+    @wire(getPicklistValues, {
+        recordTypeId: '012000000000000AAA',
+        fieldApiName: CERT_FIELD
+    })
+    certs;
+
     
     handleSearchKeyChange(event) {
         this.filters.searchKey = event.target.value;
@@ -42,6 +49,9 @@ export default class SearchFilter extends LightningElement {
         if (!this.filters.statuses) {
             // Lazy initialize filters with all values initially set
             this.filters.statuses = this.statuses.data.values.map(
+                (item) => item.value
+            );
+            this.filters.certs = this.certs.data.values.map(
                 (item) => item.value
             );
         }
