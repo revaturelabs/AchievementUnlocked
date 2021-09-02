@@ -2,9 +2,8 @@ import { createElement } from "lwc";
 import PieChart from "c/pieChart";
 
 function mapDOM(root) {
-  for (const child of root.children) {
-    mapDOM(child);
-  }
+  Array.from(root.children)
+    .forEach(mapDOM);
   console.log(root.tagName);
 }
 
@@ -27,17 +26,4 @@ describe("c-pie-chart", () => {
     });
   });
 
-  it("Should should render legend", () => {
-    const element = createElement("c-pie-chart", {
-      is: PieChart,
-    });
-    document.body.appendChild(element);
-
-    return Promise.resolve().then(() => {
-      const svg = element.shadowRoot.querySelector("svg");
-      const legend = element.shadowRoot.querySelector("#legend");
-      expect(svg).not.toBeNull();
-      expect(legend).not.toBeNull();
-    });
-  });
 });
