@@ -8,6 +8,7 @@
             <div class="slds-col slds-size_1-of-2">
                 <h2>Certification Type</h2>
                 <lightning-combobox label="Certification Type" class="examSelector" options={examTypes} onchange={changeInput}></lightning-combobox>
+                <lightning-input type="checkbox" label="Show average scores across all cohorts" onchange={changeAverage}></lightning-input>
             </div>
         </div>
         <div class="radarChart">
