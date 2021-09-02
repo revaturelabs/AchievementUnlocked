@@ -5,7 +5,8 @@
 # Salesforce cache
 .sfdx/
 .localdevserver/
-
+# LWC Jest
+**/__tests__/**
 # LWC VSCode autocomplete
 **/lwc/jsconfig.json
 
