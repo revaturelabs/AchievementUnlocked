@@ -1,7 +1,7 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, api } from 'lwc';
 
 export default class BarGraphIndex extends LightningElement {
-    models = [
+    /*models = [
       {
         "model_name":"Adm Cert",
         "field1":1,
@@ -9,8 +9,9 @@ export default class BarGraphIndex extends LightningElement {
         "field3": 1,
         "field4": 1
       }
-    ];
-
+    ];*/
+    @api models;
+    @api testmodel;
       admModels = [
         {
           "model_name":"Adm Cert",

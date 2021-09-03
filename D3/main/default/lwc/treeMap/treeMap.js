@@ -1,4 +1,4 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, api } from 'lwc';
 import { loadScript, loadStyle } from 'lightning/platformResourceLoader';
 import D3 from '@salesforce/resourceUrl/d3';
 import D3Scale from '@salesforce/resourceUrl/d3scale';
@@ -9,7 +9,7 @@ export default class TreeMap extends LightningElement {
     str = "hello d3";
     d3Initialized = false;
 
-    models = [
+   /*models = [
         {"model_name": "origin", "parent": '', "field1": ''},
         {
           "model_name":"Cohort 1",
@@ -29,8 +29,8 @@ export default class TreeMap extends LightningElement {
           "field1":50,
           "field2":30
         },
-      ];
-
+      ];*/
+      @api models;
     async renderedCallback() {
         if (this.d3Initialized) {
             return;
@@ -49,6 +49,7 @@ export default class TreeMap extends LightningElement {
     }
 
     initializeD3(){
+        console.log('data ni tree: ', this.models);
         var margin = {top: 10, right: 10, bottom: 10, left: 10},
         width = 745 - margin.left - margin.right,
         height = 745 - margin.top - margin.bottom;
@@ -80,24 +81,31 @@ export default class TreeMap extends LightningElement {
         .data(root.leaves(), function(d){return d.data})
         .enter()
         .append("rect")
-        .attr('x', function (d) { return d.x0; })
-        .attr('y', function (d) { return d.y0; })
+        .attr('x', function (d) { return d.x0/2; })
+        .attr('y', function (d) { return d.y0/2; })
         .attr("pointer-events","visible")
+        .on("mouseover", (d, i) => d3.select(d.currentTarget).transition()
+            .duration(50)
+            .style('opacity', 0.5))
+        .on("mouseout", (d, i) => d3.select(d.currentTarget).transition()
+            .duration(50)
+            .style('opacity', 1))
         .on("mousedown", (d, i) => this.handlemouse(d, i))//this.handlemouse)//function(d, i){console.log(i);this.handlemouse();})
         .transition()
         .duration(1000)
-        .attr('width', function (d) { return d.x1 - d.x0; })
-        .attr('height', function (d) { return d.y1 - d.y0; })
+        .attr('width', function (d) {console.log('d', d); console.log('d.x: ', d.x1 - d.x0); return (d.x1 - d.x0)/2; })
+        .attr('height', function (d) { console.log('d.y', d.y1 - d.y0); return (d.y1 - d.y0)/2; })
         .style("stroke", "black")
-        .style("fill", "#69b3a2");
+        .style("fill", "#402D54");
+        //.style("opacity", 0.5);
 
         svg
         .selectAll("text")
         .data(root.leaves())
         .enter()
         .append("text")
-        .attr("x", function(d){ return d.x0+10})    // +10 to adjust position (more right)
-        .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+        .attr("x", function(d){ return (d.x0+10)/2})    // +10 to adjust position (more right)
+        .attr("y", function(d){ return (d.y0+30)/2})    // +20 to adjust position (lower)
         .text(function(d){/*console.log('ssss' + d.data);*/ return d.data.model_name})
         //.on("mousedown", function(d, i){console.log(i.data.model_name)})
         .attr("font-size", "15px")
@@ -108,13 +116,13 @@ export default class TreeMap extends LightningElement {
       //this.testEvent();
       console.log("mouse is running");
       //console.log(d);
-      console.log(i.data.model_name);
+      console.log(i.data);
       console.log("test event function being called");
       //this.test();
       //this.testEvent();
       const event = new CustomEvent('child', {
          //detail contains only primitives
-        detail: {key1:i.data.model_name, key2:"Das"}
+        detail: {key1:i.data.model_name, key2:"Das", data: i.data}
         });
        this.dispatchEvent(event);
 

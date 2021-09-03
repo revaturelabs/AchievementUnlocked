@@ -107,7 +107,8 @@ export default class AttemptBarChart extends LightningElement {
                     this.xScale0.domain(models.map(d => d.model_name));
                     this.xScale1.domain(['field1', 'field2', 'field3', 'field4']).range([0, this.xScale0.bandwidth()]);
                     //this.yScale.domain([0, d3.max(models, d => d.field1 > d.field2 ? d.field1 : d.field2)]);
-                    this.yScale.domain([0, 90]);
+                    //console.log('beforeuscale', models);
+                    this.yScale.domain([0, d3.max(models, d => (d.field1 + d.field2 + d.field3 + d.field4))]);
         
                     //this.setBarFields(models);
                     // Add the X Axis

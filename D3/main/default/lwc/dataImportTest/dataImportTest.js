@@ -3,7 +3,7 @@ import { getRecord } from 'lightning/uiRecordApi';
 import { loadScript, loadStyle } from 'lightning/platformResourceLoader';
 import D3 from '@salesforce/resourceUrl/d3';
 import D3Scale from '@salesforce/resourceUrl/d3scale';
-import getRecords from '@salesforce/apex/ProjectLightController.getRecords';
+//import getRecords from '@salesforce/apex/ProjectLightController.getRecords';
 
 const FIELDS = [
     'Contact.Name',
@@ -20,7 +20,8 @@ export default class DataImportTest extends LightningElement {
     d3Initialized = false;
     ol = null;
 
-    @wire(getRecords) contacts;
+    //@wire(getRecords) contacts;
+    contacts = [];
 
     async renderedCallback() {
         if (this.d3Initialized) {

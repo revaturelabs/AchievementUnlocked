@@ -6,23 +6,17 @@
         },
         {
             "path": "BasePackage",
-            "package": "BasePackage",
+            "package": "S2BasePackage",
             "versionName": "ver 0.1",
             "versionNumber": "0.1.0.NEXT",
             "default": false
         },
         {
             "path": "D3",
-            "package": "D3",
+            "package": "S2D3",
             "versionName": "ver 0.1",
             "versionNumber": "0.1.0.NEXT",
-            "default": false,
-            "dependencies": [
-                {
-                    "package": "BasePackage",
-                    "versionNumber": "0.1.0.LATEST"
-                }
-            ]
+            "default": false
         }
     ],
     "name": "AchievementUnlocked",
@@ -30,9 +24,9 @@
     "sfdcLoginUrl": "https://login.salesforce.com",
     "sourceApiVersion": "52.0",
     "packageAliases": {
-        "BasePackage": "0Ho5f0000004C9hCAE",
-        "BasePackage@0.1.0-1": "04t5f000000xJpIAAU",
-        "D3": "0Ho5f0000004C9mCAE",
-        "D3@0.1.0-1": "04t5f000000xJpNAAU"
+        "S2BasePackage": "0Ho5f000000GmiyCAC",
+        "S2BasePackage@0.1.0-1": "04t5f000000Lf24AAC",
+        "S2D3": "0Ho5f000000Gmj3CAC",
+        "S2D3@0.1.0-1": "04t5f000000Lf29AAC"
     }
 }

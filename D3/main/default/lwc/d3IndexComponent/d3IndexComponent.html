@@ -13,10 +13,10 @@
         <template if:true={renderBarChart}>
             <!--<c-side-stacked-chart></c-side-stacked-chart>
             <c-attempt-bar-chart></c-attempt-bar-chart>-->
-            <c-bar-graph-index></c-bar-graph-index>
+            <c-bar-graph-index models={models} testmodel={testmodel}></c-bar-graph-index>
         </template>
         <template if:true={renderTreeMap}>
-            <c-tree-map onchild={childEvent}></c-tree-map>
+            <c-tree-map onchild={childEvent} models={treemodels}></c-tree-map>
         </template>
         
         <template if:true={renderStackedBarChart}>
