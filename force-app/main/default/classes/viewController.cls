@@ -52,15 +52,25 @@ public with sharing class viewController {
         public String searchKey { get; set; }
         @AuraEnabled
         public String[] statuses { get; set; }
+        @AuraEnabled
+        public String[] certs { get; set; }
     }
 
     @AuraEnabled(cacheable=true)
     public static List<Associate__c> getAssociates(String cohortId, Filters filters, String sortingField, String dir, Integer pageNum) {
         Integer ofst = (pageNum - 1) * 10;
-        String query = 'SELECT Id, Current_Status__c, First_Name__c, Last_Name__c, User__c, Cohort__c ' + 
-        'FROM Associate__c ';
+        Set<Id> ids = new Set<Id>();
+        if (filters != null && filters.certs != null) {
+            List<Attempt__c> attempts = [SELECT Id, Attempt_Type__c, Voucher__c, Passed__c, Voucher__r.Associate__c, Voucher__r.Certification_Type__c 
+        								FROM Attempt__c
+        								WHERE Voucher__r.Certification_Type__c IN :filters.certs AND Passed__c = true AND Attempt_Type__c = 'Certification'];
+            for (Attempt__c att : attempts) {
+                ids.add(att.Voucher__r.Associate__c);
+            }
+        }
+        String query = 'SELECT Id, Current_Status__c, First_Name__c, Last_Name__c, User__c, Cohort__c FROM Associate__c ';
         Boolean needAnd = false;
-        if (cohortId != null || (filters != null && (filters.statuses != null || filters.searchKey != null))) {
+        if (cohortId != null || (filters != null && (filters.statuses != null || filters.searchKey != null || filters.certs != null))) {
             query += 'WHERE ';
         }
         if (filters != null) {
@@ -75,6 +85,13 @@ public with sharing class viewController {
                 }
                 String[] statuses = filters.statuses;
                 query += 'Current_Status__c IN : statuses ';
+                needAnd= true;
+            }
+            if (filters.certs != null) {
+                if (needAnd) {
+                    query += 'AND ';
+                }
+                query += 'Id IN :ids ';
                 needAnd= true;
             }
         }
