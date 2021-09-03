@@ -179,10 +179,12 @@ export default class PieChart extends LightningElement {
 		arc.append("path")
 			.attr("d", path)
 			.attr("fill", (item) => color(item.data[this.label]));
-	
+		
+		const sum = data.reduce( (acc, item) => acc + item[this.value], 0);
+		
 		arc.append("text")
 			.attr("transform", (item) => `translate(${label.centroid(item)})`)
-			.text((item) => item.data[this.value])
+			.text((item) => item.data[this.value] !== 0 ? `${(100 * (item.data[this.value] / sum)).toFixed(1)}%`: '')
 				.attr('font-size', '0.9rem')
 				.attr('fill', '#0D3B66');
 	}
@@ -191,6 +193,7 @@ export default class PieChart extends LightningElement {
 	setupChartWrapper() {
 		// configuration
 		const svg = this.template.querySelector('svg');
+		svg.innerHTML = '';
 		const chartWrapper = d3.select(svg);
 		
 		// setting up the chart's wrapper

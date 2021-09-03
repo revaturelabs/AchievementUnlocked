@@ -10,6 +10,7 @@ import associatesInCohortWithoutCerts from "@salesforce/apex/CertificatesChartCo
 import associatesInCohortWithSpecificCert from "@salesforce/apex/CertificatesChartController.associatesInCohortWithSpecificCert";
 import associatesInCohortWithoutSpecificCert from "@salesforce/apex/CertificatesChartController.associatesInCohortWithoutSpecificCert";
 
+import getCohortName from '@salesforce/apex/CertificatesChartController.getCohortName';
 import getCertTypes from "@salesforce/apex/CertificatesChartController.getCertTypes";
 import getCohortNames from "@salesforce/apex/CertificatesChartController.getCohortNames";
 
@@ -85,6 +86,9 @@ export default class CertificatesChart extends LightningElement {
   // @desc : <string> the selected cohort
   selectedCohort = defaultCohortValue;
 
+  // @desc : <bool> whether the lightning-input-field is required
+  required = false;
+
   // @desc         : converts a list of strings into a data structure that can
   //               : be used in a lightning-combobox
   // @listOfString : <array>
@@ -109,14 +113,14 @@ export default class CertificatesChart extends LightningElement {
     const certType = (this.selectedCert === defaultCertValue) ? null : this.selectedCert;
     const cohortName = (this.selectedCohort === defaultCohortValue) ? null : this.selectedCohort;
     const cacheIndex = this.toCacheIndex(cohortName, certType);
+    
     if(this.cachedChartData[cacheIndex]) {
       this.chartData = this.cachedChartData[cacheIndex];
-      return;
+    } else {
+      const [numberWithCerts, numberWithoutCerts] = await this.loadCertsData(certType, cohortName);
+      this.chartData = this.serializeData(numberWithCerts, numberWithoutCerts);
+      this.cachedChartData[cacheIndex] = this.chartData;
     }
-
-    const [numberWithCerts, numberWithoutCerts] = await this.loadCertsData(certType, cohortName);
-    this.chartData = this.serializeData(numberWithCerts, numberWithoutCerts);
-    this.cachedChartData[cacheIndex] = this.chartData;
   }
 
   // @desc  : onchange event handler for changing cert combobox
@@ -126,11 +130,16 @@ export default class CertificatesChart extends LightningElement {
     this.onchange();
   }
 
-  // @desc  : onchange handler for changing cohort combobox
-  // @event : <event>
-  changeCohort(event) {
-    this.selectedCohort = event.target.value;
-    this.onchange();
+  // @desc   : retrieve the cohort name, then update the chart
+  // @event  : <event>
+  async changeCohort(event) {
+    // @deprecated : refactor the apex controller to work with the Id
+    if(event.target.value) {
+      this.selectedCohort = await getCohortName({id: event.target.value});
+    } else {
+      this.selectedCohort = defaultCohortValue;
+    }
+    await this.onchange();
   }
 
   // @desc : serialize the with / without data for the cart
@@ -177,6 +186,8 @@ export default class CertificatesChart extends LightningElement {
     try {
       const [numberWithCerts, numberWithoutCerts] = await this.loadCertsData();
       this.chartData = this.serializeData(numberWithCerts, numberWithoutCerts);
+
+      // cache initial retrieval
       const cacheIndex = this.toCacheIndex(null, null);
       this.cachedChartData[cacheIndex] = this.chartData;
     } catch(err) {

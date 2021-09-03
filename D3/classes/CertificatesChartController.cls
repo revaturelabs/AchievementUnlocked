@@ -127,4 +127,12 @@ public with sharing class CertificatesChartController {
     }
     return cohortNames;
   }
+
+  // @desc : given cohort id, retrieve cohort name
+  @AuraEnabled(cacheable=true)
+  public static String getCohortName(String id) {
+    Cohort__c cohort = [SELECT Name FROM Cohort__c WHERE Id=:id];
+    return cohort.Name;
+  }
+
 }
