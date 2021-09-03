@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Type_Match_Validation</fullName>
-    <active>true</active>
-    <errorConditionFormula>ISPICKVAL( Attempt_Type__c , &quot;Certification&quot;)  &lt;&gt;  ISPICKVAL( Voucher__r.Voucher_Type__c , &quot;Certification&quot;)</errorConditionFormula>
-    <errorDisplayField>Attempt_Type__c</errorDisplayField>
-    <errorMessage>Please select a valid type.</errorMessage>
-</ValidationRule>
