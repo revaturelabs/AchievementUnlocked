@@ -27,7 +27,13 @@
         <br/>
         <h1>Certifications</h1>
         <template if:true={certs.data}>
-            <template
+            <lightning-input
+                    label='Certifications'
+                    type="checkbox"
+                    value={certFilter}
+                    onchange={certFiltering}>
+            </lightning-input>
+            <template if:true={certFilter}
                 for:each={certs.data.values}
                 for:item="cert">
                 <lightning-input
@@ -36,7 +42,6 @@
                     data-filter="certs"
                     data-value={cert.value}
                     type="checkbox"
-                    checked
                     onchange={handleCheckboxChange}>
                 </lightning-input>
             </template>

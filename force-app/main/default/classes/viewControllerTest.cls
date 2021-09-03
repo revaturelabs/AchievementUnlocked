@@ -281,6 +281,28 @@ private class viewControllerTest {
         system.assertEquals('Smith', a[0].Last_Name__c);
         system.assertEquals(c.Id, a[0].Cohort__c);
     }
+
+    // Tests the getAssociates method with a certification filter
+    @isTest
+    static void getAssociatesCertTypeSinglePositive() {
+        singleSetup();
+        viewController.Filters f = new viewController.Filters();
+        f.certs = new List<String>();
+        f.certs.add('ADM');
+        List<Associate__c> a = viewController.getAssociates(null, f, 'Last_Name__c', 'ASC', 1);
+        system.AssertEquals(1, a.size());
+    }
+    
+    // Tests the getAssociates method with a certification filter
+    @isTest
+    static void getAssociatesCertTypeSingleNegative() {
+        singleSetup();
+        viewController.Filters f = new viewController.Filters();
+        f.certs = new List<String>();
+        f.certs.add('PD1');
+        List<Associate__c> a = viewController.getAssociates(null, f, 'Last_Name__c', 'ASC', 1);
+        system.AssertEquals(0, a.size());
+    }
     
     // Voucher Testing
      
