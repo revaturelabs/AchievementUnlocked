@@ -2,17 +2,14 @@
     <lightning-card title="Average Topic Scores per Cohort">
         <div class="slds-grid slds-gutters">
             <div class="slds-col slds-size_1-of-2">
-                <h2>Cohort</h2>
                 <!--<lightning-combobox class="cohortSelector" options={cohortNames} onchange={changeInput}></lightning-combobox>-->
                 <lightning-record-edit-form object-api-name="Associate__c">
-                    <lightning-input-field class="cohortSelector" field-name="Cohort__c" onchange={changeInput}>
+                    <lightning-input-field class="cohortSelector" required="false" value={selectedCohort} field-name="Cohort__c" onchange={changeInput}>
                     </lightning-input-field>
                 </lightning-record-edit-form>
-                <p>There should be something above here!</p>
             </div>
             <div class="slds-col slds-size_1-of-2">
-                <h2>Certification Type</h2>
-                <lightning-combobox class="examSelector" options={examTypes} value={selectedExam} onchange={changeInput}></lightning-combobox>
+                <lightning-combobox class="examSelector" options={examTypes} label="Certification" value={selectedExam} onchange={changeInput}></lightning-combobox>
                 <lightning-input type="checkbox" label="Show average scores across all cohorts" onchange={changeAverage}></lightning-input>
             </div>
         </div>

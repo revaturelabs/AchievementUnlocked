@@ -6,46 +6,6 @@ Description: This is a radar chart that displays the average scores of each coho
     certification exams. It pulls from the "Attempts" Custom Object and displays data in the form of an SVG. It also features
     the ability to view overall average scores in each category among all cohorts.
 */
-/*
-
-To the Internal Team...
-
-    Our next goal is to be able to set some default values for this radar chart. In the cohort view, a user should be able to
-    automatically see the radar chart data for the cohort they're currently viewing. To do this, we need to pass data from a 
-    parent component (the component that holds the cohort view) to a child component (the radar chart). We actually don't need 
-    to use Lightning Message Service for this! All we have to do is set a default value for the selected cohort.
-
-    Below, you'll see that the selectedExam and selectedCohort properties determine the exam type and cohort the radar chart 
-    will show. They're also both decorated with the @api decorator, so they're both publicly available. The selectedExam
-    property has a default value of ADM, so that's automatically selected when the component is first rendered.
-
-    In the same way, in the cohort view, we want to be able to set a default value for the selectedCohort property. The default
-    value must be the ID of the cohort that is currently being viewed. That's the parameter it takes -- not the name/auto-number
-    of the cohort, but the ID. It should also be in the form of a string, not a number.
-
-    In case you're not totally familiar yet with communication between lightning web components, here's a really cool Trailhead
-    I found. It even includes a module for passing data from a parent component to a child component!
-    https://trailhead.salesforce.com/content/learn/projects/communicate-between-lightning-web-components
-    
-    You can set a default value for the cohort input field in two ways. You can set add it directly to the HTML, like this...
-
-        <lightning-input-field class="cohortSelector" field-name="Cohort__c" onchange={changeInput} value={myCohortId}>
-
-    ...where myCohortId is the value of the cohort being viewed. Don't worry about the other three properties -- they're all already
-    in the HTML, so you don't need to implement any of them.
-    
-    The second way is by just changing the initial declaration of selectedCohort in this Javascript file. You can see that I had done
-    this with the selectedExam component to set a default value of ADM. In your case, it would probably look like this...
-
-        @api selectedCohort = cohortId
-
-    ...where cohortId is some variable that holds the current ID of the cohort, in the form of a string.
-
-    You shouldn't really need to mess too much with the code below, or write any fancy new functions. All you have to do is pass the ID
-    of the cohort that is currently being viewed in the cohort view, and pass its ID down to this component. Use the two methods above to
-    process it however you like.
-
-*/
 import { LightningElement, api, wire, track } from 'lwc';
 import { loadScript, loadStyle } from 'lightning/platformResourceLoader';
 import { getPicklistValues, getObjectInfo } from 'lightning/uiObjectInfoApi';
@@ -62,7 +22,7 @@ export default class CarloTest extends LightningElement {
     //the data you can search up
     @api cohortNames = [];
     @api examTypes = [];
-    @api selectedCohort = '';
+    @api selectedCohort = 'a028A000004yP0CQAU';
     @api selectedExam = 'ADM';
     @api showAverage = false;
     @api showCurrentCohorts = false;
@@ -126,6 +86,8 @@ export default class CarloTest extends LightningElement {
         }
 
         try{
+            this.changeInput();
+
             //setting initial radarChartOptions for our particular case
             let margin = {top: 100, bottom: 100, left: 100, right: 100},
             width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right,
