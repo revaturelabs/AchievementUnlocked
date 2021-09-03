@@ -38,6 +38,17 @@ export default class SearchFilter extends LightningElement {
     })
     certs;
 
+    certFilter = false;
+
+    certFiltering(event) {
+        this.certFilter = event.target.checked;
+        if (event.target.checked == false) {
+            this.filters.certs = null;
+        } else {
+            this.filters.certs = [];
+        }
+        this.delayedFireFilterChangeEvent();
+    }
     
     handleSearchKeyChange(event) {
         this.filters.searchKey = event.target.value;
@@ -49,9 +60,6 @@ export default class SearchFilter extends LightningElement {
         if (!this.filters.statuses) {
             // Lazy initialize filters with all values initially set
             this.filters.statuses = this.statuses.data.values.map(
-                (item) => item.value
-            );
-            this.filters.certs = this.certs.data.values.map(
                 (item) => item.value
             );
         }
