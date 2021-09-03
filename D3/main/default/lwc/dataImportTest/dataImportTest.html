@@ -1,0 +1,25 @@
+<template>
+    <lightning-card title="ApexWireMethodToProperty" icon-name="custom:custom63">
+        <div class="slds-m-around_medium">
+            <template if:true={contacts.data}>
+                <template for:each={contacts.data} for:item="contact">
+                    <p key={contact.Id}>{contact.Name}</p>
+                </template>
+            </template>
+            <template if:true={contacts.error}>
+                <p>error</p>
+            </template>
+        </div>
+    </lightning-card>
+    <lightning-card title="LibsD3" icon-name="custom:custom19">
+     <div class="slds-var-m-around_medium">
+          <!--<svg
+               class="d3"
+               width={svgWidth}
+              height={svgHeight}
+             lwc:dom="manual"
+         ></svg>-->
+        </div>
+        <p>{str}</p>
+    </lightning-card>
+</template>

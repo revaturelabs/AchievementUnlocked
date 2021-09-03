@@ -1,0 +1,27 @@
+<template>
+    <lightning-card title="d3IndexComponent" icon-name="custom:custom19">
+
+        <lightning-combobox
+            name="progress"
+            label="Status"
+            value={value}
+            placeholder="Select Progress"
+            options={options}
+            onchange={handleChange} ></lightning-combobox>
+
+
+        <template if:true={renderBarChart}>
+            <!--<c-side-stacked-chart></c-side-stacked-chart>
+            <c-attempt-bar-chart></c-attempt-bar-chart>-->
+            <c-bar-graph-index models={models} testmodel={testmodel}></c-bar-graph-index>
+        </template>
+        <template if:true={renderTreeMap}>
+            <c-tree-map onchild={childEvent} models={treemodels}></c-tree-map>
+        </template>
+        
+        <template if:true={renderStackedBarChart}>
+            <c-stacked-bar-chart></c-stacked-bar-chart>
+        </template>
+        
+    </lightning-card>
+</template>
