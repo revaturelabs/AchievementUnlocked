@@ -12,7 +12,7 @@ public class dataGrabberTest {
         //See if getCohorts() can retrieve any data
         List<String> myOtherList = new List<String>();
         system.assert(myOtherList.size()==0);
-        myOtherList = dataGrabber.getCohorts();
+        myOtherList = dataGrabber.getCohorts(false);
         system.assert(myOtherList.size() > 0);
     }
     

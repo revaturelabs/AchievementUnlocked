@@ -12,9 +12,13 @@ public with sharing class dataGrabber {
     }
 
     @AuraEnabled (cacheable=true)
-    public static List<String> getCohorts() {
+    public static List<String> getCohorts(Boolean jCurrent) {
+        String currentCohort = '';
+        if (jCurrent = true) {
+            currentCohort = ' WHERE end_date__c < today';
+        }
         List<String> cohorts = new List<String>();
-        List<Cohort__c> objects = [SELECT name FROM cohort__c];
+        List<Cohort__c> objects = Database.query('SELECT name FROM cohort__c'+currentCohort);
         for (Cohort__c co : objects) {
             cohorts.add(co.name);
         }
@@ -26,7 +30,7 @@ public with sharing class dataGrabber {
         List<Object> finalList = new List<Object>();
         String cohortOnly = '';
         if (jAverage == false) {
-            cohortOnly = ' WHERE voucher__r.associate__r.cohort__r.name =: jCohort';
+            cohortOnly = ' WHERE voucher__r.associate__r.cohort__r.Id =: jCohort';
         }
         if (jAttempt == 'ADM') {
             finalList = Database.query('SELECT AVG(configuration_and_setup__c), AVG(object_manager_and_lightning_app_builder__c), AVG(sales_and_marketing_applications__c), AVG(service_and_support_applications__c), AVG(productivity_and_collaboration__c), AVG(data_and_analytics_management__c), AVG(workflow_process_automation__c) FROM attempt__c'+cohortOnly);
