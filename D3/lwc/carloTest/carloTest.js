@@ -22,7 +22,7 @@ export default class CarloTest extends LightningElement {
     //the data you can search up
     @api cohortNames = [];
     @api examTypes = [];
-    @api selectedCohort = 'a028A000004yP0CQAU';
+    @api selectedCohort = '';
     @api selectedExam = 'ADM';
     @api showAverage = false;
     @api showCurrentCohorts = false;

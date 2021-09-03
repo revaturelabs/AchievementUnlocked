@@ -4,7 +4,7 @@
             <div class="slds-col slds-size_1-of-2">
                 <!--<lightning-combobox class="cohortSelector" options={cohortNames} onchange={changeInput}></lightning-combobox>-->
                 <lightning-record-edit-form object-api-name="Associate__c">
-                    <lightning-input-field class="cohortSelector" required="false" value={selectedCohort} field-name="Cohort__c" onchange={changeInput}>
+                    <lightning-input-field class="cohortSelector" value={selectedCohort} field-name="Cohort__c" onchange={changeInput}>
                     </lightning-input-field>
                 </lightning-record-edit-form>
             </div>
