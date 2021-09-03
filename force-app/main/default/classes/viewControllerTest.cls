@@ -37,6 +37,32 @@ private class viewControllerTest {
         Database.insert(cohorts);
     }
     
+    static void cohortFilteringSetup() {
+        List<Cohort__c> cohorts = new List<Cohort__c>();
+        // Create 4 active cohorts
+        for (Integer i=0; i<4; i++) {
+            Cohort__c c = new Cohort__c();
+            c.Start_Date__c = Date.today().addDays(-i);
+            c.End_Date__c = Date.today().addDays(i);
+            cohorts.add(c);
+        }
+        // Create 5 inactive cohorts; 2 that have already completed
+        // and 3 that have yet to start
+        for (Integer i=0; i<2; i++) {
+            Cohort__c c = new Cohort__c();
+            c.Start_Date__c = Date.today().addDays(-(i+2));
+            c.End_Date__c = Date.today().addDays(-(i+1));
+            cohorts.add(c);
+        }
+        for (Integer i=0; i<3; i++) {
+            Cohort__c c = new Cohort__c();
+            c.Start_Date__c = Date.today().addDays((i+1));
+            c.End_Date__c = Date.today().addDays((i+2));
+            cohorts.add(c);
+        }
+        Database.insert(cohorts);
+    }
+    
     // Cohort Testing
     
     // A positive test on a single cohort
@@ -55,6 +81,32 @@ private class viewControllerTest {
         List<Cohort__c> cohorts = viewController.getCohorts();
         system.assertEquals(3, cohorts.size());
     }
+    
+    // Tests the getFilteredCohorts on getting 'all' cohorts
+    @isTest
+    static void getFilteredCohortsAllBulkPositive() {
+        cohortFilteringSetup();
+        List<Cohort__c> cohorts = viewController.getFilteredCohorts('all');
+        system.assertEquals(9, cohorts.size());
+    }
+    
+    // Tests the getFilteredCohorts on getting 'active' cohorts
+    @isTest
+    static void getFilteredCohortsActiveBulkPositive() {
+        cohortFilteringSetup();
+        List<Cohort__c> cohorts = viewController.getFilteredCohorts('active');
+        system.assertEquals(4, cohorts.size());
+    }
+    
+    // Tests the getFilteredCohorts on getting 'inactive' cohorts
+    @isTest
+    static void getFilteredCohortsInactiveBulkPositive() {
+        cohortFilteringSetup();
+        List<Cohort__c> cohorts = viewController.getFilteredCohorts('inactive');
+        system.assertEquals(5, cohorts.size());
+    }
+    
+    // Associate Testing
     
     // Tests the getAllAssociates method on retrieving a single associate
     // with no arguments

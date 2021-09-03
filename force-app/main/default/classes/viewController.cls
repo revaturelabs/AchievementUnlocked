@@ -6,6 +6,19 @@ public with sharing class viewController {
         return [SELECT Start_Date__c, End_Date__c FROM Cohort__c];
     }
 
+    // Returns a list of cohorts filtered by the parameter filter
+    @AuraEnabled(cacheable=true)
+    public static List<Cohort__c> getFilteredCohorts(String filter) {
+        String query = 'SELECT Start_Date__c, End_Date__c FROM Cohort__c';
+        Date d = Date.today();
+        if (filter == 'active') {
+            query += ' WHERE Start_Date__c <= :d AND End_Date__c >= :d';
+        } else if (filter == 'inactive') {
+            query += ' WHERE Start_Date__c > :d OR End_Date__c < :d';
+        }
+        return Database.query(query);
+    }
+
     // Returns a list of all associates
     @AuraEnabled(cacheable=true)
     public static List<Associate__c> getAllAssociates() {
