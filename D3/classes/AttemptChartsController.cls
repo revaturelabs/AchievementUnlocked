@@ -5,6 +5,48 @@ public with sharing class AttemptChartsController {
     }
 
     @AuraEnabled(cacheable=true)
+    public static List<CohortWrapper> getCohortById(String cohortId){
+        List<CohortWrapper> wrapperList = new List<CohortWrapper>();
+        List<Associate__c> aList = getCohortHelper(cohortId, 'ADM');
+        List<Associate__c> pd1List = getCohortHelper(cohortId, 'PD1');
+        List<Associate__c> advList = getCohortHelper(cohortId, 'Advanced ADM');
+        List<Associate__c> pd2List = getCohortHelper(cohortId, 'PD2');
+        List<Associate__c> appBuilderList = getCohortHelper(cohortId, 'Platform App Builder');
+        List<Associate__c> js1List = getCohortHelper(cohortId, 'JS Developer 1');
+        wrapperList.add(getCohortWrapperConvert(aList, 'ADM'));
+        wrapperList.add(getCohortWrapperConvert(pd1List, 'PD1'));
+        wrapperList.add(getCohortWrapperConvert(advList, 'Advanced ADM'));
+        wrapperList.add(getCohortWrapperConvert(pd2List, 'PD2'));
+        wrapperList.add(getCohortWrapperConvert(appBuilderList, 'Platform App Builder'));
+        wrapperList.add(getCohortWrapperConvert(js1List, 'JS Developer 1'));
+        return wrapperList;
+    }
+
+    private static List<SObject> getCohortHelper(String cohortId, String cert){
+        return [SELECT Name, (SELECT Name, Number_of_Attempts__c, Certification_Type__c, Certified__c 
+        FROM Vouchers__r WHERE Certification_Type__c=:cert AND Certified__c=True) 
+        FROM Associate__c WHERE Cohort__c= :cohortId AND Associate__c.Id IN 
+        (SELECT Associate__c FROM Voucher__c WHERE Certified__c=True AND Certification_Type__c=:cert)];
+    }
+
+    private static CohortWrapper getCohortWrapperConvert(List<Associate__c> aList, String cert){
+        Integer att1 = 0, att2 = 0, att3 = 0, att4 = 0;
+            for(Associate__c a : aList){
+                for(Voucher__c v : a.Vouchers__r){
+                    //System.debug(a.Name);
+                    //System.debug(v.Name);
+                    Decimal temp = v.Number_of_Attempts__c;
+                    if(temp == 1) att1++;
+                    else if(temp == 2) att2++;
+                    else if(temp == 3) att3++;
+                    else if(temp >= 4) att4++;
+                }
+            }
+
+            return new CohortWrapper(cert, 'start', 'parent', att1, att2, att3, att4);
+    }
+
+    @AuraEnabled(cacheable=true)
     public static List<SObject> getADMOverview(){
         List<Associate__c> A =  [SELECT Name, (SELECT Name, Number_of_Attempts__c, Certification_Type__c, Certified__c FROM Vouchers__r WHERE Certification_Type__c='ADM' AND Certified__c=True) FROM Associate__c WHERE Associate__c.Id IN (SELECT Associate__c FROM Voucher__c WHERE Certified__c=True AND Certification_Type__c='ADM')];
         System.debug(A);

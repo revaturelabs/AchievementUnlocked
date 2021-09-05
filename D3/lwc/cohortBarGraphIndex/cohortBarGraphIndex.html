@@ -1,0 +1,8 @@
+<template>
+    <lightning-card title="Cohort Graphs" icon-name="utility:favorite">
+        <template if:true={renderBarChart}>
+            <c-bar-graph-index models={models} modelarray={modelarray}></c-bar-graph-index>
+        </template>
+    </lightning-card>
+
+</template>

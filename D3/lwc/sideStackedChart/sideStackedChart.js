@@ -26,7 +26,7 @@ export default class SideStackedChart extends LightningElement {
             return;
         }
         this.d3Initialized = true;
-
+        console.log(this.models);
         try{
             await loadScript(this, D3 + '/d3/d3.min.js');
             await loadScript(this, D3Scale + '/d3scale');
@@ -55,7 +55,7 @@ export default class SideStackedChart extends LightningElement {
                     .rangeRound([0, width]);	// .rangeRound([height, 0]);
 
                     var z = d3.scaleOrdinal()
-                    .range(["#1414ff", "#2e2eff", "#4747ff", "#6161ff"]);
+                    .range(["#9370DB", "#87CEFA", "#20B2AA", "#90EE90"]);
                     //.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
                     let keys = ["field4", "field3", "field2", "field1"];
@@ -94,7 +94,7 @@ export default class SideStackedChart extends LightningElement {
                         console.log(i);
                         let rectVar = i[1] - i[0];
                         let total = i.data.field1 + i.data.field2 + i.data.field3 + i.data.field4;
-                        let per = (rectVar/total) * 100;
+                        let per = Math.trunc((rectVar/total) * 100);
                         l.attr("x", d.x - 100);
                         //legend2.html("helo html");
                         t.attr("x", d.x)

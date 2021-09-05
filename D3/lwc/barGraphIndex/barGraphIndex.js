@@ -12,6 +12,7 @@ export default class BarGraphIndex extends LightningElement {
     ];*/
     @api models;
     @api testmodel;
+    @api modelarray;
       admModels = [
         {
           "model_name":"Adm Cert",
@@ -46,7 +47,10 @@ export default class BarGraphIndex extends LightningElement {
         return [
             { label: 'Adm', value: 'adm' },
             { label: 'Pd1', value: 'pd1' },
+            { label: 'Advanced Adm', value: 'adadm' },
             { label: 'Pd2', value: 'pd2' },
+            { label: 'Platform App Builder', value: 'platapp' },
+            { label: 'JS Developer 1', value: 'jsd1' },
         ];
     }
 
@@ -62,10 +66,18 @@ export default class BarGraphIndex extends LightningElement {
         this.renderGraphs = false;
         this.comboBoxValue = event.detail.value;
         if(this.comboBoxValue === "adm")
-          this.models = this.admModels;
+          this.models = this.modelarray[0];
         else if(this.comboBoxValue === "pd1")
-          this.models = this.pd1Models;
-        setTimeout(() =>{ console.log("hello time"); this.renderGraphs = true; }, 30);
+          this.models = this.modelarray[1];
+        else if(this.comboBoxValue === "adadm")
+          this.models = this.modelarray[2];
+        else if(this.comboBoxValue === "pd2")
+          this.models = this.modelarray[3];
+        else if(this.comboBoxValue === "platapp")
+          this.models = this.modelarray[4];
+        else if(this.comboBoxValue === "jsd1")
+          this.models = this.modelarray[5];
+        setTimeout(() =>{ this.renderGraphs = true; }, 30);
         //this.renderStacked = true;
         //this.renderStacked();
       }
