@@ -159,15 +159,52 @@ public with sharing class viewController {
 
     @AuraEnabled(cacheable=true)
     public static Integer getAssociateCount(Filters filters) {
+        Set<Id> ids = new Set<Id>();
+        if (filters != null && filters.certs != null) {
+            List<Attempt__c> attempts = [SELECT Id, Attempt_Type__c, Voucher__c, Passed__c, Voucher__r.Associate__c, Voucher__r.Certification_Type__c 
+        								FROM Attempt__c
+        								WHERE Voucher__r.Certification_Type__c IN :filters.certs AND Passed__c = true AND Attempt_Type__c = 'Certification'];
+            // A map of associate id -> list of certification filters
+            // Each unique id is given a list of all requested cert types
+            // Whenever an attempt with that cert type is found, it is removed
+            // from that associate's list
+            // An associate with an empty list has all the required certs and
+            // is added to the list of ids to be searched for
+            Map<Id,List<String>> filterMap = new Map<Id,List<String>>();
+            for (Attempt__c att : attempts) {
+                if (!filterMap.containsKey(att.Voucher__r.Associate__c)) {
+                    List<String> certList = new List<String>();
+                    for (String certType : filters.certs) {
+                        certList.add(certType);
+                    }
+                    filterMap.put(att.Voucher__r.Associate__c, certList);
+                }
+                Integer certListIndex = filterMap.get(att.Voucher__r.Associate__c).indexOf(att.Voucher__r.Certification_Type__c);
+                if (certListIndex != -1) {
+                    filterMap.get(att.Voucher__r.Associate__c).remove(certListIndex);
+                }
+                if (filterMap.get(att.Voucher__r.Associate__c).isEmpty()) {
+                    ids.add(att.Voucher__r.Associate__c);
+                }
+            }
+        }
+        
         Boolean needAnd = false;
         String associates = 'SELECT COUNT() ' + 
         'FROM Associate__c ';
-        if (filters.statuses != null || filters.searchKey != null) {
+        if (filters.statuses != null || filters.searchKey != null || filters.certs != null) {
             associates += 'WHERE ';        
         }
         if (!String.isEmpty(filters.searchKey)) {
             String key = '%' + filters.searchKey + '%';
             associates += 'Last_Name__c LIKE :key ';
+            needAnd= true;
+        }
+        if (filters.certs != null) {
+            if (needAnd) {
+                associates += 'AND ';
+            }
+            associates += 'Id IN :ids ';
             needAnd= true;
         }
         if (filters.statuses != null) {
