@@ -1,3 +1,14 @@
+/*
+ * Name: Jacob Schwartz
+ * Date: September 5, 2021
+ * Project3: Achievement Unlocked
+ * Description: Displays side bar chart. Takes in a paramter models in 
+ * json array format and displays accordingly. Uses D3 library.
+ * 
+ * For Future Update: Make the chart more dynamic by rendering more
+ * than just 'field1' 'field2'. Will need to make changes to input and
+ * how it is handled. 
+ */
 import { LightningElement, api } from 'lwc';
 import { loadScript, loadStyle } from 'lightning/platformResourceLoader';
 import D3 from '@salesforce/resourceUrl/d3';
@@ -26,7 +37,7 @@ export default class SideStackedChart extends LightningElement {
             return;
         }
         this.d3Initialized = true;
-        console.log(this.models);
+        //console.log(this.models);
         try{
             await loadScript(this, D3 + '/d3/d3.min.js');
             await loadScript(this, D3Scale + '/d3scale');
@@ -87,19 +98,23 @@ export default class SideStackedChart extends LightningElement {
                     .enter().append("g")
                     .attr("fill", function(d) { return z(d.key); })
                     .selectAll("rect")
-                    .data(function(d) {console.log("it is running before: " + d); return d; })
+                    .data(function(d) { return d; })
                     .enter().append("rect")
                     .on("mouseover", (d, i) => {
-                        console.log(i.data);
-                        console.log(i);
+                        //console.log(i.data);
+                        //console.log(i);
                         let rectVar = i[1] - i[0];
                         let total = i.data.field1 + i.data.field2 + i.data.field3 + i.data.field4;
                         let per = Math.trunc((rectVar/total) * 100);
-                        l.attr("x", d.x - 100);
+                        let dx = d.x;
+                        if(dx > 330) dx = 330;
+                        else if(dx < 120) dx = 120;
+                        l.attr("x", dx - 100);
                         //legend2.html("helo html");
-                        t.attr("x", d.x)
+                        //console.log('mouseofverx', d.x);
+                        t.attr("x", dx)
                         .text(rectVar + " out of " + total);
-                        t2.attr("x", d.x)
+                        t2.attr("x", dx)
                         .text(per + "%");
                         legend2
                         .style("opacity", 1);
@@ -107,13 +122,13 @@ export default class SideStackedChart extends LightningElement {
                     .on("mouseout", (d, i) => {
                         legend2.style("opacity", 0);
                     })
-                    .attr("y", function(d) {console.log(y(d.data.model_name)); return y(d.data.model_name) + 125; })//+ 125 for single 
+                    .attr("y", function(d) { return y(d.data.model_name) + 125; })//+ 125 for single 
                     .attr("x", 0)//.attr("x", function(d) {console.log("dx: " + x(d[0])); return x(d[0]); })
                     .attr("height", y.bandwidth() - 200)//-200
                     .transition()
                     .duration(1000)
-                    .attr("x", function(d) {console.log("dx: " + x(d[0])); return x(d[0]); })			
-                    .attr("width", function(d) { console.log(x(d[1]) - x(d[0]));return x(d[1]) - x(d[0]); })
+                    .attr("x", function(d) { return x(d[0]); })			
+                    .attr("width", function(d) { return x(d[1]) - x(d[0]); })
                     ;	
                     
                     /*g.append("g")
@@ -177,7 +192,7 @@ export default class SideStackedChart extends LightningElement {
                     .attr("fill", "white")
                     .attr("rx", 15)
                     .style("stroke", "black")
-       			    .style("stroke-width", 3);
+       			    .style("stroke-width", 1);
 
                     var t = legend2.append("text")
                        .attr("x", 215)
@@ -209,8 +224,8 @@ export default class SideStackedChart extends LightningElement {
 
     getLegendSymbols(d){
         if(d === "field1") return "1st Attempt";
-        else if(d === "field2") return " 2nd Attempt";
+        else if(d === "field2") return "2nd Attempt";
         else if(d === "field3") return "3rd Attempt";
-        else if(d === "field4") return ">= 4 Attempts";
+        else if(d === "field4") return " >=4 Attempts    ";
     }
 }

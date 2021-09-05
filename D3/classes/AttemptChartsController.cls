@@ -1,8 +1,4 @@
 public with sharing class AttemptChartsController {
-    @AuraEnabled
-    public static String serverEcho(String firstName) {
-        return ('Hello from the server, ' + firstName);
-    }
 
     @AuraEnabled(cacheable=true)
     public static List<CohortWrapper> getCohortById(String cohortId){
@@ -29,6 +25,7 @@ public with sharing class AttemptChartsController {
         (SELECT Associate__c FROM Voucher__c WHERE Certified__c=True AND Certification_Type__c=:cert)];
     }
 
+    @TestVisible
     private static CohortWrapper getCohortWrapperConvert(List<Associate__c> aList, String cert){
         Integer att1 = 0, att2 = 0, att3 = 0, att4 = 0;
             for(Associate__c a : aList){

@@ -1,3 +1,18 @@
+/*
+ * Name: Jacob Schwartz
+ * Date: September 5, 2021
+ * Project3: Achievement Unlocked
+ * Description: Is an index component that contains both bar graphs.
+ * The comonent takes in two paramaters when called, models and testmodel
+ * and these params are passed to the respective bar graph.
+ * changeGraph() will change from stacked to bar graph and pass the 
+ * necessary graph. 
+ * handleCertChange() will change the certification type and update the data.
+ * 
+ * For Future Update: Need to change handleCertChange and combobox values to
+ * handle values dynamically, not just for salesforce.
+ */ 
+
 import { LightningElement, api } from 'lwc';
 
 export default class BarGraphIndex extends LightningElement {
@@ -85,6 +100,6 @@ export default class BarGraphIndex extends LightningElement {
       changeGraphModels(showModel){
         this.renderGraphs = false;
         this.models = showModel;
-        setTimeout(() =>{ console.log("hello time"); this.renderGraphs = true; }, 3000);
+        setTimeout(() =>{  this.renderGraphs = true; }, 3000);
       }
 }

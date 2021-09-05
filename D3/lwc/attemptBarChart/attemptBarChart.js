@@ -1,3 +1,14 @@
+/*
+ * Name: Jacob Schwartz
+ * Date: September 5, 2021
+ * Project3: Achievement Unlocked
+ * Description: Contains bar chart based on attempts. Takes in a parameter
+ * in json array format and renders the graph accordingly.c/d3Example
+ * 
+ * For Future update: Make individual bars render dynamically based on 
+ * input from the array.
+ */
+
 import { LightningElement, api } from 'lwc';
 import { loadScript, loadStyle } from 'lightning/platformResourceLoader';
 import D3 from '@salesforce/resourceUrl/d3';
