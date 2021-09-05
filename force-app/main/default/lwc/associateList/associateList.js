@@ -81,14 +81,14 @@ export default class AssociateList extends LightningElement {
 
     handleFirst(){
         this.page = 1;
-        
+        this.clearAssociate();
     }
 
     handlePrev(){
         if(this.page > 1){
             let currentPage = this.page;
             this.page = currentPage - 1;
-            
+            this.clearAssociate();
         }
     }
 
@@ -96,7 +96,14 @@ export default class AssociateList extends LightningElement {
         if((this.page * 10) < this.count){
             let currentPage = this.page;
             this.page = currentPage + 1;
-            
+            this.clearAssociate();
         }
+    }
+
+    clearAssociate() {
+        const sendId = new CustomEvent('associateselected', {
+            detail: null
+        });
+        this.dispatchEvent(sendId);
     }
 }
