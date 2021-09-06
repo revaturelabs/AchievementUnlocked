@@ -8,4 +8,17 @@
         <target>lightning__HomePage</target>
         <target>lightningCommunity__Page</target>
     </targets>
+<<<<<<< HEAD
+=======
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage, lightning__RecordPage, lightning__HomePage">
+            <property
+                name="recordId"
+                type="String"
+                label="Record Id"
+                description="Automatically bind the page's record id to the component variable"
+                default="{recordId}" />
+        </targetConfig>
+    </targetConfigs>
+>>>>>>> b875f2f59921b1b47c6968a586fdbfd4742a0eae
 </LightningComponentBundle>

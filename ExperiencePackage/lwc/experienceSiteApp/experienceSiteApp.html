@@ -1,14 +1,24 @@
 <template>
+<<<<<<< HEAD:ExperiencePackage/lwc/experienceSiteApp/experienceSiteApp.html
     <div> rev logo here</div>>
+=======
+    
+>>>>>>> b875f2f59921b1b47c6968a586fdbfd4742a0eae:ExperiencePackage/force-app/main/default/lwc/experienceSiteApp/experienceSiteApp.html
         <c-navigation-Bar onnavclick={handleNavClick}></c-navigation-Bar>
+    <div style={websiteBackground}>
         <template if:true={home}>
             <c-homepage></c-homepage>
         </template>
         <template if:true={certificationPage}>
+<<<<<<< HEAD:ExperiencePackage/lwc/experienceSiteApp/experienceSiteApp.html
             <c-certification-Page></c-certification-Page>>
+=======
+            <c-certification-Page></c-certification-Page>
+>>>>>>> b875f2f59921b1b47c6968a586fdbfd4742a0eae:ExperiencePackage/force-app/main/default/lwc/experienceSiteApp/experienceSiteApp.html
         </template>
         <template if:true={attemptsPage} >
-            <div> Attempts Page Will GO Here</div>
+            <c-attempts-Page></c-attempts-Page>
         </template>
+
     </div>
 </template>

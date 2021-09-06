@@ -6,15 +6,6 @@
   <!--bar for navigation-->
   <br /><br />
 
-  <!--titles-->
-  <div class="slds-grid slds-gutters">
-    <div class="slds-col slds-size_1-of-3">
-      <p style="text-align: center"><b>Admin</b></p>
-    </div>
-    <div class="slds-col slds-size_1-of-3">
-      <p style="text-align: center"><b>Developer</b></p>
-    </div>
-  </div>
 
   <!--Badges for admin and Developer side by side-->
   <div class="slds-grid slds-gutters">
@@ -135,6 +126,8 @@
       </div>
       <div class="slds-col slds-size_1-of-2">
       <lightning-card title="Vouchers">
+        <lightning-button if:true={boolVisiblePabCert} label="Certification" onclick={handleClickPabCert} slot="actions"></lightning-button>
+        <lightning-button if:true={boolVisiblePabPra} label="Practice" onclick={handleClickPabPra} slot="actions"></lightning-button>
         <lightning-datatable
           data={voucherAdm.data}
           columns={voucherColumns}
@@ -152,16 +145,14 @@
       <lightning-card>
         <lightning-button
           variant="Neutral"
-          label="Register for exam"
-          title="Register for exam"
-          onclick={handleClickRegister}
+          label="Register for Cert Exam"
           class="slds-m-left_x-small"
-        ></lightning-button>
+          onclick={openWebAssessor}> </lightning-button>
         <lightning-button
           variant="Neutral"
           label="Log an Attempt Button"
           title="Log an Attempt Button"
-          onclick={handleClick}
+          onclick={showAttemptsInputModal}
           class="slds-m-left_x-small"
         ></lightning-button>
         </lightning-card>
@@ -194,6 +185,8 @@
       </div>
       <div class="slds-col slds-size_1-of-2">
       <lightning-card title="Vouchers">
+        <lightning-button if:true={boolVisiblePabCert} label="Certification" onclick={handleClickPabCert} slot="actions"></lightning-button>
+        <lightning-button if:true={boolVisiblePabPra} label="Practice" onclick={handleClickPabPra} slot="actions"></lightning-button>
         <lightning-datatable
           data={voucherAdvAdm.data}
           columns={voucherColumns}
@@ -210,17 +203,15 @@
       <div class="slds-col slds-size_1-of-2">
       <lightning-card>
         <lightning-button
-          variant="Neutral"
-          label="Register for exam"
-          title="Register for exam"
-          onclick={handleClickRegister}
-          class="slds-m-left_x-small"
-        ></lightning-button>
+        variant="Neutral"
+        label="Register for Cert Exam"
+        class="slds-m-left_x-small"
+        onclick={openWebAssessor}> </lightning-button>
         <lightning-button
           variant="Neutral"
           label="Log an Attempt Button"
           title="Log an Attempt Button"
-          onclick={handleClick}
+          onclick={showAttemptsInputModal}
           class="slds-m-left_x-small"
         ></lightning-button>
         </lightning-card>
@@ -253,6 +244,8 @@
       </div>
       <div class="slds-col slds-size_1-of-2">
       <lightning-card title="Vouchers">
+        <lightning-button if:true={boolVisiblePabCert} label="Certification" onclick={handleClickPabCert} slot="actions"></lightning-button>
+        <lightning-button if:true={boolVisiblePabPra} label="Practice" onclick={handleClickPabPra} slot="actions"></lightning-button>
         <lightning-datatable
           data={voucherJavascr.data}
           columns={voucherColumns}
@@ -269,17 +262,15 @@
       <div class="slds-col slds-size_1-of-2">
       <lightning-card>
         <lightning-button
-          variant="Neutral"
-          label="Register for exam"
-          title="Register for exam"
-          onclick={handleClickRegister}
-          class="slds-m-left_x-small"
-        ></lightning-button>
+        variant="Neutral"
+        label="Register for Cert Exam"
+        class="slds-m-left_x-small"
+        onclick={openWebAssessor}> </lightning-button>
         <lightning-button
           variant="Neutral"
           label="Log an Attempt Button"
           title="Log an Attempt Button"
-          onclick={handleClick}
+          onclick={showAttemptsInputModal}
           class="slds-m-left_x-small"
         ></lightning-button>
         </lightning-card>
@@ -312,6 +303,8 @@
       </div>
       <div class="slds-col slds-size_1-of-2">
       <lightning-card title="Vouchers">
+        <lightning-button if:true={boolVisiblePabCert} label="Certification" onclick={handleClickPabCert} slot="actions"></lightning-button>
+        <lightning-button if:true={boolVisiblePabPra} label="Practice" onclick={handleClickPabPra} slot="actions"></lightning-button>
         <lightning-datatable
           data={voucherPd1.data}
           columns={voucherColumns}
@@ -329,16 +322,14 @@
       <lightning-card>
         <lightning-button
           variant="Neutral"
-          label="Register for exam"
-          title="Register for exam"
-          onclick={handleClickRegister}
+          label="Register for Cert Exam"
           class="slds-m-left_x-small"
-        ></lightning-button>
+          onclick={openWebAssessor}> </lightning-button>
         <lightning-button
           variant="Neutral"
           label="Log an Attempt Button"
           title="Log an Attempt Button"
-          onclick={handleClick}
+          onclick={showAttemptsInputModal}
           class="slds-m-left_x-small"
         ></lightning-button>
         </lightning-card>
@@ -371,6 +362,8 @@
       </div>
       <div class="slds-col slds-size_1-of-2">
         <lightning-card title="Vouchers">
+          <lightning-button if:true={boolVisiblePabCert} label="Certification" onclick={handleClickPabCert} slot="actions"></lightning-button>
+        <lightning-button if:true={boolVisiblePabPra} label="Practice" onclick={handleClickPabPra} slot="actions"></lightning-button>
         <lightning-datatable
           data={voucherPd2.data}
           columns={voucherColumns}
@@ -387,17 +380,15 @@
       <div class="slds-col slds-size_1-of-2">
       <lightning-card>
         <lightning-button
-          variant="Neutral"
-          label="Register for exam"
-          title="Register for exam"
-          onclick={handleClickRegister}
-          class="slds-m-left_x-small"
-        ></lightning-button>
+        variant="Neutral"
+        label="Register for Cert Exam"
+        class="slds-m-left_x-small"
+        onclick={openWebAssessor}> </lightning-button>
         <lightning-button
           variant="Neutral"
           label="Log an Attempt Button"
           title="Log an Attempt Button"
-          onclick={handleClick}
+          onclick={showAttemptsInputModal}
           class="slds-m-left_x-small"
         ></lightning-button>
         </lightning-card>
@@ -430,8 +421,8 @@
       </div>
       <div class="slds-col slds-size_1-of-2">
         <lightning-card title="Vouchers">
-        <lightning-button if:true={boolVisiblePabCert} label="Certification" onclick={handleClickPabCertMdl} slot="actions"></lightning-button>
-        <lightning-button if:true={boolVisiblePabPra} label="Practice" onclick={handleClickPabPraMdl} slot="actions"></lightning-button>
+          <lightning-button if:true={boolVisiblePabCert} label="Certification" onclick={handleClickPabCer} slot="actions"></lightning-button>
+          <lightning-button if:true={boolVisiblePabPra} label="Practice" onclick={handleClickPabPra} slot="actions"></lightning-button>
         <lightning-datatable
           data={voucherPab.data}
           columns={voucherColumns}
@@ -447,18 +438,16 @@
     <div class="slds-grid slds-gutters">
       <div class="slds-col slds-size_1-of-2">
         <lightning-card>
-        <lightning-button
+          <lightning-button
           variant="Neutral"
-          label="Register for exam"
-          title="Register for exam"
-          onclick={handleClickRegister}
+          label="Register for Cert Exam"
           class="slds-m-left_x-small"
-        ></lightning-button>
+          onclick={openWebAssessor}> </lightning-button>
         <lightning-button
           variant="Neutral"
           label="Log an Attempt Button"
           title="Log an Attempt Button"
-          onclick={handleClick}
+          onclick={showAttemptsInputModal}
           class="slds-m-left_x-small"
         ></lightning-button>
         </lightning-card>
@@ -496,8 +485,8 @@
                     <p><b>If you want to show that you have used the voucher, click Save.</b></p>
                     <lightning-record-edit-form 
                       object-api-name="Voucher__c"
-                      record-id="a03J000001Lm4vOIAR">
-                      <lightning-input-field
+                      record-id={recordId}>
+                      <lightning-input-field if:true={boolVisibleInput}
                         field-name="Status__c" value="Used">
                         </lightning-input-field>
                         <lightning-button
@@ -509,7 +498,48 @@
                 </div>
                 <footer class="slds-modal__footer">
                     <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
-                    <button class="slds-button slds-button_neutral" onclick={closeModal} title="Ok">Ok</button>
+                    <button class="slds-button slds-button_neutral" onclick={closeModalPabCert} title="Ok">Ok</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+<<<<<<< HEAD:ExperiencePackage/lwc/certificationPage/certificationPage.html
+
+    <template if:true={inputAttemptsModal} >
+        <c-attempts-Input-Modal></c-attempts-Input-Modal>
+=======
+      <template if:true={modalPabPra}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Practice</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    <p><b>If you want to show that you have used the voucher, click Save.</b></p>
+                    <lightning-record-edit-form 
+                      object-api-name="Voucher__c"
+                      record-id={recordId}>
+                      <lightning-input-field if:true={boolVisibleInput}
+                        field-name="Status__c" value="Used">
+                        </lightning-input-field>
+                        <lightning-button
+                            variant="brand"
+                            type="submit"
+                            label="Save" >
+                        </lightning-button>
+                        </lightning-record-edit-form>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+                    <button class="slds-button slds-button_neutral" onclick={closeModalPabPra} title="Ok">Ok</button>
                 </footer>
             </div>
         </section>
@@ -517,6 +547,7 @@
     </template>
 
     <template if:true={inputAttemptsModal} >
-        <c-attempts-Input-Modal></c-attempts-Input-Modal>
+        <c-attempts-Input-Modal current-voucher-type={currentVoucherType} cert-voucher-id={currentCertVoucherId} practice-voucher-id={currentPracticeVoucherId} record-type-id={currentRecordTypeId} onclose={closeAttemptInputModal} ></c-attempts-Input-Modal>
+>>>>>>> b875f2f59921b1b47c6968a586fdbfd4742a0eae:ExperiencePackage/force-app/main/default/lwc/certification_Page/certification_Page.html
     </template>
 </template>
