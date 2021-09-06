@@ -1,0 +1,195 @@
+<template>
+   
+
+<div class="c-container">
+        <lightning-layout multiple-rows="true">
+
+            <!-- This will be the Navigation or splash screen welcome-->
+            
+            
+            <lightning-layout-item padding="around-small" size="12">
+                <div class="page-section page-header">
+                   
+                   <!-- Exam Results -->
+                    <lightning-card>
+                    <div style="height: 300px;">
+
+
+            
+                        <lightning-datatable
+                            key-field="id"
+                            data={s}
+                            columns={examResultsColumn}
+                            hide-checkbox-column="true">
+                        </lightning-datatable>
+            
+                    </div>
+
+
+                </lightning-card> 
+
+
+
+                    
+                    <h2>(Place Navigation Bar here) {name}</h2>
+                </div>
+            </lightning-layout-item>
+
+            <lightning-layout-item padding="around-small" size="12">
+                <div class="page-section page-header">
+                    <h2>Modern Splash Screen with Welcome {name}</h2>
+                </div>
+            </lightning-layout-item>
+
+            <!-- First block showing Certification status and Exam Results-->
+            <lightning-layout-item padding="around-small" size="12">
+                <lightning-layout>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <div class="page-section page-right card">
+                            
+                            
+
+                          <!-- <template if:true={accounts.data}>
+                                <template for:each={accounts.data} for:item="acc">
+                                    <p key={acc.Id}>{acc.Name}</p>
+                                </template>
+                            </template>
+                            <template if:true={accounts.error}>
+                                {accounts.error}
+                            </template> --> 
+                            <h1>Certification Status</h1>
+                            <div>
+
+                                
+
+
+
+
+                            </div>
+                            <img src=adm_logo/> <p>  O Pending - 8/30/21 (date scheduled) -> Input this data with backend </br>
+                                (LOGO)  O Failed - 8/30/21 (date completed) -> Input this data with backend
+                            </p>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <div class="page-section page-main card1">
+                            <h2>Exam Results</h2>
+                                 <!-- Exam Results -->
+                    <lightning-card>
+                        <h1>Exam Results</h1>
+                    <div style="height: 300px;">
+
+                        <lightning-datatable
+                            key-field="id"
+                            data={s}
+                            columns={examResultsColumn}
+                            hide-checkbox-column="true">
+                        </lightning-datatable>
+            
+                    </div>
+
+                
+                </lightning-card> 
+                            
+
+                            <p> This will have the previous exam results most likely through recordeditform or
+                                whatever we have to use idk lol.
+                            </p>
+                        </div>
+                    </lightning-layout-item>
+
+                </lightning-layout>
+            </lightning-layout-item>
+
+            <!--2nd Row shwoing the Interactive Date schedule of due dates and exam dates with Upcoming Exams-->
+            <lightning-layout-item padding="around-small" size="12">
+                <lightning-layout>
+                    <lightning-layout-item padding="around-small" size="8">
+                        <div class="page-section page-right card2">
+                            <h2>Interactive Important Dates</h2>
+
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="4">
+                        <div class="page-section page-main card3">
+                            <h2>Upcoming Exams</h2>
+                            <lightning-datatable
+                            key-field="id"
+                            data={s}
+                            columns={examResultsColumn}
+                            hide-checkbox-column="true">
+                        </lightning-datatable>
+                        
+                            <p> Due dates that the Trainer can add as an indicator on when associate should make a
+                                schedulefor exam
+                            </p>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="4">
+                        <div class="page-section page-main card3">
+                            <h2>Upcoming Exams</h2>
+                            
+                        
+                            <p> Due dates that the Trainer can add as an indicator on when associate should make a
+                                schedulefor exam
+                            </p>
+                        </div>
+                    </lightning-layout-item>
+
+                </lightning-layout>
+            </lightning-layout-item>
+
+
+            
+            <lightning-layout-item padding="around-small" size="12">
+                <div class="page-section page-header">
+                   
+                   <!-- Exam Results -->
+                    <lightning-card>
+                        <h1>Exam Results</h1>
+                    <div style="height: 300px;">
+
+                        <lightning-datatable
+                            key-field="id"
+                            data={s}
+                            columns={examResultsColumn}
+                            hide-checkbox-column="true">
+                        </lightning-datatable>
+            
+                    </div>
+
+                
+                </lightning-card> 
+            </div>
+            </lightning-layout-item>
+
+           <lightning-layout-item padding="around-small" size="12">
+                <div class="page-section page-header">
+                   
+                   <!-- Exam Results -->
+                    <lightning-card>
+                        <h1>Upcoming Exams</h1>
+                    <div style="height: 300px;">
+
+                      <lightning-datatable
+                            key-field="id"
+                            data={vouchers}
+                            columns={upcomingExamsColumn}
+                            hide-checkbox-column="true">
+                        </lightning-datatable>
+            
+                    </div>
+
+                
+                </lightning-card> 
+            </div>
+            </lightning-layout-item> 
+
+            <lightning-layout-item flexibility="auto" padding="around-small" size="12">
+                <div class="page-footer page-section card4">
+                    <h2>Footer</h2>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+</template>

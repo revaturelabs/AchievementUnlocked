@@ -1,0 +1,23 @@
+.slds-grid{
+    background-color: white;
+    margin: 1em;
+    width: 15%;
+    font-size: 4em;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+.filterBtn{
+    padding: 1em;
+    position: absolute;
+    float: right;
+    margin-top: 1px;
+    margin-right: 2px;
+    top:0;
+    right:0;
+}
+h1{
+    font-size: 2em;
+    font-weight: bold;
+}

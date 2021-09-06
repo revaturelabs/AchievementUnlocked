@@ -1,0 +1,14 @@
+<template>
+    <div> rev logo here</div>>
+        <c-navigation-Bar onnavclick={handleNavClick}></c-navigation-Bar>
+        <template if:true={home}>
+            <c-homepage></c-homepage>
+        </template>
+        <template if:true={certificationPage}>
+            <c-certification-Page></c-certification-Page>>
+        </template>
+        <template if:true={attemptsPage} >
+            <div> Attempts Page Will GO Here</div>
+        </template>
+    </div>
+</template>
