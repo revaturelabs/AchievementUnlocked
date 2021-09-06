@@ -22,7 +22,7 @@ export default class CohortBarGraphIndex extends LightningElement {
 
     renderBarChart = false;
     //_cohortId = 'a02S000000GyIy9IAF';
-    _cohortId = '';
+   _cohortId = '';
 
     @api
     get cohortId(){
@@ -40,7 +40,8 @@ export default class CohortBarGraphIndex extends LightningElement {
 
     @wire(getCohortById, {cohortId: '$_cohortId'}) fun(data){
         
-        this.rerenderChart();
+        //this.rerenderChart();
+        this.renderTestModels();
     }//*/
 
     buttonTest(){
@@ -52,6 +53,19 @@ export default class CohortBarGraphIndex extends LightningElement {
 
     renderAfterTime(){
         setTimeout(() =>{ this.rerenderChart(); }, 2000);
+    }
+
+    renderTestModels(){
+        this.models = [
+            {
+              "model_name":"Adm Cert",
+              "field1":35,
+              "field2":25,
+              "field3": 15,
+              "field4": 5
+            }
+          ];
+          this.renderBarChart = true;
     }
 
     rerenderChart(){
