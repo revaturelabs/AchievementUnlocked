@@ -24,6 +24,7 @@ export default class CohortBarGraphIndex extends LightningElement {
     //_cohortId = 'a02S000000GyIy9IAF';
     _cohortId = '';
 
+    @api
     get cohortId(){
         return this.cohortId;
     }
