@@ -38,7 +38,7 @@ const attemptsColumns = [
 const certColumns = [
   {
     label: "Certification Status",
-    fieldName: "Certification_Status__c",
+    fieldName: "Certified__c",
     type: "picklist",
   },
   { label: "Attempt Due Date", fieldName: "Due_Date__c", type: "Date" },

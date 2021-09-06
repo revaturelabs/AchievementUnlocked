@@ -1,20 +1,32 @@
 <template>
-    <img src={rev_logo}/>
-<p>Revature Logo    title and header?    </p>
+    
+        <img src={rev_logo} />
+      
+<p>Revature Logo    title and header?   </p>
 <div class="c-container">
         <lightning-layout multiple-rows="true">
 
             <!-- This will be the Navigation or splash screen welcome-->
             <lightning-layout-item padding="around-small" size="12">
                 <div class="page-section page-header">
+
+
                     <lightning-card>
-                        <lightning-record-form
-                            object-api-name={objectApiName}
-                            fields={fields}
-                            onsuccess={handleSuccess}>
-                        </lightning-record-form>
+                            <lightning-record-view-form
+                            record-id={Id_test}
+                            object-api-name={associate}>
+                            <div class="slds-box">
+                            <lightning-output-field field-name="First_Name__c">
+                            </lightning-output-field>
+                            <lightning-output-field field-name="Email__c">
+                            </lightning-output-field>
+                            <lightning-output-field field-name="Voucher__c.Certification_Type__c">
+                            </lightning-output-field>
+
+                            </div>
+                            </lightning-record-view-form>
                     </lightning-card>
-                    <h2>(Place Navigation Bar here) {voucherCode}</h2>
+                    <h2>(Place Navigation Bar here) {name}</h2>
                 </div>
             </lightning-layout-item>
 
@@ -29,6 +41,25 @@
                 <lightning-layout>
                     <lightning-layout-item padding="around-small" size="8">
                         <div class="page-section page-right card">
+                            
+                            <lightning-record-view-form
+                            record-id="a003F000005ETORQA4"
+                            object-api-name={associate}>
+                            <div class="slds-box">
+                                <lightning-output-field field-name="First_Name__c">
+                                </lightning-output-field>       
+                                
+                            </div>
+                            </lightning-record-view-form>
+
+                          <!-- <template if:true={accounts.data}>
+                                <template for:each={accounts.data} for:item="acc">
+                                    <p key={acc.Id}>{acc.Name}</p>
+                                </template>
+                            </template>
+                            <template if:true={accounts.error}>
+                                {accounts.error}
+                            </template> --> 
                             <h2>Certification Status</h2>
                             <div></div>
                             <img src=adm_logo/> <p>  O Pending - 8/30/21 (date scheduled) -> Input this data with backend </br>
@@ -39,6 +70,17 @@
                     <lightning-layout-item padding="around-small" size="4">
                         <div class="page-section page-main card1">
                             <h2>Exam Results</h2>
+                           <!-- <lightning-record-view-form
+                            record-id="a013F000008be6QQAQ"
+                            object-api-name={attempt}>
+                            <div class="slds-box">
+                            <lightning-output-field field-name="Weighted__c">
+                            </lightning-output-field>
+                            <lightning-output-field field-name="Passed__c">
+                            </lightning-output-field>
+
+                            </div>
+                            </lightning-record-view-form> -->
                             <p> This will have the previous exam results most likely through recordeditform or
                                 whatever we have to use idk lol.
                             </p>
@@ -80,6 +122,38 @@
                     <lightning-layout-item padding="around-small" size="4">
                         <div class="page-section page-main card3">
                             <h2>Upcoming Exams</h2>
+                            <lightning-record-view-form
+                                record-id="a033F000005Pf4AQAS"
+                                object-api-name={voucher}>
+                                        <div>
+                                        <lightning-output-field field-name="Certification_Type__c">
+                                        </lightning-output-field>
+                                        <lightning-output-field field-name="Due_Date__c">
+                                        </lightning-output-field>
+                                
+                                </div>
+                            </lightning-record-view-form>
+                        
+                            <p> Due dates that the Trainer can add as an indicator on when associate should make a
+                                schedulefor exam
+                            </p>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="4">
+                        <div class="page-section page-main card3">
+                            <h2>Upcoming Exams</h2>
+                            <lightning-record-view-form
+                                record-id="a033F000005PtX2QAK"
+                                object-api-name={voucher}>
+                                        <div>
+                                        <lightning-output-field field-name="Certification_Type__c">
+                                        </lightning-output-field>
+                                        <lightning-output-field field-name="Due_Date__c">
+                                        </lightning-output-field>
+                                
+                                </div>
+                            </lightning-record-view-form>
+                        
                             <p> Due dates that the Trainer can add as an indicator on when associate should make a
                                 schedulefor exam
                             </p>
