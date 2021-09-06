@@ -65,6 +65,7 @@ export default class Certification_Page extends LightningElement {
   boolVisiblePabCert = true;
   boolVisiblePabPra = true;
   modalPabCert = false;
+  modalPabPra = false;
 
   // Attempts Modal for Inputting an Attempt
   inputAttemptsModal;
@@ -321,13 +322,26 @@ export default class Certification_Page extends LightningElement {
     }
   }
   // click event for Pab practice
-  handleClickPabCertMdl(event) {
+  handleClickPabCert(event) {
     this.modalPabCert = true;
+  }
+
+  handleClickPabPra(event) {
+      this.modalPabPra = true;
   }
 
   // close modals
   closeModal() {
     this.modalPabCert = false;
+    this.modalPabPra = false;
+  }
+  closeModalPabCert() {
+    this.modalPabCert = false;
+    this.boolVisiblePabCert = false;
+  }
+  closeModalPabPra() {
+    this.modalPabPra = false;
+    this.boolVisiblePabPra = false;
   }
 
   showAttemptsInputModal() {
@@ -337,6 +351,13 @@ export default class Certification_Page extends LightningElement {
 
   closeAttemptInputModal() {
     this.inputAttemptsModal = false;
+  }
+
+  openWebAssessor() {
+    window.open(
+      'https://www.webassessor.com/salesforce',
+      '_blank' // <- This is what makes it open in a new window.
+    );
   }
 
 
