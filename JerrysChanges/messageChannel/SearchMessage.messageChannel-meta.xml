@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This event is fired when the search key field is changed.</description>
+    <isExposed>false</isExposed>
+    <lightningMessageFields>
+        <description>search Term.</description>
+        <fieldName>filters</fieldName>
+    </lightningMessageFields>
+    <masterLabel>SearchMessage</masterLabel>
+</LightningMessageChannel>

@@ -1,0 +1,17 @@
+<template>
+    <lightning-card title="Vouchers">
+        <template if:true={vouchers.data}>
+            <template if:true={vouchers.data.length}>
+                <lightning-datatable
+                    key-field="Id"
+                    data={vouchers.data}
+                    columns={columns}
+                    hide-checkbox-column="true">
+                </lightning-datatable>
+            </template>
+            <template if:false={vouchers.data.length}>       
+                <p>This associate has no vouchers!</p>
+            </template>
+        </template>
+    </lightning-card>
+</template>
