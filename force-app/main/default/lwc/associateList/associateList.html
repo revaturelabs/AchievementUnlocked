@@ -1,22 +1,24 @@
 <template>
     <lightning-card title="Associates">
         <div>
-            <p>{count}</p>
-            <lightning-button-group>
+            <lightning-button-group class = "slds-align_absolute-center">
                 <lightning-button label="First" onclick={handleFirst}></lightning-button>
                 <lightning-button label="Previous" onclick={handlePrev}></lightning-button>
                 <lightning-button label="Next" onclick={handleNext}></lightning-button>
             </lightning-button-group>
         </div>
-        <lightning-datatable
-            key-field="Id"
-            data={associates.data}
-            columns={columns}
-            hide-checkbox-column="true"
-            onrowaction={showInfo}
-            sorted-by={sortField}
-            sorted-direction={sortDirection}
-            onsort={updateColumnSorting}>
-        </lightning-datatable>
+        <div class="slds-p-around_small">
+            <lightning-datatable 
+                key-field="Id"
+                data={associates.data}
+                columns={columns}
+                hide-checkbox-column="false"
+                onrowselection={rowsSelected}
+                onrowaction={showInfo}
+                sorted-by={sortField}
+                sorted-direction={sortDirection}
+                onsort={updateColumnSorting}>
+            </lightning-datatable>
+        </div>
     </lightning-card>
 </template>
