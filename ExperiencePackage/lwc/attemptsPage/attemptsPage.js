@@ -142,8 +142,9 @@ export default class AttemptsPage extends LightningElement {
             let preparedAttempts = [];
             data.forEach(attempt => {
                 let preparedAttempt = {};
+                preparedAttempt.Id = attempt.Id
                 preparedAttempt.Name = attempt.Name;
-                preparedAttempt.Certification_Type = attempt.Voucher__r.Certification_Type__c;
+                preparedAttempt.CertificationType = attempt.Voucher__r.Certification_Type__c;
                 preparedAttempt.Date= attempt.textDate__c;
                 preparedAttempt.AttemptType = attempt.Attempt_Type__c;
                 preparedAttempt.Result = attempt.Weighted__c.toFixed(2) + "%";
