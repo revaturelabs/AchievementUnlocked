@@ -54,7 +54,8 @@ export default class CohortBarGraphIndex extends LightningElement {
         getCohortById({cohortId : this._cohortId})
             .then(r => {
                 this.renderBarChart = false;
-                 //console.log('r', r[0]);
+                console.log('rerendering chart');
+                 console.log('r', r[0]);
                  this.models = [];
                  this.modelarray = [];
                  for(let i = 0; i < r.length; i++)
