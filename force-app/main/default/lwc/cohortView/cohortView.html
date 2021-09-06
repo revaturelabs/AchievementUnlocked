@@ -30,15 +30,15 @@
           </lightning-accordion-section>
         </lightning-accordion>
     </lightning-card>
+    </div>
     <div class="slds-col slds-size_1-of-5">
-      <c-assignment-bar
-        cohort-id={cohortId}
-        selection-list={selectionList}
-      ></c-assignment-bar>
+        <c-assignment-bar
+          cohort-id={cohortId}
+          selection-list={selectionList}
+        ></c-assignment-bar>
+    </div>
     </div>
     <c-certificates-chart cohort-id={cohortId}></c-certificates-chart>
     <c-carlo-test selected-cohort={cohortId}></c-carlo-test>
     <c-cohort-bar-graph-index cohort-id={cohortId}></c-cohort-bar-graph-index>
-    </div>
-  </div>
 </template>
