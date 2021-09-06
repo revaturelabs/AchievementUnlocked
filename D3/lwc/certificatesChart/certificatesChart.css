@@ -1,0 +1,9 @@
+.flex-center-horizontal {
+	display: flex;
+	justify-content: center;
+}
+
+.handle-overflow {
+	overflow-x: auto;
+	overflow-y: auto;
+}

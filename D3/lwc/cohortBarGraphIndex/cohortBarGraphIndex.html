@@ -1,0 +1,13 @@
+<template>
+    <lightning-card title="Cohort Graphs" icon-name="utility:favorite">
+        <div style="width:650px; height:800px;">
+        <!--
+        <lightning-button label="click me" title="Non-primary action" onclick={buttonTest} class="slds-m-left_x-small"></lightning-button>
+        -->
+        <template if:true={renderBarChart}>
+            <c-bar-graph-index models={models} modelarray={modelarray}></c-bar-graph-index>
+        </template>
+        </div>
+    </lightning-card>
+
+</template>

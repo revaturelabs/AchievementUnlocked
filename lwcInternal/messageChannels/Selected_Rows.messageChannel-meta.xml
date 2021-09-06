@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This event is fired when rows are selected.</description>
+    <isExposed>true</isExposed>
+    <lightningMessageFields>
+        <description>list of selected rows</description>
+        <fieldName>selectedList</fieldName>
+    </lightningMessageFields>
+    <masterLabel>SelectedRows</masterLabel>
+</LightningMessageChannel>
