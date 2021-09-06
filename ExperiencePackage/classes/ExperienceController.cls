@@ -1,6 +1,6 @@
 public with sharing class ExperienceController {
   // ADM
-  // grab the voucher for adm
+  // grab the vouchers for adm
   @AuraEnabled(cacheable=true)
   public static List<Voucher__c> getVoucherAdm() {
     return [

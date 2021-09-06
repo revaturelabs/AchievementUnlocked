@@ -6,15 +6,6 @@
   <!--bar for navigation-->
   <br /><br />
 
-  <!--titles-->
-  <div class="slds-grid slds-gutters">
-    <div class="slds-col slds-size_1-of-3">
-      <p style="text-align: center"><b>Admin</b></p>
-    </div>
-    <div class="slds-col slds-size_1-of-3">
-      <p style="text-align: center"><b>Developer</b></p>
-    </div>
-  </div>
 
   <!--Badges for admin and Developer side by side-->
   <div class="slds-grid slds-gutters">
@@ -517,6 +508,6 @@
     </template>
 
     <template if:true={inputAttemptsModal} >
-        <c-attempts-Input-Modal current-voucher-type={currentVoucherType} onclose={closeAttemptInputModal} ></c-attempts-Input-Modal>
+        <c-attempts-Input-Modal current-voucher-type={currentVoucherType} cert-voucher-id={currentCertVoucherId} practice-voucher-id={currentPracticeVoucherId} record-type-id={currentRecordTypeId} onclose={closeAttemptInputModal} ></c-attempts-Input-Modal>
     </template>
 </template>

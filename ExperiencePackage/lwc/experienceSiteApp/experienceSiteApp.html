@@ -1,5 +1,7 @@
 <template>
+    
         <c-navigation-Bar onnavclick={handleNavClick}></c-navigation-Bar>
+    <div style={websiteBackground}>
         <template if:true={home}>
             <c-homepage></c-homepage>
         </template>
@@ -9,4 +11,6 @@
         <template if:true={attemptsPage} >
             <div> Attempts Page Will GO Here</div>
         </template>
+
+    </div>
 </template>

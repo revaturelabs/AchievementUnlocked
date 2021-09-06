@@ -1,4 +1,5 @@
 import { LightningElement, track, wire, api } from "lwc";
+import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import REVATURELOGO from "@salesforce/resourceUrl/RevatureLogo";
 import ADMLOGO from "@salesforce/resourceUrl/AdmLogo";
 import ADVANCEDADMLOGO from "@salesforce/resourceUrl/AdvancedAdmLogo";
@@ -25,6 +26,7 @@ import getPracticeAttemptsPab from "@salesforce/apex/ExperienceController.getPra
 import getCertStatusPab from "@salesforce/apex/ExperienceController.getCertStatusPab";
 import getVoucherPab from "@salesforce/apex/ExperienceController.getVoucherPab";
 import STATUS_FIELD from "@salesforce/schema/Voucher__c.Status__c";
+import ATTEMPT_OBJECT from "@salesforce/schema/Attempt__c";
 
 const voucherColumns = [
   { label: "Voucher Type", fieldName: "Voucher_Type__c", type: "picklist" },
@@ -38,8 +40,8 @@ const attemptsColumns = [
 const certColumns = [
   {
     label: "Certification Status",
-    fieldName: "Certified__c__c",
-    type: "picklist",
+    fieldName: "Certified__c",
+    type: "checkbox",
   },
   { label: "Attempt Due Date", fieldName: "Due_Date__c", type: "Date" },
 ];
@@ -67,6 +69,13 @@ export default class Certification_Page extends LightningElement {
   // Attempts Modal for Inputting an Attempt
   inputAttemptsModal;
   currentVoucherType;
+  currentPracticeVoucherId;
+  currentCertVoucherId;
+  @track
+  currentRecordTypeId;
+
+  @wire(getObjectInfo, {objectApiName : ATTEMPT_OBJECT})
+  attemptInfo;
 
   // static resources
   revatureLogo = REVATURELOGO;
@@ -148,6 +157,14 @@ export default class Certification_Page extends LightningElement {
       this.clickedButtonPab = "Show Pab";
       this.boolVisiblePab = false;
       this.currentVoucherType = "Adm";
+      for (let i of this.voucherAdm.data) {
+        if (i.Voucher_Type__c == "Certification") {
+            this.currentCertVoucherId = i.Id;
+        } else if(i.Voucher_Type__c == "Practice") {
+          this.currentPracticeVoucherId = i.Id;
+        }
+      }
+      this.getRecordTypeId("Administrator");
     } else if (label === "Hide Adm") {
       this.clickedButtonAdm = "Show Adm";
       this.boolVisibleAdm = false;
@@ -170,6 +187,14 @@ export default class Certification_Page extends LightningElement {
       this.clickedButtonPab = "Show Pab";
       this.boolVisiblePab = false;
       this.currentVoucherType = "Advanced Adm";
+      for (let i of this.voucherAdvAdm.data) {
+        if (i.Voucher_Type__c == "Certification") {
+            this.currentCertVoucherId = i.Id;
+        }  else if(i.Voucher_Type__c == "Practice") {
+          this.currentPracticeVoucherId = i.Id;
+        }
+      }
+      this.getRecordTypeId("Advanced Administrator");
     } else if (label === "Hide Advanced Adm") {
       this.clickedButtonAdvancedAdm = "Show Advanced Adm";
       this.boolVisibleAdvancedAdm = false;
@@ -192,6 +217,14 @@ export default class Certification_Page extends LightningElement {
       this.clickedButtonPab = "Show Pab";
       this.boolVisiblePab = false;
       this.currentVoucherType = "Javascript";
+      for (let i of this.voucherJavascr.data) {
+        if (i.Voucher_Type__c == "Certification") {
+            this.currentCertVoucherId = i.Id;
+        }  else if(i.Voucher_Type__c == "Practice") {
+          this.currentPracticeVoucherId = i.Id;
+        }
+      }
+      this.getRecordTypeId("JavaScript Developer I");
     } else if (label === "Hide JavaScript") {
       this.clickedButtonJavascr = "Show JavaScript";
       this.boolVisibleJavascr = false;
@@ -214,6 +247,14 @@ export default class Certification_Page extends LightningElement {
       this.clickedButtonPab = "Show Pab";
       this.boolVisiblePab = false;
       this.currentVoucherType = "PD1";
+      for (let i of this.voucherPd1.data) {
+        if (i.Voucher_Type__c == "Certification") {
+            this.currentCertVoucherId = i.Id;
+        }  else if(i.Voucher_Type__c == "Practice") {
+          this.currentPracticeVoucherId = i.Id;
+        }
+      }
+      this.getRecordTypeId("Platform Developer I");
     } else if (label === "Hide Pd1") {
       this.clickedButtonPd1 = "Show Pd1";
       this.boolVisiblePd1 = false;
@@ -236,6 +277,14 @@ export default class Certification_Page extends LightningElement {
       this.clickedButtonPab = "Show Pab";
       this.boolVisiblePab = false;
       this.currentVoucherType = "PD2";
+      for (let i of this.voucherPd2.data) {
+        if (i.Voucher_Type__c == "Certification") {
+            this.currentCertVoucherId = i.Id;
+        } else if(i.Voucher_Type__c == "Practice") {
+          this.currentPracticeVoucherId = i.Id;
+        }
+      }
+      this.getRecordTypeId("Platform Developer II");
     } else if (label === "Hide Pd2") {
       this.clickedButtonPd2 = "Show Pd2";
       this.boolVisiblePd2 = false;
@@ -258,6 +307,14 @@ export default class Certification_Page extends LightningElement {
       this.clickedButtonPd1 = "Show Pd1";
       this.boolVisiblePd1 = false;
       this.currentVoucherType = "Platform App Builder";
+      for (let i of this.voucherPab.data) {
+        if (i.Voucher_Type__c == "Certification") {
+            this.currentCertVoucherId = i.Id;
+        }  else if(i.Voucher_Type__c == "Practice")  {
+          this.currentPracticeVoucherId = i.Id;
+        }
+      }
+      this.getRecordTypeId("Platform App Builder");
     } else if (label === "Hide Pab") {
       this.clickedButtonPab = "Show Pab";
       this.boolVisiblePab = false;
@@ -281,4 +338,17 @@ export default class Certification_Page extends LightningElement {
   closeAttemptInputModal() {
     this.inputAttemptsModal = false;
   }
+
+
+  getRecordTypeId(recordTypeName) {
+    console.log("hi got in here",this.attemptInfo);
+    let recordTypeInfo = this.attemptInfo.data.recordTypeInfos;
+    for(let recordType in recordTypeInfo) {
+      if(recordTypeInfo[recordType].name == recordTypeName) {
+        this.currentRecordTypeId = recordTypeInfo[recordType].recordTypeId;
+      }
+    }
+  }
+
+
 }

@@ -1,4 +1,4 @@
-import { LightningElement, api } from "lwc";
+import { LightningElement, api,wire } from "lwc";
 import ATTEMPT_OBJECT from "@salesforce/schema/Attempt__c";
 import ANALYTICS_FIELD from "@salesforce/schema/Attempt__C.Analytics_Reports_and_Dashboards__c";
 import APP_DEPLOYMENT_FIELD from "@salesforce/schema/Attempt__c.App_Deployment__c";
@@ -14,6 +14,7 @@ import DATA_ANALYTICS_MANAGEMENT_FIELD from "@salesforce/schema/Attempt__c.Data_
 import DATA_MANAGEMENT_FIELD from "@salesforce/schema/Attempt__c.Data_Management__c";
 import DATA_MODELING_MANAGEMENT_FIELD from "@salesforce/schema/Attempt__c.Data_Modeling_and_Management__c";
 import DATE_FIELD from "@salesforce/schema/Attempt__c.Date__c";
+import DATE_TEXT_FIELD from '@salesforce/schema/Attempt__c.textDate__c'
 import DEBUG_DEPLOYMENT_FIELD from "@salesforce/schema/Attempt__c.Debug_and_Deployment_Tools__c";
 import DEBUG_ERROR_HANDLING_FIELD from "@salesforce/schema/Attempt__c.Debugging_and_Error_Handling__c";
 import EXTENDING_CUSTOM_OBJECTS_FIELD from "@salesforce/schema/Attempt__c.Extending_Custom_Objects_and_Application__c";
@@ -41,6 +42,9 @@ import VARIABLES_TYPES_COLLECTIONS_FIELD from "@salesforce/schema/Attempt__c.Var
 import VOUCHER_FIELD from "@salesforce/schema/Attempt__c.Voucher__c";
 import WORKFLOW_FIELD from "@salesforce/schema/Attempt__c.Workflow_Process_Automation__c";
 
+import { getObjectInfo } from 'lightning/uiObjectInfoApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent'
+
 export default class AttemptsInputModal extends LightningElement {
   // Setting Object Name and Fields for the Edit Form from imports
   objectApiName = ATTEMPT_OBJECT;
@@ -58,6 +62,7 @@ export default class AttemptsInputModal extends LightningElement {
   dataManagement = DATA_MANAGEMENT_FIELD;
   dataModeling = DATA_MODELING_MANAGEMENT_FIELD;
   date = DATE_FIELD;
+  textDate = DATE_TEXT_FIELD;
   debugDeploy = DEBUG_DEPLOYMENT_FIELD;
   debugError = DEBUG_ERROR_HANDLING_FIELD;
   extendingCustomObjects = EXTENDING_CUSTOM_OBJECTS_FIELD;
@@ -85,9 +90,15 @@ export default class AttemptsInputModal extends LightningElement {
   voucher = VOUCHER_FIELD;
   workflow = WORKFLOW_FIELD;
 
+
   @api
   currentVoucherType;
-  voucherId;
+  @api
+  certVoucherId;
+  @api
+  practiceVoucherId;
+  @api
+  recordTypeId;
   adm;
   advAdm;
   pd1;
@@ -95,10 +106,37 @@ export default class AttemptsInputModal extends LightningElement {
   js;
   pab;
 
-  handleSubmit(event) {}
+  @wire(getObjectInfo, {objectApiName : ATTEMPT_OBJECT})
+  attemptInfo;
+
+  handleAttemptSubmit(event) {
+    event.preventDefault();
+    const fields = event.detail.fields;
+    if(fields.Attempt_Type__c == "Practice") {
+      fields.Voucher__r = this.practiceVoucherId;
+    } else if (fields.Attempt_Type__c == 'Certfication') {
+      fields.Voucher__r = this.certVoucherId;
+    }
+    this.template.querySelector('lightning-record-edit-form').submit(fields);
+  }
 
   handleCancel(event) {
     this.dispatchEvent(new CustomEvent("close"));
+  }
+
+  handleSuccess(event) {
+    console.log("successful?")
+    this.dispatchEvent(new CustomEvent("close"));
+    const toastEvent = new ShowToastEvent({
+      title: "Successful Submit",
+      message: "Attempt Submitted!",
+      variant: "success"
+    });
+    this.dispatchEvent(toastEvent);
+  }
+
+  handleErrors(event){
+    console.log("in errors function",event);
   }
 
   connectedCallback() {
@@ -125,4 +163,5 @@ export default class AttemptsInputModal extends LightningElement {
         break;
     }
   }
+
 }
