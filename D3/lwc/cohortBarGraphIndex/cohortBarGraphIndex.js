@@ -26,12 +26,13 @@ export default class CohortBarGraphIndex extends LightningElement {
 
     @api
     get cohortId(){
-        return this.cohortId;
+        return this._cohortId;
     }
     
     set cohortId(value){
-        this.cohortId = value;
-        if(this.cohortId){
+        this._cohortId = value;
+        if(this._cohortId){
+            console.log('bar char cohort id: ' + this._cohortId);
             this.renderBarChart = false;
             this.rerenderChart();
         }
