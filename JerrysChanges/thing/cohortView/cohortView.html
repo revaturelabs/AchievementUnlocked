@@ -1,0 +1,19 @@
+<template>
+    <lightning-card>
+        <lightning-accordion class='accordion' onsectiontoggle={handleToggleSection} active-section-name='cohorts'> 
+            <lightning-accordion-section label='Cohorts' name='cohorts'>
+                <lightning-combobox
+                    name="filter"
+                    label="Status"
+                    value={filter}
+                    options={options}
+                    onchange={handleChange}>
+                </lightning-combobox>
+                <c-cohort-list filter={filter} oncohortselected={displayCohort}></c-cohort-list>
+            </lightning-accordion-section>
+            <lightning-accordion-section if:true={cohortId} label='Associates' name='associates' >
+                <c-base-view cohort-id={cohortId}></c-base-view>
+            </lightning-accordion-section>
+        </lightning-accordion>
+    </lightning-card>
+</template>

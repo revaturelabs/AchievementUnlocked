@@ -1,5 +1,5 @@
-import { LightningElement, api, wire, track } from 'lwc';
-import { subscribe, MessageContext } from 'lightning/messageService';
+import { LightningElement, track, api, wire } from 'lwc';
+import { publish, subscribe, MessageContext } from 'lightning/messageService';
 import SEARCH_MESSAGE from '@salesforce/messageChannel/SearchMessage__c';
 import getAssociates from '@salesforce/apex/viewController.getAssociates';
 import getAssociateCount from '@salesforce/apex/viewController.getAssociateCount';
@@ -18,33 +18,22 @@ export default class AssociateList extends LightningElement {
     sortField;
     sortDirection;
     filters = {};
-    count;
+
+    @track
+    selectionList;
+
     @api status = null;
     @api page;
     @api cohortId = null;
-    @track
-    selectionList;
-    
     @wire(getAssociates, {cohortId: '$cohortId', filters: '$filters', sortingField: '$sortField', dir: '$sortDirection', pageNum: '$page'})
     associates;
-    
-    @wire(getAssociateCount, {filters: '$filters'})
-    wiredFunction({ error, data }) {
-        if (data) {
-            this.count = data;
-            console.log(JSON.stringify(data));
-        } else if (error) {
-            console.log(error);
-        }
-    }
-
+    @wire(getAssociateCount, {stat: '$filters'})
+    assocCount;
 
     constructor() {
         super();
         this.sortField = 'Last_Name__c';
         this.sortDirection = 'ASC';
-        this.count = 0;
-        this.page = 1;
     }
 
     showInfo(event) {
@@ -54,13 +43,21 @@ export default class AssociateList extends LightningElement {
         this.dispatchEvent(sendId);
     }
 
-    
-
     /** Load context for Lightning Messaging Service */
     @wire(MessageContext) messageContext;
 
     /** Subscription for ProductSelected Lightning message */
     searchTermSubscription;
+
+    /** retrieves a list of selected rows and publishes them in response to an event */
+    rowsSelected(event){
+        console.log('rows selected');
+        //this.dispatchEvent( new CustomEvent('getdemassociates', event ));
+        this.selectionList = this.getAllSelectedRows();
+        publish(this.messageContext, SELECTED_ROWS , {
+            selectedList:this.selectionList
+        });
+    }
 
     connectedCallback() {
         // Subscribe to ProductSelected message
@@ -74,7 +71,6 @@ export default class AssociateList extends LightningElement {
     handleSearchFilter(message){
         this.filters = { ...message.filters };
         this.page = 1;
-        
     }
 
     updateColumnSorting(event) {
@@ -84,43 +80,19 @@ export default class AssociateList extends LightningElement {
 
     handleFirst(){
         this.page = 1;
-        this.clearAssociate();
     }
 
     handlePrev(){
         if(this.page > 1){
-            let currentPage = this.page;
+            currentPage = this.page;
             this.page = currentPage - 1;
-            this.clearAssociate();
         }
     }
 
     handleNext(){
-        if((this.page * 10) < this.count){
-            let currentPage = this.page;
+        if(((this.page -1) * 10) + 10 < this.assocCount){
+            currentPage = this.page;
             this.page = currentPage + 1;
-            this.clearAssociate();
         }
-    }
-
-    clearAssociate() {
-        const sendId = new CustomEvent('associateselected', {
-            detail: null
-        });
-        this.dispatchEvent(sendId);
-    }
-
-    rowsSelected(event){
-        console.log('rows selected');
-        //this.dispatchEvent( new CustomEvent('getdemassociates', event ));
-        this.selectionList = this.getAllSelectedRows();
-        publish(this.messageContext, SELECTED_ROWS , {
-            selectedList:this.selectionList
-        });
-    }
-
-    getAllSelectedRows(){
-        console.log('rows returned');
-        return this.template.querySelector('lightning-datatable').getSelectedRows();
     }
 }

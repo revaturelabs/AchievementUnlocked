@@ -1,9 +1,8 @@
-import { LightningElement, api, wire, track } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import { subscribe, MessageContext } from 'lightning/messageService';
 import SEARCH_MESSAGE from '@salesforce/messageChannel/SearchMessage__c';
 import getAssociates from '@salesforce/apex/viewController.getAssociates';
 import getAssociateCount from '@salesforce/apex/viewController.getAssociateCount';
-import SELECTED_ROWS from '@salesforce/messageChannel/Selected_Rows__c';
 
 const columns = [
     { label: 'First Name', fieldName: 'First_Name__c', sortable: true},
@@ -22,8 +21,6 @@ export default class AssociateList extends LightningElement {
     @api status = null;
     @api page;
     @api cohortId = null;
-    @track
-    selectionList;
     
     @wire(getAssociates, {cohortId: '$cohortId', filters: '$filters', sortingField: '$sortField', dir: '$sortDirection', pageNum: '$page'})
     associates;
@@ -108,19 +105,5 @@ export default class AssociateList extends LightningElement {
             detail: null
         });
         this.dispatchEvent(sendId);
-    }
-
-    rowsSelected(event){
-        console.log('rows selected');
-        //this.dispatchEvent( new CustomEvent('getdemassociates', event ));
-        this.selectionList = this.getAllSelectedRows();
-        publish(this.messageContext, SELECTED_ROWS , {
-            selectedList:this.selectionList
-        });
-    }
-
-    getAllSelectedRows(){
-        console.log('rows returned');
-        return this.template.querySelector('lightning-datatable').getSelectedRows();
     }
 }
