@@ -6,27 +6,239 @@
         </lightning-card>
     </div>
 
-    <lightning-card title="Attempts" icon-name="utility:page">
-        <div style="height: 300px;">
-
-            <div class="filterBtn">
-                <lightning-button 
-                    variant="brand"
-                    label="Certification: All"
-                    icon-name="utility:picklist_type"
-                    icon-position="left"
-                    onclick={handleFilterClick}>
-                </lightning-button>
-            </div>
-
-            <lightning-datatable
-                key-field="id"
-                data={attempts}
-                columns={columns}
-                hide-checkbox-column="true">
-            </lightning-datatable>
-
+    <lightning-card title="Past Attempts" icon-name="utility:page">        
+        <div style="height: 500px;">
+            <div class="slds-grid">
+                <div class="slds-p-horizontal_medium">
+                    <span style="padding-right: 5px; padding-bottom: 5px;">
+                        <lightning-combobox
+                            name="certChoice"
+                            value={certValue}
+                            label="Certification Type:"
+                            placeholder="--All--"
+                            options={certOptions}
+                            onchange={handleCertTypeChange}
+                            style="color:grey;width:200px;" >
+                        </lightning-combobox>
+                        <br></br>
+                        <lightning-combobox
+                            name="attemptChoice"
+                            value={attemptValue}
+                            label="Attempt Type:"
+                            placeholder="--Both--"
+                            options={attemptOptions}
+                            onchange={handleAttemptTypeChange}
+                            style="color:grey;width:200px;">
+                        </lightning-combobox>
+                        <br></br>
+                        <lightning-button 
+                            variant="brand"
+                            label="Filter"
+                            icon-name="utility:picklist_type"
+                            icon-position="left"
+                            onclick={handleFilterClick}>
+                        </lightning-button>
+                    </span>
+                </div>
+                <br></br>
+                <lightning-datatable
+                    key-field="id"
+                    data={attempts}
+                    columns={columns}
+                    onrowaction={handleRowAction}
+                    hide-checkbox-column="true">
+                </lightning-datatable>
+            </div> <!-- END slds-grid-->
         </div>
     </lightning-card>
+
+        <template if:true={showModal}>
+            <section class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!--Modal Box Header Start-->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={closeModalAction}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                size="small"></lightning-icon>
+                        </button>
+                        <h2 class="slds-text-heading_medium slds-hyphenate">{currentAttempt.CertificationType}
+                            {currentAttempt.AttemptType} Exam Attempt</h2>
+                        <h3>Date Attempted: <lightning-formatted-date-time value={currentAttempt.Date} year="numeric"
+                                day="2-digit" month="long" time-zone="UTC"></lightning-formatted-date-time>
+                        </h3>
+                        <h3>Overall Score: {currentAttempt.Result}</h3>
+                    </header>
+                    <!--Modal Box Header End-->
+
+                    <!--Modal Box Content Start-->
+                    <div class="slds-modal__content slds-p-around_medium">
+
+                        <lightning-record-view-form record-id={currentAttempt.Id} object-api-name={objectApiName}>
+                            <template if:true={adm}>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={configSetup}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={objectManager}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={salesMarketing}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={serviceAndSupport}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={productivityCollab}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={dataAnalyticsManagement}>
+                                    </lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={workflow}></lightning-output-field>
+                                </div>
+                            </template>
+
+
+                            <template if:true={advAdm}>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={securityAccess}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={extendingCustomObjects}>
+                                    </lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={auditingMonitoring}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={salesCloud}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={serviceCloud}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={dataManagement}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={contentManagement}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={changeManagement}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={analyticsReportsField}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={processAutomation}></lightning-output-field>
+                                </div>
+                            </template>
+
+                            <template if:true={pd1}>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={salesforceFundamentals}>
+                                    </lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={dataModeling}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={processAutomationAndLogic}>
+                                    </lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={userInterface}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={testingDebugDeploy}></lightning-output-field>
+                                </div>
+                            </template>
+
+                            <template if:true={pd2}>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={salesforceFundamentals}>
+                                    </lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={dataModeling}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={businessLogic}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={userInterface}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={performance}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={integration}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={testing}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={debugDeploy}></lightning-output-field>
+                                </div>
+                            </template>
+
+                            <template if:true={js}>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={variablesTypesCollections}>
+                                    </lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={objectsFunctionsClasses}>
+                                    </lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={browserEvents}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={debugError}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={asyncProgramming}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={serverSideJs}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={testing}></lightning-output-field>
+                                </div>
+                            </template>
+
+                            <template if:true={pab}>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={salesforceFundamentals}>
+                                    </lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={dataModeling}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={businessLogic}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={userInterface}></lightning-output-field>
+                                </div>
+                                <div class="slds-box slds-box_xx-small">
+                                    <lightning-output-field field-name={appDeploy}></lightning-output-field>
+                                </div>
+                            </template>
+
+                        </lightning-record-view-form>
+                    </div>
+                    <!--Modal Box Content End-->
+
+                    <footer class="slds-modal__footer">
+                        <lightning-button variant="brand" label="Close" title="Close" onclick={closeModalAction}>
+                        </lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
 
 </template>
