@@ -1,127 +1,98 @@
 <template>
-  <div role="dialog" class="slds-modal slds-fade-in-open ">
-    <div class="slds-modal__container">
-        <!--Modal Box Header Start-->
-        <header class="slds-modal__header">
-<<<<<<< HEAD
-            <h1 class="slds-text-heading--medium" >Log an Attempt</h1>
-=======
-            <h1 class="slds-text-heading--medium" >Log an Attempt for {currentVoucherType}</h1>
->>>>>>> b875f2f59921b1b47c6968a586fdbfd4742a0eae
-        </header>
-        <!--Modal Box Header End-->
-         
-        <!--Modal Box Content Start-->
-        <div class="slds-modal__content slds-p-around--medium">
-            <lightning-record-edit-form
-<<<<<<< HEAD
-                object-api-name={objectApiName}>
-                <lightning-input-field field-name={attemptType}></lightning-input-field>
-                <lightning-input-field field-name={date}></lightning-input-field>
-=======
-                object-api-name={objectApiName}
-                record-type-id={recordTypeId}
-                onsubmit={handleAttemptSubmit}
-                onsuccess={handleSuccess}
-                onerror={handleErrors}>
-                <lightning-messages></lightning-messages>
-                <lightning-input-field field-name={attemptType}></lightning-input-field>
-                <lightning-input-field field-name={textDate} label="Date"></lightning-input-field>
-                <lightning-input-field field-name={passedCheckbox}></lightning-input-field>
->>>>>>> b875f2f59921b1b47c6968a586fdbfd4742a0eae
-                <template if:true={adm}>
-                    <lightning-input-field field-name={configSetup}></lightning-input-field>
-                    <lightning-input-field field-name={objectManager}></lightning-input-field>
-                    <lightning-input-field field-name={salesMarketing}></lightning-input-field>
-                    <lightning-input-field field-name={serviceAndSupport}></lightning-input-field>
-                    <lightning-input-field field-name={productivityCollab}></lightning-input-field>
-                    <lightning-input-field field-name={dataAnalyticsManagement}></lightning-input-field>
-                    <lightning-input-field field-name={workflow}></lightning-input-field>
-                </template>
-
-                <template if:true={advAdm}>
-                    <lightning-input-field field-name={securityAccess}></lightning-input-field>
-                    <lightning-input-field field-name={extendingCustomObjects}></lightning-input-field>
-                    <lightning-input-field field-name={auditingMonitoring}></lightning-input-field>
-                    <lightning-input-field field-name={salesCloud}></lightning-input-field>
-                    <lightning-input-field field-name={serviceCloud}></lightning-input-field>
-                    <lightning-input-field field-name={dataManagement}></lightning-input-field>
-                    <lightning-input-field field-name={contentManagement}></lightning-input-field>
-                    <lightning-input-field field-name={changeManagement}></lightning-input-field>
-                    <lightning-input-field field-name={analyticsReportsField}></lightning-input-field>
-                    <lightning-input-field field-name={processAutomation}></lightning-input-field>
-                </template>
-
-                <template if:true={pd1}>
-                    <lightning-input-field field-name={salesforceFundamentals}></lightning-input-field>
-                    <lightning-input-field field-name={dataModeling}></lightning-input-field>
-                    <lightning-input-field field-name={processAutomationAndLogic}></lightning-input-field>
-                    <lightning-input-field field-name={userInterface}></lightning-input-field>
-                    <lightning-input-field field-name={testingDebugDeploy}></lightning-input-field>
-                </template>
-
-                <template if:true={pd2}>
-                    <lightning-input-field field-name={salesforceFundamentals}></lightning-input-field>
-                    <lightning-input-field field-name={dataModeling}></lightning-input-field>
-                    <lightning-input-field field-name={businessLogic}></lightning-input-field>
-                    <lightning-input-field field-name={userInterface}></lightning-input-field>
-                    <lightning-input-field field-name={performance}></lightning-input-field>
-                    <lightning-input-field field-name={integration}></lightning-input-field>
-                    <lightning-input-field field-name={testingDebugDeploy}></lightning-input-field>
-                    <lightning-input-field field-name={debugDeploy}></lightning-input-field>
-                </template>
-
-                <template if:true={js}>
-                    <lightning-input-field field-name={variablesTypesCollections}></lightning-input-field>
-                    <lightning-input-field field-name={objectsFunctionsClasses}></lightning-input-field>
-                    <lightning-input-field field-name={browserEvents}></lightning-input-field>
-                    <lightning-input-field field-name={debugDeploy}></lightning-input-field>
-                    <lightning-input-field field-name={asyncProgramming}></lightning-input-field>
-                    <lightning-input-field field-name={serverSideJs}></lightning-input-field>
-                    <lightning-input-field field-name={testing}></lightning-input-field>
-                </template>
-
-                <template if:true={pab}>
-                    <lightning-input-field field-name={salesforceFundamentals}></lightning-input-field>
-                    <lightning-input-field field-name={dataModeling}></lightning-input-field>
-                    <lightning-input-field field-name={businessLogic}></lightning-input-field>
-                    <lightning-input-field field-name={userInterface}></lightning-input-field>
-                    <lightning-input-field field-name={appDeploy}></lightning-input-field>
-                </template>
-                
-<<<<<<< HEAD
-            
-            
-            </lightning-record-edit-form>
-        </div>
-        <!--Modal Box Content End-->
-         
-        <!--Modal Box Button Start-->
-        <footer class="slds-modal__footer">
-
-            <lightning-button variant="success" label="Submit Attempt" title="Successful action" onclick={handleSubmit} class="slds-m-left_x-small"></lightning-button>
-            <lightning-button variant="destructive" label="Cancel" title="Cancel action" onclick={handleCancel} class="slds-m-left_x-small"></lightning-button>
-        </footer>
-        <!--Modal Box Button End-->
+    <div role="dialog" class="slds-modal slds-fade-in-open ">
+      <div class="slds-modal__container">
+          <!--Modal Box Header Start-->
+          <header class="slds-modal__header">
+              <h1 class="slds-text-heading--medium" >Log an Attempt for {currentVoucherType}</h1>
+          </header>
+          <!--Modal Box Header End-->
+           
+          <!--Modal Box Content Start-->
+          <div class="slds-modal__content slds-p-around--medium">
+              <lightning-record-edit-form
+                  object-api-name={objectApiName}
+                  record-type-id={recordTypeId}
+                  onsubmit={handleAttemptSubmit}
+                  onsuccess={handleSuccess}
+                  onerror={handleErrors}>
+                  <lightning-messages></lightning-messages>
+                  <lightning-input-field field-name={attemptType}></lightning-input-field>
+                  <lightning-input-field field-name={textDate} label="Date"></lightning-input-field>
+                  <lightning-input-field field-name={passedCheckbox}></lightning-input-field>
+                  <template if:true={adm}>
+                      <lightning-input-field field-name={configSetup}></lightning-input-field>
+                      <lightning-input-field field-name={objectManager}></lightning-input-field>
+                      <lightning-input-field field-name={salesMarketing}></lightning-input-field>
+                      <lightning-input-field field-name={serviceAndSupport}></lightning-input-field>
+                      <lightning-input-field field-name={productivityCollab}></lightning-input-field>
+                      <lightning-input-field field-name={dataAnalyticsManagement}></lightning-input-field>
+                      <lightning-input-field field-name={workflow}></lightning-input-field>
+                  </template>
+  
+                  <template if:true={advAdm}>
+                      <lightning-input-field field-name={securityAccess}></lightning-input-field>
+                      <lightning-input-field field-name={extendingCustomObjects}></lightning-input-field>
+                      <lightning-input-field field-name={auditingMonitoring}></lightning-input-field>
+                      <lightning-input-field field-name={salesCloud}></lightning-input-field>
+                      <lightning-input-field field-name={serviceCloud}></lightning-input-field>
+                      <lightning-input-field field-name={dataManagement}></lightning-input-field>
+                      <lightning-input-field field-name={contentManagement}></lightning-input-field>
+                      <lightning-input-field field-name={changeManagement}></lightning-input-field>
+                      <lightning-input-field field-name={analyticsReportsField}></lightning-input-field>
+                      <lightning-input-field field-name={processAutomation}></lightning-input-field>
+                  </template>
+  
+                  <template if:true={pd1}>
+                      <lightning-input-field field-name={salesforceFundamentals}></lightning-input-field>
+                      <lightning-input-field field-name={dataModeling}></lightning-input-field>
+                      <lightning-input-field field-name={processAutomationAndLogic}></lightning-input-field>
+                      <lightning-input-field field-name={userInterface}></lightning-input-field>
+                      <lightning-input-field field-name={testingDebugDeploy}></lightning-input-field>
+                  </template>
+  
+                  <template if:true={pd2}>
+                      <lightning-input-field field-name={salesforceFundamentals}></lightning-input-field>
+                      <lightning-input-field field-name={dataModeling}></lightning-input-field>
+                      <lightning-input-field field-name={businessLogic}></lightning-input-field>
+                      <lightning-input-field field-name={userInterface}></lightning-input-field>
+                      <lightning-input-field field-name={performance}></lightning-input-field>
+                      <lightning-input-field field-name={integration}></lightning-input-field>
+                      <lightning-input-field field-name={testingDebugDeploy}></lightning-input-field>
+                      <lightning-input-field field-name={debugDeploy}></lightning-input-field>
+                  </template>
+  
+                  <template if:true={js}>
+                      <lightning-input-field field-name={variablesTypesCollections}></lightning-input-field>
+                      <lightning-input-field field-name={objectsFunctionsClasses}></lightning-input-field>
+                      <lightning-input-field field-name={browserEvents}></lightning-input-field>
+                      <lightning-input-field field-name={debugDeploy}></lightning-input-field>
+                      <lightning-input-field field-name={asyncProgramming}></lightning-input-field>
+                      <lightning-input-field field-name={serverSideJs}></lightning-input-field>
+                      <lightning-input-field field-name={testing}></lightning-input-field>
+                  </template>
+  
+                  <template if:true={pab}>
+                      <lightning-input-field field-name={salesforceFundamentals}></lightning-input-field>
+                      <lightning-input-field field-name={dataModeling}></lightning-input-field>
+                      <lightning-input-field field-name={businessLogic}></lightning-input-field>
+                      <lightning-input-field field-name={userInterface}></lightning-input-field>
+                      <lightning-input-field field-name={appDeploy}></lightning-input-field>
+                  </template>
+                  
+                  <lightning-input-field class="slds-hidden" field-name={voucher} value={certVoucherId}></lightning-input-field> 
+              
+                      
+                  
+                      <!--Modal Box Button Start-->
+                      <footer class="slds-modal__footer">
+                          <lightning-button type="submit" variant="success" label="Submit Attempt" ></lightning-button>
+                          <lightning-button variant="destructive" label="Cancel" title="Cancel action" onclick={handleCancel} class="slds-m-left_x-small"></lightning-button>
+                      </footer> 
+          
+              </lightning-record-edit-form>
+          </div>
+          <!--Modal Box Button End-->
+      </div>
     </div>
-</div>
-<div class="slds-backdrop slds-backdrop--open"></div> 
-=======
-                <lightning-input-field class="slds-hidden" field-name={voucher} value={certVoucherId}></lightning-input-field> 
-            
-                    
-                
-                    <!--Modal Box Button Start-->
-                    <footer class="slds-modal__footer">
-                        <lightning-button type="submit" variant="success" label="Submit Attempt" ></lightning-button>
-                        <lightning-button variant="destructive" label="Cancel" title="Cancel action" onclick={handleCancel} class="slds-m-left_x-small"></lightning-button>
-                    </footer> 
-        
-            </lightning-record-edit-form>
-        </div>
-        <!--Modal Box Button End-->
-    </div>
-  </div>
-    <div class="slds-backdrop slds-backdrop--open"></div> 
->>>>>>> b875f2f59921b1b47c6968a586fdbfd4742a0eae
-</template>
+      <div class="slds-backdrop slds-backdrop--open"></div> 
+  </template>

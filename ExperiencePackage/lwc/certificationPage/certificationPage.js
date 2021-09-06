@@ -8,21 +8,21 @@ import PD1 from "@salesforce/resourceUrl/Pd1Logo";
 import PD2 from "@salesforce/resourceUrl/Pd2Logo";
 import PAB from "@salesforce/resourceUrl/platformappbuilder";
 import getVoucherAdm from "@salesforce/apex/ExperienceController.getVoucherAdm";
-import getPracticesAdm from "@salesforce/apex/ExperienceController.getPracticesAdm";
+import getPracticeAttemptsAdm from "@salesforce/apex/ExperienceController.getPracticeAttemptsAdm";
 import getCertStatusAdm from "@salesforce/apex/ExperienceController.getCertStatusAdm";
-import getPracticesAdvancedAdm from "@salesforce/apex/ExperienceController.getPracticesAdvancedAdm";
+import getPracticeAttemptsAdvancedAdm from "@salesforce/apex/ExperienceController.getPracticeAttemptsAdvancedAdm";
 import getVoucherAdvancedAdm from "@salesforce/apex/ExperienceController.getVoucherAdvancedAdm";
 import getCertStatusAdvancedAdm from "@salesforce/apex/ExperienceController.getCertStatusAdvancedAdm";
 import getVoucherJavascr from "@salesforce/apex/ExperienceController.getVoucherJavascr";
-import getPracticesJavascr from "@salesforce/apex/ExperienceController.getPracticesJavascr";
+import getPracticeAttemptsJavascr from "@salesforce/apex/ExperienceController.getPracticeAttemptsJavascr";
 import getCertStatusJavascr from "@salesforce/apex/ExperienceController.getCertStatusJavascr";
 import getCertStatusPd1 from "@salesforce/apex/ExperienceController.getCertStatusPd1";
-import getPracticesPd1 from "@salesforce/apex/ExperienceController.getPracticesPd1";
+import getPracticeAttemptsPd1 from "@salesforce/apex/ExperienceController.getPracticeAttemptsPd1";
 import getVoucherPd1 from "@salesforce/apex/ExperienceController.getVoucherPd1";
 import getVoucherPd2 from "@salesforce/apex/ExperienceController.getVoucherPd2";
 import getCertStatusPd2 from "@salesforce/apex/ExperienceController.getCertStatusPd2";
-import getPracticesPd2 from "@salesforce/apex/ExperienceController.getPracticesPd2";
-import getPracticesPab from "@salesforce/apex/ExperienceController.getPracticesPab";
+import getPracticeAttemptsPd2 from "@salesforce/apex/ExperienceController.getPracticeAttemptsPd2";
+import getPracticeAttemptsPab from "@salesforce/apex/ExperienceController.getPracticeAttemptsPab";
 import getCertStatusPab from "@salesforce/apex/ExperienceController.getCertStatusPab";
 import getVoucherPab from "@salesforce/apex/ExperienceController.getVoucherPab";
 import STATUS_FIELD from "@salesforce/schema/Voucher__c.Status__c";
@@ -32,8 +32,8 @@ const voucherColumns = [
   { label: "Voucher Type", fieldName: "Voucher_Type__c", type: "picklist" },
   { label: "Voucher Code", fieldName: "Voucher_Code__c", type: "text" },
 ];
-const sColumns = [
-  { label: " Type", fieldName: "_Type__c", type: "picklist" },
+const attemptsColumns = [
+  { label: "Attempt Type", fieldName: "Attempt_Type__c", type: "picklist" },
   { label: "Passed?", fieldName: "Passed__c", type: "checkbox" },
   { label: "Practice Score", fieldName: "Practice_Score__c", type: "percent" },
 ];
@@ -41,32 +41,20 @@ const certColumns = [
   {
     label: "Certification Status",
     fieldName: "Certified__c",
-<<<<<<< HEAD:ExperiencePackage/lwc/certificationPage/certificationPage.js
-    type: "picklist",
-=======
     type: "checkbox",
->>>>>>> b875f2f59921b1b47c6968a586fdbfd4742a0eae:ExperiencePackage/force-app/main/default/lwc/certification_Page/certification_Page.js
   },
-  { label: " Due Date", fieldName: "Due_Date__c", type: "Date" },
+  { label: "Attempt Due Date", fieldName: "Due_Date__c", type: "Date" },
 ];
 
 export default class Certification_Page extends LightningElement {
   // things to track button clicks and bool values
-<<<<<<< HEAD:ExperiencePackage/lwc/certificationPage/certificationPage.js
-   clickedButtonAdm = "Show Adm";
-=======
   clickedButtonAdm = "Show Adm";
->>>>>>> b875f2f59921b1b47c6968a586fdbfd4742a0eae:ExperiencePackage/force-app/main/default/lwc/certification_Page/certification_Page.js
   clickedButtonAdvancedAdm = "Show Advanced Adm";
   clickedButtonJavascr = "Show JavaScript";
   clickedButtonPd1 = "Show Pd1";
   clickedButtonPd2 = "Show Pd2";
   clickedButtonPab = "Show Pab";
-<<<<<<< HEAD:ExperiencePackage/lwc/certificationPage/certificationPage.js
-  clickedButtonPabCert
-=======
   clickedButtonPabCert;
->>>>>>> b875f2f59921b1b47c6968a586fdbfd4742a0eae:ExperiencePackage/force-app/main/default/lwc/certification_Page/certification_Page.js
   clickedButtonPabPra = "Practice";
   boolVisibleAdm = false;
   boolVisibleAdvancedAdm = false;
@@ -77,8 +65,6 @@ export default class Certification_Page extends LightningElement {
   boolVisiblePabCert = true;
   boolVisiblePabPra = true;
   modalPabCert = false;
-<<<<<<< HEAD:ExperiencePackage/lwc/certificationPage/certificationPage.js
-=======
   modalPabPra = false;
 
   // Attempts Modal for Inputting an Attempt
@@ -88,7 +74,6 @@ export default class Certification_Page extends LightningElement {
   currentCertVoucherId;
   @track
   currentRecordTypeId;
->>>>>>> b875f2f59921b1b47c6968a586fdbfd4742a0eae:ExperiencePackage/force-app/main/default/lwc/certification_Page/certification_Page.js
 
   @wire(getObjectInfo, {objectApiName : ATTEMPT_OBJECT})
   attemptInfo;
@@ -105,46 +90,46 @@ export default class Certification_Page extends LightningElement {
   // logic for data tables
   // tie content to columns
   voucherColumns = voucherColumns;
-  sColumns = sColumns;
+  attemptsColumns = attemptsColumns;
   certColumns = certColumns;
   // tie content to adm
-  @wire(getPracticesAdm)
-  sAdm;
+  @wire(getPracticeAttemptsAdm)
+  attemptsAdm;
   @wire(getVoucherAdm)
   voucherAdm;
   @wire(getCertStatusAdm)
   certAdm;
   // tie content to advanced adm
-  @wire(getPracticesAdvancedAdm)
-  sAdvAdm;
+  @wire(getPracticeAttemptsAdvancedAdm)
+  attemptsAdvAdm;
   @wire(getVoucherAdvancedAdm)
   voucherAdvAdm;
   @wire(getCertStatusAdvancedAdm)
   certAdvAdm;
   // tie content to javascript
-  @wire(getPracticesJavascr)
-  sJavascr;
+  @wire(getPracticeAttemptsJavascr)
+  attemptsJavascr;
   @wire(getVoucherJavascr)
   voucherJavascr;
   @wire(getCertStatusJavascr)
   certJavascr;
   // tie content to Pd1
-  @wire(getPracticesPd1)
-  sPd1;
+  @wire(getPracticeAttemptsPd1)
+  attemptsPd1;
   @wire(getVoucherPd1)
   voucherPd1;
   @wire(getCertStatusPd1)
   certPd1;
   // tie content to Pd2
-  @wire(getPracticesPd2)
-  sPd2;
+  @wire(getPracticeAttemptsPd2)
+  attemptsPd2;
   @wire(getVoucherPd2)
   voucherPd2;
   @wire(getCertStatusPd2)
   certPd2;
   // tie content to Pab
-  @wire(getPracticesPab)
-  sPab;
+  @wire(getPracticeAttemptsPab)
+  attemptsPab;
   @wire(getVoucherPab)
   voucherPab;
   @wire(getCertStatusPab)

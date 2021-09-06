@@ -1,12 +1,12 @@
 import { LightningElement } from 'lwc';
 import REVATURE_LOGO from '@salesforce/resourceUrl/RevatureLogo';
-import WEBSITE_BACKGROUND from '@salesforce/resourceUrl/orangeBackgroundGradient';
+//import WEBSITE_BACKGROUND from '@salesforce/resourceUrl/orangeBackgroundGradient';
 //import ORANGE_BLUE_BACKGROUND from '@salesforce/resourceUrl/orangeBlue';
 
 export default class ExperienceSiteApp extends LightningElement {
 
     revLogo = REVATURE_LOGO;
-    background = WEBSITE_BACKGROUND;
+  //  background = WEBSITE_BACKGROUND;
    // orageBlueBackground = ORANGE_BLUE_BACKGROUND;
 
     home = true;
