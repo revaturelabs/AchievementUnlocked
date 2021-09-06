@@ -50,7 +50,12 @@ export default class CohortBarGraphIndex extends LightningElement {
         this.rerenderChart();
     }
 
+    renderAfterTime(){
+        setTimeout(() =>{ this.rerenderChart(); }, 2000);
+    }
+
     rerenderChart(){
+        console.log('rerenderChart value: ', this._cohortId);
         getCohortById({cohortId : this._cohortId})
             .then(r => {
                 this.renderBarChart = false;
