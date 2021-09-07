@@ -1,3 +1,20 @@
+<!--
+* homepage.html
+* By: Jawad Chowdhury
+*
+* After the user logs in, the homepage will show the users general information, such
+* as the Splash Screen that welcomes the user, Certification Status that gives on the
+* fly current info on what certifications the user has either achieved or is currently
+* pending, Upcoming Exams that shows what exams are coming up, due dates that the
+* cohort assigned, and an easy view of vouchers given for the certification, and
+* Exam Results which shows the results of certified test and their scores on the fly.
+* If the user needs to see more details on these exams, then the Attempts and Certification
+* page can be located on the navigation bar.
+*
+-->
+
+
+
 <template>
    
 
@@ -11,14 +28,14 @@
                 <div class="page-section page-header">
 
                     
-                    <h2>(Place Navigation Bar here)</h2>
+                    
                 </div>
             </lightning-layout-item>
 
             <lightning-layout-item size="12">
                 <div>
                     
-                      
+                      <!-- Splash Screen that greets user with a gradient that Spans from Revature Orange to Salesforce Blue -->
                         <div class="card slds-align_absolute-center" style="height:5rem">
                             <h1>Welcome {userName}</h1></div>
                 
@@ -46,6 +63,9 @@
                             <template if:true={accounts.error}>
                                 {accounts.error}
                             </template> --> 
+                           
+                           
+                           <!-- Certification Status that shows all the badges and Certifications Achieved or Pending -->
                             <div class="slds-align_absolute-center">
                             <h1>Certification Status</h1>
                         </div>
@@ -124,7 +144,7 @@
 
 
                                 <br>
-
+                                 <!-- Lightning Datatable which displays the Certification Status details -->
                                 <lightning-datatable
                                 key-field="id"
                                 data={certs}
@@ -145,7 +165,8 @@
                         <h1>Upcoming Exams</h1>
                     </div>
                     <div style="height: 214px;">
-
+                     
+                       <!-- Lightning Datatable which shows the details on Upcoming Exams -->
                       <lightning-datatable
                             key-field="id"
                             data={vouchers}
@@ -176,7 +197,7 @@
                         <h1>Exam Results</h1>
                     </div>
                     <div style="height: 200px;">
-
+                        <!-- Lightning Datatable which shows the details on Exam Results -->
                         <lightning-datatable
                             key-field="id"
                             data={attempts}
