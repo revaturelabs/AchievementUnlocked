@@ -1,7 +1,23 @@
+/* attemptsPage.js
+* Created: 8/23/2021
+* Last Modified: 9/7/2021
+* Authors: Evan DeVizio, Nouh Anies
+* Purpose: JavaScript client-side controller for attemptsPage LWC.
+           Provides properties, event handlers, and functionality for the view.
+*/
+
+// *****************************************************************************************************
+// ******************************** BEGIN IMPORT SECTION ***********************************************
+// LWC import
 import { track, wire, LightningElement, api } from 'lwc';
-//import { getRecord } from 'lightning/uiRecordApi';
+
+// APEX import
 import getAttempts from '@salesforce/apex/UserAttempt.getAttempts';
+
+// Object import
 import ATTEMPT_OBJECT from '@salesforce/schema/Attempt__c';
+
+// Field imports
 import ANALYTICS_FIELD from '@salesforce/schema/Attempt__C.Analytics_Reports_and_Dashboards__c';
 import APP_DEPLOYMENT_FIELD from '@salesforce/schema/Attempt__c.App_Deployment__c';
 import ASYN_PROGRAMMING_FIELD from '@salesforce/schema/Attempt__c.Asynchronous_Programming__c';
@@ -42,8 +58,12 @@ import USER_INTERFACE_FIELD from '@salesforce/schema/Attempt__c.User_Interface__
 import VARIABLES_TYPES_COLLECTIONS_FIELD from '@salesforce/schema/Attempt__c.Variables_Types_and_Collections__c';
 import VOUCHER_FIELD from '@salesforce/schema/Attempt__c.Voucher__c';
 import WORKFLOW_FIELD from '@salesforce/schema/Attempt__c.Workflow_Process_Automation__c';
+// ******************************** END IMPORT SECTION *************************************************
+// *****************************************************************************************************
 
-const columns = [
+// *****************************************************************************************************
+// ******************************* BEGIN AttemptsPage Class ********************************************
+const columns = [ // columns for the attempt datatable
     { label: 'View', type: 'button-icon', initialWidth: 75, 
     typeAttributes: {iconName: 'action:preview', title: 'preview', 
     variant: 'border-filled', alternativeText: 'View'}},
@@ -53,10 +73,11 @@ const columns = [
     { label: 'Result', fieldName: 'Result', type: 'formula(percent)' },
 ];
 
+// AttemptsPage class definition
 export default class AttemptsPage extends LightningElement {
     @api recordId;
+    // Store imported schema info into variables
     objectApiName = ATTEMPT_OBJECT;
-    //certType = CERT_TYPE;
     analyticsReportsField = ANALYTICS_FIELD;
     appDeploy = APP_DEPLOYMENT_FIELD;
     asyncProgramming = ASYN_PROGRAMMING_FIELD;
@@ -98,14 +119,13 @@ export default class AttemptsPage extends LightningElement {
     voucher = VOUCHER_FIELD;
     workflow = WORKFLOW_FIELD;
 
+    columns = columns; // set the columns for the datatable
+    userName; // for displaying the user's name at the top of the page
+    certFilterType = "All"; // default cert type. used in filter combobox
+    attemptFilterType = "Both"; // default attempt type. used in filter combobox
+    initialData; // temp variable for saving a reference to the full set of attempts
 
-    columns = columns;
-    userName;
-    certFilterType = "All";
-    attemptFilterType = "Both";
-    initialData;
-
-    get attemptOptions() {
+    get attemptOptions() { // return values for attempt type combobox
         return [
                  { label: '--Both--', value: 'Both' },
                  { label: 'Practice', value: 'Practice' },
@@ -113,7 +133,7 @@ export default class AttemptsPage extends LightningElement {
                ];
     }
 
-    get certOptions() {
+    get certOptions() { // returns values for cert type combobox
         return [
                  { label: '--All--', value: 'All' },
                  { label: 'ADM', value: 'ADM' },
@@ -126,21 +146,24 @@ export default class AttemptsPage extends LightningElement {
     }
 
     @track
-    currentAttempt;
+    currentAttempt; // current attempt of a specific row in the datatable
 
     @track
-    showModal = false;
+    showModal = false; // boolean for displaying the attempt modal
 
     @track
-    attempts;
+    attempts; // property that responds to APEX
 
-    @wire(getAttempts)
-    DoAttempts({ error, data }) {
-        if (data) {
-            this.attempts = data;
+    @wire(getAttempts) // wire the Apex controller
+    DoAttempts({ error, data }) { 
+        if (data) { 
+            this.attempts = data; 
+            // get the first name of the first attempt retrieved
             this.userName = data[0].Voucher__r.Associate__r.First_Name__c;
+            
+            // prepare the data to use in the datatable if data exists
             let preparedAttempts = [];
-            data.forEach(attempt => {
+            data.forEach(attempt => { // on every attempt, set the fields
                 let preparedAttempt = {};
                 preparedAttempt.Id = attempt.Id
                 preparedAttempt.Name = attempt.Name;
@@ -150,62 +173,66 @@ export default class AttemptsPage extends LightningElement {
                 preparedAttempt.Result = attempt.Weighted__c.toFixed(2) + "%";
                 preparedAttempts.push(preparedAttempt);
             });
-            this.attempts = preparedAttempts;
-            this.initialData = preparedAttempts;
-        } else if (error) {
+            this.attempts = preparedAttempts; // set the full list
+            this.initialData = preparedAttempts; // set the temp list
+        } else if (error) { // no data
             console.log(error);
         }
     }
-
-    handleFilterClick() {
-
+    // ******************************** END AttemptsPage Class *********************************************
+    // *****************************************************************************************************
+    
+    // *****************************************************************************************************
+    // ******************************** BEGIN FUNCTION SECTION *********************************************
+    
+    handleFilterClick() { // fired when the Filter button is clicked
+        // set temporary variable that holds all of attempts for the associate
         let allAttempts = this.initialData;
-        let filtered = [];
+        let filtered = []; // list to hold the matched attempts
 
         // Filter by certification type
         if(this.certFilterType != "All"){
+            // check the list and match attempts based on cert 
             for(let att of allAttempts){
                 if(att.CertificationType == this.certFilterType){
                     filtered.push(att);
                 }
             }
-            if(filtered.length < 1){
+            if(filtered.length < 1){ // empty table if no matches
                 this.attempts = [];
             }
-            else {
+            else { // set the datatable equal to the list of matches
                 this.attempts = filtered;
             }
         }
-        else {
+        else { // if the filter is set to "All", show all the cert types
             this.attempts = allAttempts;
         }
 
         //Filter by attempt type
-        let currentList = [];
+        let currentList = []; // blank list to add the found matches
         if(this.attemptFilterType != "Both"){
+            // check the list and match attempts based on attempt type
             for(let attempt of this.attempts){
                 if(attempt.AttemptType == this.attemptFilterType){
                     currentList.push(attempt);
                 }
             }
-            this.attempts = currentList;
+            this.attempts = currentList; // change the datatable to the new list
         }
         else {
-            currentList = this.attempts;
+            currentList = this.attempts; // revert the list to show both types
         }
     }
 
-    handleRowAction(event) {
-        this.showModal = true;
+    handleRowAction(event) { // fired when the View button is clicked
+        this.showModal = true; // show the modal
+        this.currentAttempt = event.detail.row; // set the currentAttempt to the row that was clicked
 
-        this.currentAttempt = event.detail.row;
-        console.log('dataRow: ', this.currentAttempt);
-        console.log("cert: ", this.currentAttempt.CertificationType);
-        console.log("DataRowID: ", this.currentAttempt.Id);
+        // switch the result based on the cert type
         switch (this.currentAttempt.CertificationType) {
             case 'ADM':
                 this.adm = true;
-                console.log("adm: ", this.adm);
                 break;
             case 'Advanced ADM':
                 this.advAdm = true;
@@ -223,19 +250,21 @@ export default class AttemptsPage extends LightningElement {
                 this.pab = true;
                 break;
             default:
-
         }
-
-
     }
-    handleCertTypeChange(event) {
-        this.certFilterType = event.detail.value;
+    
+    handleCertTypeChange(event) { // cert type combobox action
+        // set cert type property to combobox value
+        this.certFilterType = event.detail.value; 
     }
 
-    handleAttemptTypeChange(event){
+    handleAttemptTypeChange(event){ // attempt type combobox action
+        // set attempt type property to combobox value
         this.attemptFilterType = event.detail.value;
     }
-    closeModalAction() {
+    
+    closeModalAction() { // fires when Close button is clicked in the modal
+        // closes modal and resets cert types
         this.showModal = false;
         this.adm = false;
         this.advAdm = false;
@@ -245,3 +274,5 @@ export default class AttemptsPage extends LightningElement {
         this.pab = false;
     }
 }
+// ******************************** END FUNCTION SECTION *********************************************
+// ***************************************************************************************************
