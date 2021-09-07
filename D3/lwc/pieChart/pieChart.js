@@ -1,3 +1,7 @@
+// Author: Zackary Frazier
+// Last Modify Date: 9/7/2021
+// Description: component to render a generic pie chart
+
 import { LightningElement, api } from 'lwc';
 import { loadScript } from 'lightning/platformResourceLoader';
 
