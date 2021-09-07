@@ -1,4 +1,4 @@
-  // Author: Zackary Frazier
+// Author: Zackary Frazier
 // Last Modify Date: 9/7/2021
 // Description: test class for CertificatesChartController
 
