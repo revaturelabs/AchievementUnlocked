@@ -534,7 +534,9 @@
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>
     </template>
+  
 
+    <!-- Modal for inputting a new Attempt -->
     <template if:true={inputAttemptsModal} >
         <c-attempts-Input-Modal current-voucher-type={currentVoucherType} cert-voucher-id={currentCertVoucherId} practice-voucher-id={currentPracticeVoucherId} record-type-id={currentRecordTypeId} onclose={closeAttemptInputModal} ></c-attempts-Input-Modal>
     </template>
