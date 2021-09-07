@@ -1,6 +1,14 @@
 <template>
     <c-associate-list onassociateselected={showInfo} cohort-id={cohortId} status={status} page={page}></c-associate-list>
-    <c-voucher-list if:true={associateId} associate-id={associateId}></c-voucher-list>
-    <c-attempt-list if:true={associateId} associate-id={associateId}></c-attempt-list>
-    <c-certification-list if:true={associateId} associate-id={associateId}></c-certification-list>
+    <br/>
+    <lightning-card title="Associate Details">
+        <div if:true={associateId}>
+            <c-voucher-list if:true={associateId} associate-id={associateId}></c-voucher-list>
+            <c-attempt-list if:true={associateId} associate-id={associateId}></c-attempt-list>
+            <c-certification-list if:true={associateId} associate-id={associateId}></c-certification-list>
+        </div>
+        <div if:false={associateId} class="slds-p-around_small">
+            <p>Please Select An Associate</p>
+        </div>
+    </lightning-card>
 </template>

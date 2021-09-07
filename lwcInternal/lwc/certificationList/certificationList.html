@@ -1,17 +1,19 @@
 <template>
     <lightning-card title="Certifications">
-        <template if:true={flatCerts}>
-            <template if:true={flatCerts.length}>
-                <lightning-datatable
-                    key-field="Id"
-                    data={flatCerts}
-                    columns={columns}
-                    hide-checkbox-column="true">
-                </lightning-datatable>
+        <div class="slds-p-around_small" style="width: 14rem">
+            <template if:true={flatCerts}>
+                <template if:true={flatCerts.length}>
+                    <lightning-datatable
+                        key-field="Id"
+                        data={flatCerts}
+                        columns={columns}
+                        hide-checkbox-column="true">
+                    </lightning-datatable>
+                </template>
+                <template if:false={flatCerts.length}>       
+                    <p>This associate has no certifications!</p>
+                </template>
             </template>
-            <template if:false={flatCerts.length}>       
-                <p>This associate has no certifications!</p>
-            </template>
-        </template>
+        </div>
     </lightning-card>
 </template>

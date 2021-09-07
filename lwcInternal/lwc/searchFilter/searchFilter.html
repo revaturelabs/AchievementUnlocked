@@ -1,51 +1,57 @@
 <template>
     <lightning-card title="Filters" icon-name="standard:calibration">
-        <div class="slds-var-m-horizontal_medium">
-            <lightning-input
-                label="Search Key"
-                type="search"
-                onchange={handleSearchKeyChange}
-            ></lightning-input>
+        <div class="slds-var-m-horizontal_medium slds-grid slds-gutters slds-wrap">
+            <div class="slds-col slds-size_1-of-1">
+                <lightning-input
+                    label="Search Key"
+                    type="search"
+                    onchange={handleSearchKeyChange}
+                ></lightning-input>
+            </div>
             <section>
             </section>
-        <h1>Status</h1>
-        <template if:true={statuses.data}>
-            <template
-                for:each={statuses.data.values}
-                for:item="status">
-                <lightning-input
-                    key={status.value}
-                    label={status.label}
-                    data-filter="statuses"
-                    data-value={status.value}
-                    type="checkbox"
-                    checked
-                    onchange={handleCheckboxChange}>
-                </lightning-input>
-            </template>
-        </template>
+            <div class="slds-col slds-size_1-of-2">
+                <h1>Status</h1>
+                <template if:true={statuses.data}>
+                    <template
+                        for:each={statuses.data.values}
+                        for:item="status">
+                        <lightning-input
+                            key={status.value}
+                            label={status.label}
+                            data-filter="statuses"
+                            data-value={status.value}
+                            type="checkbox"
+                            checked
+                            onchange={handleCheckboxChange}>
+                        </lightning-input>
+                    </template>
+                </template>
+            </div>
         <br/>
-        <h1>Certifications</h1>
-        <template if:true={certs.data}>
-            <lightning-input
-                    label='Certifications'
-                    type="checkbox"
-                    value={certFilter}
-                    onchange={certFiltering}>
-            </lightning-input>
-            <template if:true={certFilter}
-                for:each={certs.data.values}
-                for:item="cert">
+        <div class="slds-col slds-size_1-of-2">
+            <h1>Certifications</h1>
+            <template if:true={certs.data}>
                 <lightning-input
-                    key={cert.value}
-                    label={cert.label}
-                    data-filter="certs"
-                    data-value={cert.value}
-                    type="checkbox"
-                    onchange={handleCheckboxChange}>
+                        label='Certifications'
+                        type="checkbox"
+                        value={certFilter}
+                        onchange={certFiltering}>
                 </lightning-input>
+                <template if:true={certFilter}
+                    for:each={certs.data.values}
+                    for:item="cert">
+                    <lightning-input
+                        key={cert.value}
+                        label={cert.label}
+                        data-filter="certs"
+                        data-value={cert.value}
+                        type="checkbox"
+                        onchange={handleCheckboxChange}>
+                    </lightning-input>
+                </template>
             </template>
-        </template>
+            </div>
         </div>
     </lightning-card>
 </template>
