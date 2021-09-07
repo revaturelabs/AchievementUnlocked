@@ -1,3 +1,7 @@
+// logic for the certification page 
+// grabs info from the apex controller for the specific badges for the specific user
+// tracks everything that happens for the lwc
+
 import { LightningElement, track, wire, api } from "lwc";
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import REVATURELOGO from "@salesforce/resourceUrl/RevatureLogo";
