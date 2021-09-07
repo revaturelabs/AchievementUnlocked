@@ -1,11 +1,14 @@
 <template>
-    <lightning-card>
-        <lightning-datatable
-            key-field="Id"
-            data={cohorts.data}
-            columns={columns}
-            hide-checkbox-column="true"
-            onrowaction={showCohort}>
-        </lightning-datatable>
-    </lightning-card>
+  <lightning-card>
+    <div style="scrollable">
+      <lightning-datatable
+        key-field="Id"
+        data={cohorts.data}
+        columns={columns}
+        hide-checkbox-column="true"
+        onrowaction={showCohort}
+      >
+      </lightning-datatable>
+    </div>
+  </lightning-card>
 </template>
