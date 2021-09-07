@@ -1,17 +1,19 @@
 <template>
     <lightning-card title="Attempts">
-        <template if:true={flatAttempts}>
-            <template if:true={flatAttempts.length}>
-                <lightning-datatable
-                    key-field="Id"
-                    data={flatAttempts}
-                    columns={columns}
-                    hide-checkbox-column="true">
-                </lightning-datatable>
+        <div class="slds-p-around_small">
+            <template if:true={flatAttempts}>
+                <template if:true={flatAttempts.length}>
+                    <lightning-datatable
+                        key-field="Id"
+                        data={flatAttempts}
+                        columns={columns}
+                        hide-checkbox-column="true">
+                    </lightning-datatable>
+                </template>
+                <template if:false={flatAttempts.length}>       
+                    <p>This associate has made no attempts!</p>
+                </template>
             </template>
-            <template if:false={flatAttempts.length}>       
-                <p>This associate has made no attempts!</p>
-            </template>
-        </template>
+        </div>
     </lightning-card>
 </template>

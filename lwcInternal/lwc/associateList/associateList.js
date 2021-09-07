@@ -9,7 +9,7 @@ const columns = [
     { label: 'First Name', fieldName: 'First_Name__c', sortable: true},
     { label: 'Last Name', fieldName: 'Last_Name__c', sortable: true},
     { label: 'Status', fieldName: 'Current_Status__c', sortable: true},
-    { type: 'button', typeAttributes: { variant: 'base', label: 'View' },}
+    { type: 'button', typeAttributes: { variant: 'base', label: 'View' }, cellAttributes: { alignment: "center", iconName: "utility:chart" }},
 ];
 
 export default class AssociateList extends LightningElement {
