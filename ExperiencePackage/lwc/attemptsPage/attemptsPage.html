@@ -1,16 +1,28 @@
+<!-- attemptsPage.html
+Created: 8/23/21
+Last Modified: 9/7/2021
+Authors: Evan DeVizio, Nouh Anies
+Purpose: HTML file for LWC "attemptsPage".
+	   Displays an associate's past attempts for practice
+	   and certification exams. -->
+
 <template>
     
+    <!-- Display a welcome message to the user with their first name. -->
     <div class="slds-m-vertical_medium">
         <lightning-card>
             <h1 class="slds-text-heading_small">Hello, {userName}!</h1>
         </lightning-card>
     </div>
-
+    
+    <!-- Display the filter section and datatable.-->
+	<!-- BEGIN Lightning Card -->
     <lightning-card title="Past Attempts" icon-name="utility:page">        
         <div style="height: 500px;">
             <div class="slds-grid">
                 <div class="slds-p-horizontal_medium">
                     <span style="padding-right: 5px; padding-bottom: 5px;">
+                        <!-- Certification Type Filter-->
                         <lightning-combobox
                             name="certChoice"
                             value={certValue}
@@ -21,6 +33,7 @@
                             style="color:grey;width:200px;" >
                         </lightning-combobox>
                         <br></br>
+                        <!-- Attempt Type Filter -->
                         <lightning-combobox
                             name="attemptChoice"
                             value={attemptValue}
@@ -31,6 +44,7 @@
                             style="color:grey;width:200px;">
                         </lightning-combobox>
                         <br></br>
+                        <!-- Filter Button -->
                         <lightning-button 
                             variant="brand"
                             label="Filter"
@@ -41,6 +55,7 @@
                     </span>
                 </div>
                 <br></br>
+                <!-- Datatable of attempts -->
                 <lightning-datatable
                     key-field="id"
                     data={attempts}
@@ -48,8 +63,8 @@
                     onrowaction={handleRowAction}
                     hide-checkbox-column="true">
                 </lightning-datatable>
-            </div> <!-- END slds-grid-->
-        </div>
+            </div> <!-- END slds-grid -->
+        </div> <!-- END 500px height div -->
     </lightning-card>
 
         <template if:true={showModal}>
@@ -72,8 +87,9 @@
 
                     <!--Modal Box Content Start-->
                     <div class="slds-modal__content slds-p-around_medium">
-
-                        <lightning-record-view-form record-id={currentAttempt.Id} object-api-name={objectApiName}>
+     
+                        <lightning-record-view-form record-id={currentAttempt.Id} object-api-name={objectApiName}> 
+                            <!-- BEGIN ADM -->
                             <template if:true={adm}>
                                 <div class="slds-box slds-box_xx-small">
                                     <lightning-output-field field-name={configSetup}></lightning-output-field>
@@ -96,10 +112,11 @@
                                 </div>
                                 <div class="slds-box slds-box_xx-small">
                                     <lightning-output-field field-name={workflow}></lightning-output-field>
-                                </div>
+                                </div> 
                             </template>
-
-
+                            <!-- END ADM -->
+                            
+                             <!-- BEGIN Advanced ADM -->
                             <template if:true={advAdm}>
                                 <div class="slds-box slds-box_xx-small">
                                     <lightning-output-field field-name={securityAccess}></lightning-output-field>
@@ -133,7 +150,9 @@
                                     <lightning-output-field field-name={processAutomation}></lightning-output-field>
                                 </div>
                             </template>
+                            <!-- END Advanced ADM -->
 
+                            <!-- BEGIN PD1 -->
                             <template if:true={pd1}>
                                 <div class="slds-box slds-box_xx-small">
                                     <lightning-output-field field-name={salesforceFundamentals}>
@@ -153,7 +172,9 @@
                                     <lightning-output-field field-name={testingDebugDeploy}></lightning-output-field>
                                 </div>
                             </template>
-
+                            <!-- END PD1 -->
+                            
+                            <!-- BEGIN PD2 -->
                             <template if:true={pd2}>
                                 <div class="slds-box slds-box_xx-small">
                                     <lightning-output-field field-name={salesforceFundamentals}>
@@ -181,7 +202,9 @@
                                     <lightning-output-field field-name={debugDeploy}></lightning-output-field>
                                 </div>
                             </template>
-
+                            <!-- END PD2 -->
+                            
+                            <!-- BEGIN JS Dev 1 -->
                             <template if:true={js}>
                                 <div class="slds-box slds-box_xx-small">
                                     <lightning-output-field field-name={variablesTypesCollections}>
@@ -207,7 +230,9 @@
                                     <lightning-output-field field-name={testing}></lightning-output-field>
                                 </div>
                             </template>
-
+                            <!-- END JS Dev 1-->
+                            
+                            <!-- BEGIN Platform App Builder -->
                             <template if:true={pab}>
                                 <div class="slds-box slds-box_xx-small">
                                     <lightning-output-field field-name={salesforceFundamentals}>
@@ -226,16 +251,19 @@
                                     <lightning-output-field field-name={appDeploy}></lightning-output-field>
                                 </div>
                             </template>
+                            <!-- END Platform App Builder -->
 
                         </lightning-record-view-form>
                     </div>
                     <!--Modal Box Content End-->
-
+                    
+                    <!-- Close Button -->
                     <footer class="slds-modal__footer">
                         <lightning-button variant="brand" label="Close" title="Close" onclick={closeModalAction}>
                         </lightning-button>
                     </footer>
                 </div>
+                <!-- END Modal Container -->
             </section>
             <div class="slds-backdrop slds-backdrop_open"></div>
         </template>
