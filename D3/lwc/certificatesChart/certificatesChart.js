@@ -1,3 +1,7 @@
+// Author: Zackary Frazier
+// Last Modify Date: 9/7/2021
+// Description: component to render a pie chart for certification data with components to filter the data
+
 import { LightningElement, wire, api } from "lwc";
 
 /* apex methods */
