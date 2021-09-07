@@ -3,7 +3,7 @@ public with sharing class UserAttempt {
     @AuraEnabled(cacheable=true)
     public static List<Attempt__c> getAttempts(){
         List<Attempt__c> attemptList = new List<Attempt__c>();
-        attemptList = [SELECT Id, Name, Attempt_Type__c, Voucher__r.Certification_Type__c,
+        attemptList = [SELECT Id, Name, Attempt_Type__c, Voucher__r.Due_Date__c, Voucher__r.Certification_Type__c,
                        Voucher__r.Associate__r.First_Name__c,
                        Date__c, Passed__c, Practice_Score__c, Weighted__c FROM Attempt__c];
         return attemptList;
