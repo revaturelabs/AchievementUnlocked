@@ -1,3 +1,5 @@
+// controller to get all the information for the specific badges for the specific user
+
 public with sharing class ExperienceController {
   // ADM
   // grab the vouchers for adm
