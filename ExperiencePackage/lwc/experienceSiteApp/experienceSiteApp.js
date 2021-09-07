@@ -1,18 +1,18 @@
 import { LightningElement } from 'lwc';
 import REVATURE_LOGO from '@salesforce/resourceUrl/RevatureLogo';
 import WEBSITE_BACKGROUND from '@salesforce/resourceUrl/orangeBackgroundGradient';
-//import ORANGE_BLUE_BACKGROUND from '@salesforce/resourceUrl/orangeBlue';
 
 export default class ExperienceSiteApp extends LightningElement {
 
     revLogo = REVATURE_LOGO;
     background = WEBSITE_BACKGROUND;
-   // orageBlueBackground = ORANGE_BLUE_BACKGROUND;
-
+   
+    
     home = true;
     certificationPage;
     attemptsPage;
-
+    
+    //Setting the background gradient image as the app background for all the pages.
    get websiteBackground() {
        return `height: 100%; background-image:url(${WEBSITE_BACKGROUND}); background-position: center; background-size:cover; background-repeat: no-repeat;`;
     }
