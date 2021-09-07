@@ -344,7 +344,9 @@ export default class Certification_Page extends LightningElement {
     this.modalPabPra = false;
     this.boolVisiblePabPra = false;
   }
-
+  
+  // This opens up the input attempt modal. Hosts some logic if the associate hasn't clicked any of the show buttons, it makes the adm voucher's the current ones
+  // so they can be used in the attempt modal. Currently a little buggy if the associate doens't have vouchers assigned to them for a certification.
   showAttemptsInputModal() {
     if(this.currentCertVoucherId == null || this.currentPracticeVoucherId == null) {
       console.log("this is null");
@@ -361,11 +363,13 @@ export default class Certification_Page extends LightningElement {
     console.log("practice", this.currentPracticeVoucherId);
     this.inputAttemptsModal = true;
   }
-
+  
+  //Closing the attempt input modal. Comes from the event handler on the attemptinputmodal component.
   closeAttemptInputModal() {
     this.inputAttemptsModal = false;
   }
 
+  // Register for exam button logic that opens a new tab and directs the tab to Webassessor.com
   openWebAssessor() {
     window.open(
       'https://www.webassessor.com/salesforce',
@@ -373,7 +377,7 @@ export default class Certification_Page extends LightningElement {
     );
   }
 
-
+  // Helper function to get the record type Id based on the current cert type selected. This info is passed into the attempt modal to submit an attempt.
   getRecordTypeId(recordTypeName) {
     console.log("hi got in here",this.attemptInfo);
     let recordTypeInfo = this.attemptInfo.data.recordTypeInfos;
