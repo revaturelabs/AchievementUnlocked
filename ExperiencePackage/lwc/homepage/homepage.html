@@ -1,101 +1,197 @@
 <template>
    
-<p>Revature Logo    title and header?    </p>
+
 <div class="c-container">
         <lightning-layout multiple-rows="true">
 
             <!-- This will be the Navigation or splash screen welcome-->
+            
+            
             <lightning-layout-item padding="around-small" size="12">
                 <div class="page-section page-header">
-                    <lightning-card>
-                        <lightning-record-form
-                            object-api-name={objectApiName}
-                            fields={fields}
-                            onsuccess={handleSuccess}>
-                        </lightning-record-form>
-                    </lightning-card>
-                    <h2>(Place Navigation Bar here) {voucherCode}</h2>
+
+                    
+                    <h2>(Place Navigation Bar here)</h2>
                 </div>
             </lightning-layout-item>
 
-            <lightning-layout-item padding="around-small" size="12">
-                <div class="page-section page-header">
-                    <h2>Modern Splash Screen with Welcome {name}</h2>
+            <lightning-layout-item size="12">
+                <div>
+                    
+                      
+                        <div class="card slds-align_absolute-center" style="height:5rem">
+                            <h1>Welcome {userName}</h1></div>
+                
+                        
+
+    
+                    
+                    
                 </div>
             </lightning-layout-item>
 
             <!-- First block showing Certification status and Exam Results-->
             <lightning-layout-item padding="around-small" size="12">
                 <lightning-layout>
-                    <lightning-layout-item padding="around-small" size="8">
-                        <div class="page-section page-right card">
-                            <h2>Certification Status</h2>
-                            <div></div>
-                            <img src=adm_logo/> <p>  O Pending - 8/30/21 (date scheduled) -> Input this data with backend </br>
-                                (LOGO)  O Failed - 8/30/21 (date completed) -> Input this data with backend
-                            </p>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <div class="page-section">
+                            
+                            
+
+                          <!-- <template if:true={accounts.data}>
+                                <template for:each={accounts.data} for:item="acc">
+                                    <p key={acc.Id}>{acc.Name}</p>
+                                </template>
+                            </template>
+                            <template if:true={accounts.error}>
+                                {accounts.error}
+                            </template> --> 
+                            <div class="slds-align_absolute-center">
+                            <h1>Certification Status</h1>
                         </div>
-                    </lightning-layout-item>
-                    <lightning-layout-item padding="around-small" size="4">
-                        <div class="page-section page-main card1">
-                            <h2>Exam Results</h2>
-                            <p> This will have the previous exam results most likely through recordeditform or
-                                whatever we have to use idk lol.
-                            </p>
-                        </div>
-                    </lightning-layout-item>
+                            <div>
+                                <div class="card slds-align_absolute-center slds-box slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none">
+                                    <lightning-layout>
+                                        <lightning-layout-item flexibility="auto" padding="around-small">
+                                            
+                                                <img
+                                                style="max-width: 125%; height: auto;" 
+                                                src={adm_logo}
+                                                />
+                                         
 
-                </lightning-layout>
-            </lightning-layout-item>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item flexibility="auto" padding="around-small">
+                                            
+                                                <img
+                                                style="max-width: 125%; height: auto;"
+                                                src={adv_adm_logo}
+                                                />
 
-            <!--2nd Row shwoing the Interactive Date schedule of due dates and exam dates with Upcoming Exams-->
-            <lightning-layout-item padding="around-small" size="12">
-                <lightning-layout>
-                    <lightning-layout-item padding="around-small" size="8">
-                        <div class="page-section page-right card2">
-                            <h2>Interactive Important Dates</h2>
-                            <lightning-layout-item padding="around-small" size="12">
-                                <lightning-layout>
-                                <lightning-layout-item padding="around-small" size="6">
-                                    <div class="page-section page-main card3">
-                                        <h2>Date component</h2>
-                                        <p> Shows a date that we can add and be interactive.
-                                        </p>
-                                    </div>
+                                          
+                                        
+
+                                        
+                                        </lightning-layout-item>
+                                        <lightning-layout-item flexibility="auto" padding="around-small">
+                                            
+                                                
+                                
+                                                <img
+                                                style="max-width: 125%; height: auto;"
+                                                src={js_logo}
+                                                />
+
+                                           
+                                        </lightning-layout-item>
+
+                                        <lightning-layout-item flexibility="auto" padding="around-small">
+                                           
+                                                
+                                                <img
+                                                style="max-width: 125%; height: auto;"
+                                                src={pd1_logo}
+                                                />
+
+                                            
+                                        </lightning-layout-item>
+                                    
+                                    <lightning-layout-item flexibility="auto" padding="around-small">
+                                        
+                                            
+                                            <img
+                                            style="max-width: 125%; height: auto;"
+                                            src={pd2_logo}
+                                            />
+
+
+                                        
+                                    </lightning-layout-item>
+                                
+                                <lightning-layout-item flexibility="auto" padding="around-small">
+                                    
+                                        
+                                        <img
+                                        style="max-width: 125%; height: auto;"
+                                        src={pab_logo}
+                                        />
+
+                                    
                                 </lightning-layout-item>
-                                <lightning-layout-item padding="around-small" size="6">
-                                    <div class="page-section page-main card3">
-                                        <h2>Current dates for user</h2>
-                                        <p> This will have multiple lists of events from the date once clicked
-                                        </p>
-                                    </div>
-                                </lightning-layout-item>
-
 
                             </lightning-layout>
-                            </lightning-layout-item>
+                                </div>
 
+
+                                <br>
+
+                                <lightning-datatable
+                                key-field="id"
+                                data={certs}
+                                columns={certificationColumn}
+                                hide-checkbox-column="true">
+                                </lightning-datatable>
+
+                            </div>
+                             
                         </div>
                     </lightning-layout-item>
-                    <lightning-layout-item padding="around-small" size="4">
-                        <div class="page-section page-main card3">
-                            <h2>Upcoming Exams</h2>
-                            <p> Due dates that the Trainer can add as an indicator on when associate should make a
-                                schedulefor exam
-                            </p>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <div class="page-section page-main">
+                            
+                    <!-- Upcoming Exams -->
+                    <lightning-card>
+                        <div class="slds-align_absolute-center">
+                        <h1>Upcoming Exams</h1>
+                    </div>
+                    <div style="height: 214px;">
+
+                      <lightning-datatable
+                            key-field="id"
+                            data={vouchers}
+                            columns={upcomingExamsColumn}
+                            hide-checkbox-column="true">
+                        </lightning-datatable>
+            
+                    </div>
+
+                
+                </lightning-card> 
+                            
+
                         </div>
                     </lightning-layout-item>
 
                 </lightning-layout>
             </lightning-layout-item>
 
+            <!--2nd Row shwoing the Exam Results-->
 
+            <lightning-layout-item padding="around-small" size="12">
+                <div class="page-section page-header">
+                   
+                   <!-- Exam Results -->
+                    <lightning-card>
+                        <div class="slds-align_absolute-center">
+                        <h1>Exam Results</h1>
+                    </div>
+                    <div style="height: 200px;">
 
-            <lightning-layout-item flexibility="auto" padding="around-small" size="12">
-                <div class="page-footer page-section card4">
-                    <h2>Footer</h2>
-                </div>
+                        <lightning-datatable
+                            key-field="id"
+                            data={attempts}
+                            columns={examResultsColumn}
+                            hide-checkbox-column="true">
+                        </lightning-datatable>
+            
+                    </div>
+
+                
+                </lightning-card> 
+            </div>
             </lightning-layout-item>
+
+
         </lightning-layout>
     </div>
 </template>
