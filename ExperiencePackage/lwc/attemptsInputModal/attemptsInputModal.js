@@ -111,13 +111,24 @@ export default class AttemptsInputModal extends LightningElement {
 
   handleAttemptSubmit(event) {
     event.preventDefault();
+    console.log("event",event)
     const fields = event.detail.fields;
     if(fields.Attempt_Type__c == "Practice") {
       fields.Voucher__r = this.practiceVoucherId;
     } else if (fields.Attempt_Type__c == 'Certfication') {
       fields.Voucher__r = this.certVoucherId;
     }
-    this.template.querySelector('lightning-record-edit-form').submit(fields);
+    if(fields.Voucher__r) {
+      this.template.querySelector('lightning-record-edit-form').submit(fields);
+    } else {
+      const toastEvent = new ShowToastEvent({
+        title: "Submit Failed",
+        message: "Submit failed, please check that you have the necessary vouchers before submitting attempts",
+        variant: "danger"
+      });
+      this.dispatchEvent(toastEvent);
+    }
+    
   }
 
   handleCancel(event) {
@@ -136,7 +147,12 @@ export default class AttemptsInputModal extends LightningElement {
   }
 
   handleErrors(event){
-    console.log("in errors function",event);
+    const toastEvent = new ShowToastEvent({
+      title: "Submit Failed",
+      message: "Submit failed, please check that you have the necessary vouchers before submitting attempts",
+      variant: "danger"
+    });
+    this.dispatchEvent(toastEvent);
   }
 
   connectedCallback() {

@@ -6,7 +6,7 @@ import ADVANCEDADMLOGO from "@salesforce/resourceUrl/AdvancedAdmLogo";
 import JAVASCRIPTLOGO from "@salesforce/resourceUrl/JavscriptDevLogo";
 import PD1 from "@salesforce/resourceUrl/Pd1Logo";
 import PD2 from "@salesforce/resourceUrl/Pd2Logo";
-import PAB from "@salesforce/resourceUrl/platformappbuilder";
+import PAB from "@salesforce/resourceUrl/pabLogo";
 import getVoucherAdm from "@salesforce/apex/ExperienceController.getVoucherAdm";
 import getPracticeAttemptsAdm from "@salesforce/apex/ExperienceController.getPracticeAttemptsAdm";
 import getCertStatusAdm from "@salesforce/apex/ExperienceController.getCertStatusAdm";
@@ -48,7 +48,7 @@ const certColumns = [
 
 export default class Certification_Page extends LightningElement {
   // things to track button clicks and bool values
-  clickedButtonAdm = "Show Adm";
+  clickedButtonAdm = "Hide Adm";
   clickedButtonAdvancedAdm = "Show Advanced Adm";
   clickedButtonJavascr = "Show JavaScript";
   clickedButtonPd1 = "Show Pd1";
@@ -56,7 +56,7 @@ export default class Certification_Page extends LightningElement {
   clickedButtonPab = "Show Pab";
   clickedButtonPabCert;
   clickedButtonPabPra = "Practice";
-  boolVisibleAdm = false;
+  boolVisibleAdm = true;
   boolVisibleAdvancedAdm = false;
   boolVisibleJavascr = false;
   boolVisiblePd1 = false;
@@ -69,7 +69,7 @@ export default class Certification_Page extends LightningElement {
 
   // Attempts Modal for Inputting an Attempt
   inputAttemptsModal;
-  currentVoucherType;
+  currentVoucherType = "Adm";
   currentPracticeVoucherId;
   currentCertVoucherId;
   @track
@@ -95,6 +95,7 @@ export default class Certification_Page extends LightningElement {
   // tie content to adm
   @wire(getPracticeAttemptsAdm)
   attemptsAdm;
+  
   @wire(getVoucherAdm)
   voucherAdm;
   @wire(getCertStatusAdm)
@@ -345,7 +346,19 @@ export default class Certification_Page extends LightningElement {
   }
 
   showAttemptsInputModal() {
-    console.log("hi got in here");
+    if(this.currentCertVoucherId == null && this.currentPracticeVoucherId == null) {
+      console.log("this is null");
+      console.log(this.voucherAdm.data)
+      for (let i of this.voucherAdm.data) {
+        if (i.Voucher_Type__c == "Certification") {
+            this.currentCertVoucherId = i.Id;
+        }  else if(i.Voucher_Type__c == "Practice")  {
+          this.currentPracticeVoucherId = i.Id;
+        }
+      }
+    }
+    console.log("in modal" ,this.currentCertVoucherId);
+    console.log("practice", this.currentPracticeVoucherId);
     this.inputAttemptsModal = true;
   }
 
@@ -370,6 +383,8 @@ export default class Certification_Page extends LightningElement {
       }
     }
   }
+
+
 
 
 }

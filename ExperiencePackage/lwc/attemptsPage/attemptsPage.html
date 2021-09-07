@@ -64,8 +64,7 @@
                         </button>
                         <h2 class="slds-text-heading_medium slds-hyphenate">{currentAttempt.CertificationType}
                             {currentAttempt.AttemptType} Exam Attempt</h2>
-                        <h3>Date Attempted: <lightning-formatted-date-time value={currentAttempt.Date} year="numeric"
-                                day="2-digit" month="long" time-zone="UTC"></lightning-formatted-date-time>
+                        <h3>Date Attempted: {currentAttempt.Date} 
                         </h3>
                         <h3>Overall Score: {currentAttempt.Result}</h3>
                     </header>
