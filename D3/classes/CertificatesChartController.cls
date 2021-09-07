@@ -1,3 +1,7 @@
+// Author: Zackary Frazier
+// Last Modify Date: 9/7/2021
+// Description: Apex controller for the certificatesChart LWC
+
 public with sharing class CertificatesChartController {
   // @desc : retrieve all associates who have earned at least one certificate
   @AuraEnabled(cacheable=true)
