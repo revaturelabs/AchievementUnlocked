@@ -5,7 +5,7 @@ public with sharing class UserAttempt {
         List<Attempt__c> attemptList = new List<Attempt__c>();
         attemptList = [SELECT Id, Name, Attempt_Type__c, Voucher__r.Certification_Type__c,
                        Voucher__r.Associate__r.First_Name__c,
-                       Date__c, Passed__c, Practice_Score__c, Weighted__c FROM Attempt__c];
+                       textDate__c, Passed__c, Practice_Score__c, Weighted__c FROM Attempt__c];
         return attemptList;
     }
     
