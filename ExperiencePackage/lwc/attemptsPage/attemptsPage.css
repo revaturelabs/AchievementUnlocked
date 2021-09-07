@@ -21,3 +21,12 @@ h1{
     font-size: 1em;
     font-weight: bold;
 }
+.slds-box {
+    margin-bottom: 6px; 
+    background-color:whitesmoke;
+} 
+
+h2 {
+    font-weight: bold;
+    font-family:'Times New Roman', Times, serif;
+}
