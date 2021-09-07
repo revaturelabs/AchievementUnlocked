@@ -1,23 +1,21 @@
 import { LightningElement, wire, api, track } from 'lwc';
-import getAttempts from '@salesforce/apex/viewController.getAttempts';
+import getCertifications from '@salesforce/apex/viewController.getCertifications';
 
 const columns = [
     { label: 'Certification', fieldName: 'Voucher__r.Certification_Type__c' },
-    { label: 'Type', fieldName: 'Attempt_Type__c' },
-    { label: 'Passed', fieldName: 'Passed__c', type: 'boolean' },
 ];
 
-export default class AttemptList extends LightningElement {
+export default class CertificationList extends LightningElement {
 
     error;
-    @track flatAttempts = [];
+    @track flatCerts = [];
     @track columns = columns;
 
     @api associateId;
-    @wire(getAttempts, {associateId: '$associateId'})
-    attempts({error, data}){
+    @wire(getCertifications, {associateId: '$associateId'})
+    certs({error, data}){
         if(data){
-            let attemptsArray = [];
+            let certsArray = [];
 
             for(let row of data){
                 const flattenedRow = {};
@@ -33,9 +31,9 @@ export default class AttemptList extends LightningElement {
                     }
                 });
 
-                attemptsArray.push(flattenedRow);
+                 certsArray.push(flattenedRow);
             }
-            this.flatAttempts = attemptsArray;
+            this.flatCerts = certsArray;
         }else if(error){
             this.error = error;
         }

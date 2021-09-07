@@ -1,14 +1,17 @@
 import { LightningElement, api, wire } from 'lwc';
-import getCohorts from '@salesforce/apex/viewController.getCohorts';
+import getFilteredCohorts from '@salesforce/apex/viewController.getFilteredCohorts';
 
 const columns = [
-    {label: 'Start Date', fieldName: 'Start_Date__c', type: 'button', typeAttributes: {variant: 'base', label: {fieldName: 'Start_Date__c'}}},
+    {label: 'Start Date', fieldName: 'Start_Date__c', type: 'date'},
+    {label: 'End Date', fieldName: 'End_Date__c', type: 'date'},
+    {type: 'button', typeAttributes: {variant: 'base', label: 'View'}}
 ];
 
 export default class CohortList extends LightningElement {
     columns = columns;
     cohortId;
-    @wire(getCohorts)
+    @api filter = 'Active';
+    @wire(getFilteredCohorts, {filter: '$filter'})
     cohorts;
 
     showCohort(event) {
