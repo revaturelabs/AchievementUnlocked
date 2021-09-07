@@ -1,6 +1,13 @@
-public with sharing class UserAttempt {
+/* UserAttempt.cls
+* Created: 8/23/2021
+* Last Modified: 9/7/2021
+* Authors: Evan DeVizio, Nouh Anies
+* Purpose: Server-side controller for retrieving 
+           a list of Attempt__c and/or Voucher__c objects.
+*/
+public with sharing class UserAttempt { // with sharing for security settings
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled(cacheable=true) // make method available in LWC
     public static List<Attempt__c> getAttempts(){
         List<Attempt__c> attemptList = new List<Attempt__c>();
         attemptList = [SELECT Id, Name, Attempt_Type__c, Voucher__r.Due_Date__c, Voucher__r.Certification_Type__c,
@@ -9,7 +16,7 @@ public with sharing class UserAttempt {
         return attemptList;
     }
     
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled(cacheable=true) // make method available in LWC
     public static List<Voucher__c> getVouchers(){
         List<Voucher__c> voucherList = new List<Voucher__c>();
         voucherList = [SELECT Id, Name, Due_Date__c, Voucher_Type__c, Voucher_Code__c,
