@@ -1,5 +1,5 @@
 import { LightningElement } from 'lwc';
-import REVATURE_LOGO from '@salesforce/resourceUrl/RevatureLogo';
+import REVATURE_LOGO from '@salesforce/resourceUrl/revLogo';
 import WEBSITE_BACKGROUND from '@salesforce/resourceUrl/orangeBackgroundGradient';
 
 export default class ExperienceSiteApp extends LightningElement {

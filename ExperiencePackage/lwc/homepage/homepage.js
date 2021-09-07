@@ -6,13 +6,12 @@ import getAttempts from '@salesforce/apex/UserAttempt.getAttempts';
 import getVouchers from '@salesforce/apex/UserAttempt.getVouchers';
 
 import style from '@salesforce/resourceUrl/style';
-import REVATURE_LOGO from '@salesforce/resourceUrl/RevatureLogo';
 import ADM_LOGO from '@salesforce/resourceUrl/AdmLogo';
 import ADVANCED_ADM_LOGO from "@salesforce/resourceUrl/AdvancedAdmLogo";
 import JAVASCRIPT_LOGO from "@salesforce/resourceUrl/JavscriptDevLogo";
 import PD1 from "@salesforce/resourceUrl/Pd1Logo";
 import PD2 from "@salesforce/resourceUrl/Pd2Logo";
-import PAB from "@salesforce/resourceUrl/platformappbuilder";
+import PAB from "@salesforce/resourceUrl/pabLogo";
 
 import Id from '@salesforce/user/Id';
 import ACCOUNT_OBJECT from '@salesforce/schema/Account';
@@ -75,7 +74,6 @@ export default class Homepage extends LightningElement{
     @track adm_logo = ADM_LOGO;
     @track adv_adm_logo = ADVANCED_ADM_LOGO;
     @track js_logo = JAVASCRIPT_LOGO;
-    @track rev_logo = REVATURE_LOGO;
     @track pd1_logo = PD1;
     @track pd2_logo = PD2;
     @track pab_logo = PAB;

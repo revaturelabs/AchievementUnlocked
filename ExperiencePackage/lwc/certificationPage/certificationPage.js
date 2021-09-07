@@ -4,7 +4,6 @@
 
 import { LightningElement, track, wire, api } from "lwc";
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
-import REVATURELOGO from "@salesforce/resourceUrl/RevatureLogo";
 import ADMLOGO from "@salesforce/resourceUrl/AdmLogo";
 import ADVANCEDADMLOGO from "@salesforce/resourceUrl/AdvancedAdmLogo";
 import JAVASCRIPTLOGO from "@salesforce/resourceUrl/JavscriptDevLogo";
@@ -83,7 +82,6 @@ export default class Certification_Page extends LightningElement {
   attemptInfo;
 
   // static resources
-  revatureLogo = REVATURELOGO;
   admLogo = ADMLOGO;
   advancedAdmLogo = ADVANCEDADMLOGO;
   javascriptLogo = JAVASCRIPTLOGO;
