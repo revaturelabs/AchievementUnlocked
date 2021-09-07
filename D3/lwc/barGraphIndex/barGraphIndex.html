@@ -1,0 +1,23 @@
+<template>
+    <lightning-combobox
+            name="certShown"
+            label="Certification Type"
+            value={comboBoxValue}
+            placeholder="Select Progress"
+            options={options}
+            onchange={handleCertChange} 
+            style="width:200px"></lightning-combobox>
+    
+            <br/>
+            <lightning-button label={buttonLabel} title="Non-primary action" onclick={changeGraph} class="slds-m-left_x-small"></lightning-button>
+    <div class="slds-card" style="height:650px; width:500px">
+    <template if:true={renderGraphs}>
+        <template if:true={renderStacked}>
+            <c-side-stacked-chart models={models}></c-side-stacked-chart>
+        </template>
+        <template if:false={renderStacked}>
+            <c-attempt-bar-chart models={models}></c-attempt-bar-chart>
+        </template>
+    </template>
+</div>
+</template>

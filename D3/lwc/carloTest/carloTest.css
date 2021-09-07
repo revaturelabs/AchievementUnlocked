@@ -1,0 +1,36 @@
+
+
+  h1 {
+    color: steelblue;
+    font-weight: 800;
+    font-size: 1.7em;
+  }
+
+  h2 {
+    color: steelblue;
+    font-size: 1.3em;
+    padding-bottom: 10px;
+  }
+
+  h3 {
+    color: gray;
+    font-size: 1.2em;
+    padding-bottom: 10px;
+  }
+
+  .radarChart {
+    align-self: center;
+    align-content: center;
+    align-items: center;
+    border-left:auto;
+    border-right:auto;
+  }
+
+  .text-small {
+    font-size: 12px;
+    font-style: italic;
+  }
+  
+  .checkbox {
+    margin-left: 20px;
+  }

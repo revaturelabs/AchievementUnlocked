@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <brand>
+        <headerColor>#0070D2</headerColor>
+        <logo>AUlogo</logo>
+        <logoVersion>1</logoVersion>
+        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+    </brand>
+    <formFactors>Small</formFactors>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <label>Achievement Unlocked</label>
+    <navType>Standard</navType>
+    <tabs>Cohort_View</tabs>
+    <tabs>Staging_View</tabs>
+    <tabs>Voucher_Generator</tabs>
+    <tabs>Voucher__c</tabs>
+    <tabs>Associate__c</tabs>
+    <tabs>Cohort__c</tabs>
+    <uiType>Lightning</uiType>
+    <utilityBar>Achievement_Unlocked_UtilityBar</utilityBar>
+</CustomApplication>

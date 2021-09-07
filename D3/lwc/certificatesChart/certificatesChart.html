@@ -1,0 +1,32 @@
+<template>
+	<lightning-card title={title}>
+		<div class="handle-overflow">
+
+			<!-- find a way to do this without the lightning-record-edit form, bit of a hacky solution -->
+			<lightning-record-edit-form object-api-name="Associate__c" onchange={changeCohort}>
+				<lightning-input-field value={cohortId} field-name="Cohort__c">
+
+				</lightning-input-field>
+			</lightning-record-edit-form>
+
+			<lightning-combobox
+				value={selectedCert}
+				options={certTypes}
+				label={certLabel}
+				onchange={changeCert}
+				class="slds-p-around_x-small"
+			></lightning-combobox>
+
+			<div class='flex-center-horizontal'>
+				<c-pie-chart
+					chart-data={chartData} 
+					value={value} 
+					label={label}
+					width={width}
+					height={height}
+					colors={colors}
+				></c-pie-chart>
+			</div>
+		</div>
+	</lightning-card>
+</template>

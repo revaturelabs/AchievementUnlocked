@@ -1,0 +1,11 @@
+<template>
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_4-of-5">
+            <c-cohort-list oncohortselected={displayCohort}></c-cohort-list>
+            <c-base-view if:true={cohortId} ongetdemassociates={handleSelectedRequest} selection-list={selectionList} cohort-id={cohortId}></c-base-view>        
+        </div>        
+        <div class="slds-col slds-size_1-of-5">
+            <c-assignment-bar cohort-id={cohortId} selection-list={selectionList}></c-assignment-bar>
+        </div>
+    </div>
+</template>
