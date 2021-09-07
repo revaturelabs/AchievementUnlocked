@@ -428,23 +428,23 @@
         <recordType>Attempt__c.ADM</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Attempt__c-ADM Attempt Layout</layout>
+        <layout>Attempt__c-Advanced ADM Attempt Layout</layout>
         <recordType>Attempt__c.Advanced_ADM</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Attempt__c-ADM Attempt Layout</layout>
+        <layout>Attempt__c-JS Developer 1 Attempt Layout</layout>
         <recordType>Attempt__c.JS_Developer_1</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Attempt__c-ADM Attempt Layout</layout>
+        <layout>Attempt__c-PD1 Attempt Layout</layout>
         <recordType>Attempt__c.PD1</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Attempt__c-ADM Attempt Layout</layout>
+        <layout>Attempt__c-PD2 Attempt Layout</layout>
         <recordType>Attempt__c.PD2</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Attempt__c-ADM Attempt Layout</layout>
+        <layout>Attempt__c-Platform App Builder Attempt Layout</layout>
         <recordType>Attempt__c.Platform_App_Builder</recordType>
     </layoutAssignments>
     <layoutAssignments>
