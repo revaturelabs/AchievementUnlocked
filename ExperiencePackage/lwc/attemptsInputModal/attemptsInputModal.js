@@ -109,6 +109,9 @@ export default class AttemptsInputModal extends LightningElement {
   @wire(getObjectInfo, {objectApiName : ATTEMPT_OBJECT})
   attemptInfo;
 
+  //Prevents default submit for an attempmt in the edit form. Changes the voucher field to the correct one depending which attempt type the associate chooses and submits fields.
+  //Shows Toast event if it fails
+  //Currently the voucher that starts out assigned to the form is the adm practice voucher. If the asscociate has no vouchers for a certification type, the form doens't work.
   handleAttemptSubmit(event) {
     event.preventDefault();
     console.log("event",event)
@@ -130,11 +133,12 @@ export default class AttemptsInputModal extends LightningElement {
     }
     
   }
-
+  //Closes the modal and cancels the form
   handleCancel(event) {
     this.dispatchEvent(new CustomEvent("close"));
   }
-
+  
+  //IF a submit is succesful, have a toast event
   handleSuccess(event) {
     console.log("successful?")
     this.dispatchEvent(new CustomEvent("close"));
@@ -145,7 +149,7 @@ export default class AttemptsInputModal extends LightningElement {
     });
     this.dispatchEvent(toastEvent);
   }
-
+  //If a submit fails, shows a toast event error message.
   handleErrors(event){
     const toastEvent = new ShowToastEvent({
       title: "Submit Failed",
@@ -154,7 +158,9 @@ export default class AttemptsInputModal extends LightningElement {
     });
     this.dispatchEvent(toastEvent);
   }
-
+  
+  
+  // Determines which fields are displayed based on the current voucher type that an associate is on.
   connectedCallback() {
     switch (this.currentVoucherType) {
       case "Adm":
