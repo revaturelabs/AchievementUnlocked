@@ -80,13 +80,6 @@ export default class AssignmentBar extends LightningElement {
             //this.dispatchEvent( new CustomEvent('getdemassociates', event ));
             console.log(this.selectionList);
 
-            this.curList = [];
-            this.selectionList.forEach((element) => this.curList.push(element.Id));
-            console.log(this.selectionList);
-            console.log(this.voucherType);
-            console.log(this.certType);
-            console.log(this.dueDate);
-
             Assign({associateIds: this.selectionList, voucherType: this.voucherType, certType: this.certType, dueDate: this.dueDate})
             .then((result) => {
                 this.result = result;
