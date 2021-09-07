@@ -47,9 +47,9 @@ const columns = [
     { label: 'View', type: 'button-icon', initialWidth: 75, 
     typeAttributes: {iconName: 'action:preview', title: 'preview', 
     variant: 'border-filled', alternativeText: 'View'}},
-    { label: 'Certification', fieldName: 'Certification_Type'},
+    { label: 'Certification', fieldName: 'CertificationType'},
     { label: 'Attempt Type', fieldName: 'AttemptType' },
-    { label: 'Date', fieldName: 'textDate', type: 'text' },
+    { label: 'Date', fieldName: 'Date', type: 'text' },
     { label: 'Result', fieldName: 'Result', type: 'formula(percent)' },
 ];
 
@@ -165,7 +165,7 @@ export default class AttemptsPage extends LightningElement {
         // Filter by certification type
         if(this.certFilterType != "All"){
             for(let att of allAttempts){
-                if(att.Certification_Type == this.certFilterType){
+                if(att.CertificationType == this.certFilterType){
                     filtered.push(att);
                 }
             }

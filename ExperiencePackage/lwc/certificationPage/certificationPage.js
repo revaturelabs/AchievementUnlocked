@@ -346,7 +346,7 @@ export default class Certification_Page extends LightningElement {
   }
 
   showAttemptsInputModal() {
-    if(this.currentCertVoucherId == null && this.currentPracticeVoucherId == null) {
+    if(this.currentCertVoucherId == null || this.currentPracticeVoucherId == null) {
       console.log("this is null");
       console.log(this.voucherAdm.data)
       for (let i of this.voucherAdm.data) {
