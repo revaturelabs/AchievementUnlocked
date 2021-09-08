@@ -4,7 +4,7 @@
 // 
 // also tests voucher assignment triggers
 // 
-//  Code Coverage: 88%
+//  Code Coverage: 94%
 //  
 //  Created on: 8/26/2021
 //  Last Edited: 8/26/2021
@@ -14,18 +14,21 @@
 @isTest
 public class TestMockDataGenerator {
     
-	@isTest
+    @isTest
     public static void genTest(){
         MockDataGenerator gen = new MockDataGenerator();
-        gen.generate(1);
-        Voucher__c curVoucher = [SELECT Id FROM Voucher__c LIMIT 1];
-        Attempt__c attempt1 = new Attempt__c();
-        Attempt__c attempt2 = new Attempt__c();
-        
-        attempt1.Voucher__c = curVoucher.Id;
-        Database.insert(attempt1);
-        attempt2.Voucher__c = curVoucher.Id;
-        Database.insert(attempt2);
+        gen.generate(0);
+        gen = new MockDataGenerator();
+        gen.generate(2);
+        gen = new MockDataGenerator();
+        gen.generate(4);
+        gen = new MockDataGenerator();
+        gen.generate(6);
+        gen = new MockDataGenerator();
+        gen.generate(8);
+        gen = new MockDataGenerator();
+        gen.generate(10);
+
         
     }
 }
