@@ -14,6 +14,8 @@ export default class AttemptList extends LightningElement {
     @track columns = columns;
 
     @api associateId;
+    
+    //gets all of an associate's attempts when given an id, and flattens them in order to be able to display related fields in the same data table 
     @wire(getAttempts, {associateId: '$associateId'})
     attempts({error, data}){
         if(data){
