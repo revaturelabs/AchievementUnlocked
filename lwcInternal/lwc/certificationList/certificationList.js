@@ -12,6 +12,8 @@ export default class CertificationList extends LightningElement {
     @track columns = columns;
 
     @api associateId;
+    
+    //gets a list of certifications an associate has earned through querying for their passed certification attempts, and flattens them to be able to show them in the data table
     @wire(getCertifications, {associateId: '$associateId'})
     certs({error, data}){
         if(data){
