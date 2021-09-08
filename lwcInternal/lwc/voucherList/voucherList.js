@@ -11,6 +11,8 @@ const columns = [
 export default class VoucherList extends LightningElement {
     columns = columns;
     @api associateId;
+    
+    //gets a list of vouchers when an associate id is passed in
     @wire(getVouchers, {associateId: '$associateId'})
     vouchers;
 }
