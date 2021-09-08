@@ -47,6 +47,7 @@ public with sharing class viewController {
         return Database.query(associates);
     }
 
+    //Filters to be used in the getAssociates method when filter criteria is set
     public class Filters {
         @AuraEnabled
         public String searchKey { get; set; }
@@ -56,6 +57,7 @@ public with sharing class viewController {
         public String[] certs { get; set; }
     }
 
+    //returns a list of associates based on search filter criteria, and cohort, and orders the results based on a specified field
     @AuraEnabled(cacheable=true)
     public static List<Associate__c> getAssociates(String cohortId, Filters filters, String sortingField, String dir, Integer pageNum) {
         Integer ofst = (pageNum - 1) * 10;
@@ -149,6 +151,7 @@ public with sharing class viewController {
         ORDER BY Voucher__r.Certification_Type__c];
     }
 
+    //returns a list of all of the certifications an associate has when that associate's id is passed in as a parameter
     @AuraEnabled(cacheable=true)
     public static List<Attempt__c> getCertifications(Id associateId) {
         return [SELECT Id, Attempt_Type__c, Voucher__c, Passed__c, Voucher__r.Associate__c, Voucher__r.Certification_Type__c 
@@ -157,6 +160,7 @@ public with sharing class viewController {
         ORDER BY Voucher__r.Certification_Type__c];
     }
 
+    //counts the total number of associates with the given criteria. Mostly used for pagination.
     @AuraEnabled(cacheable=true)
     public static Integer getAssociateCount(Filters filters) {
         Set<Id> ids = new Set<Id>();
