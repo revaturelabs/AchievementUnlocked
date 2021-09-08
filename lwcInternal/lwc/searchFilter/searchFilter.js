@@ -15,23 +15,25 @@ const DELAY = 350;
 
 
 export default class SearchFilter extends LightningElement {
+    //create String searchkey
     searchKey = '';
 
+    //Create filters object
     filters = {
         searchKey: ''     
     };
 
-
+    //Wire Message context object
     @wire(MessageContext)
     messageContext;
 
-
+    //get all picklist values from record type STATUS_FIELD and add it to form
     @wire(getPicklistValues, {
         recordTypeId: '012000000000000AAA',
         fieldApiName: STATUS_FIELD
     })
     statuses;
-
+    //get all picklist values from record type CERT_FIELD and add it to form
     @wire(getPicklistValues, {
         recordTypeId: '012000000000000AAA',
         fieldApiName: CERT_FIELD
@@ -49,24 +51,28 @@ export default class SearchFilter extends LightningElement {
         }
         this.delayedFireFilterChangeEvent();
     }
-    
+    //Get changed value from search filter and add it to filters object
     handleSearchKeyChange(event) {
         this.filters.searchKey = event.target.value;
         this.delayedFireFilterChangeEvent();
     }
     
-
+    //handle checkbox change event add all changed filters to filter object
     handleCheckboxChange(event) {
+        
+        //if this.filters.statuses are null then initialize all values for initial view
         if (!this.filters.statuses) {
             // Lazy initialize filters with all values initially set
             this.filters.statuses = this.statuses.data.values.map(
                 (item) => item.value
             );
         }
-
+        
         const value = event.target.dataset.value;
         const filterArray = this.filters[event.target.dataset.filter];
         if (event.target.checked) {
+            
+            //get current filter value and add it to array
             if (!filterArray.includes(value)) {
                 filterArray.push(value);
             }
@@ -75,7 +81,7 @@ export default class SearchFilter extends LightningElement {
                 (item) => item !== value
             );
         }
-        // Published ProductsFiltered message
+        // Published updated this.filters to Search Message
         publish(this.messageContext, SEARCH_MESSAGE, {
             filters: this.filters
         });
