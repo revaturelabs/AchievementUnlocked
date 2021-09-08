@@ -121,18 +121,11 @@ export default class AttemptsInputModal extends LightningElement {
     } else if (fields.Attempt_Type__c == 'Certfication') {
       fields.Voucher__r = this.certVoucherId;
     }
-    if(fields.Voucher__r) {
+
       this.template.querySelector('lightning-record-edit-form').submit(fields);
-    } else {
-      const toastEvent = new ShowToastEvent({
-        title: "Submit Failed",
-        message: "Submit failed, please check that you have the necessary vouchers before submitting attempts",
-        variant: "danger"
-      });
-      this.dispatchEvent(toastEvent);
+  
     }
     
-  }
   //Closes the modal and cancels the form
   handleCancel(event) {
     this.dispatchEvent(new CustomEvent("close"));

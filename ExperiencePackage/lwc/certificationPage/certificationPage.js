@@ -38,7 +38,7 @@ const voucherColumns = [
 const attemptsColumns = [
   { label: "Attempt Type", fieldName: "Attempt_Type__c", type: "picklist" },
   { label: "Passed?", fieldName: "Passed__c", type: "checkbox" },
-  { label: "Practice Score", fieldName: "Practice_Score__c", type: "percent" },
+  { label: "Practice Score", fieldName: "Practice_Score__c"},
 ];
 const certColumns = [
   {
