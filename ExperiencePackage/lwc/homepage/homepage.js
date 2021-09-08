@@ -37,7 +37,7 @@ import VOUCHER_OBJECT from '@salesforce/schema/Voucher__c';
 
 const upcomingExamsColumn = [
     { label: 'Certification', fieldName: 'CertificationType'},
-    { label: 'Due Date', fieldName: 'DueDate', type: 'date'  },
+    { label: 'Due Date', fieldName: 'DueDate', type: 'Date'  },
     { label: 'Voucher Code', fieldName: 'VoucherCode'},
 
 ];
@@ -46,7 +46,7 @@ const upcomingExamsColumn = [
 const examResultsColumn = [
     { label: 'Certification', fieldName: 'Certification_Type'},
    // { label: 'Attempt Type', fieldName: 'AttemptType' },
-    { label: 'Date', fieldName: 'Date', type: 'date' },
+    { label: 'Date', fieldName: 'Date'},
     { label: 'Passed?', fieldName: 'Passed', type: 'boolean' },
     { label: 'Result', fieldName: 'Result', type: 'formula(percent)' },
 ];
@@ -54,7 +54,7 @@ const examResultsColumn = [
 const certificationColumn = [
     { label: 'Certification', fieldName: 'Certification_Type'},
     { label: 'Status', fieldName: 'Status'},
-    { label: 'Date', fieldName: 'Date', type: 'date' },
+    { label: 'Date', fieldName: 'Date'},
     
     
    // { label: 'Attempt Type', fieldName: 'AttemptType' },
@@ -114,7 +114,7 @@ export default class Homepage extends LightningElement{
                 
                 examResult.Certification_Type = attempt.Voucher__r.Certification_Type__c;
                 examResult.AttemptType = attempt.Attempt_Type__c;
-                examResult.Date= attempt.Date__c;
+                examResult.Date= attempt.textDate__c;
                 examResult.Passed = attempt.Passed__c;
                 examResult.Result = attempt.Weighted__c.toFixed(2) + "%";
              
@@ -152,12 +152,15 @@ export default class Homepage extends LightningElement{
             data.forEach(voucher => {
                 
                 let voucherResult = {};
+                if (voucher.Voucher_Type__c == "Certification"){
+                    voucherResult.CertificationType= voucher.Certification_Type__c;
+                    voucherResult.DueDate = voucher.Due_Date__c;
+                    voucherResult.VoucherCode = voucher.Voucher_Code__c;
+                    voucherResults.push(voucherResult);
+
+                }
                 
-                voucherResult.CertificationType= voucher.Certification_Type__c;
-                voucherResult.DueDate = voucher.Due_Date__c;
-                voucherResult.VoucherCode = voucher.Voucher_Code__c;
             
-                voucherResults.push(voucherResult);
                
                 
             });
@@ -183,7 +186,7 @@ export default class Homepage extends LightningElement{
     @track certs;
 @wire (getAttempts) ShowCertStatus({ error, data }) {
         if (data) {
-            
+            console.log(data);
             this.certs = data;
            
             let examCerts = [];
@@ -205,7 +208,7 @@ export default class Homepage extends LightningElement{
                 breakme: if(examCert.AttemptType == this.attemptFilterType){
                     if(examCert.Passed == true){
                         examCert.Status = "Achieved";
-                        examCert.Date= cert.Date__c;
+                        examCert.Date= cert.textDate__c;
                         examCerts.push(examCert);
                         i = i + 1;
                         break breakme;

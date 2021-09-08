@@ -51,7 +51,7 @@ public with sharing class ExperienceController {
       WHERE
         Associate__r.User__c = :UserInfo.getUserId()
         AND Voucher_Type__c != 'Practice'
-        AND Certification_Type__c = 'Advanced ADM'
+        AND Certification_Type__c = 'ADM'
     ];
   }
 
