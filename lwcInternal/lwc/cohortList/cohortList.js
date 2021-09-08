@@ -11,9 +11,12 @@ export default class CohortList extends LightningElement {
     columns = columns;
     cohortId;
     @api filter = 'Active';
+    
+    //gets a list of active cohorts to display in the data table
     @wire(getFilteredCohorts, {filter: '$filter'})
     cohorts;
 
+    //sends a cohort id to the associates list to display all of the associates in that cohort in another component
     showCohort(event) {
         const sendId = new CustomEvent('cohortselected', {
             detail: event.detail.row.Id
