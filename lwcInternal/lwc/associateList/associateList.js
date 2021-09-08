@@ -14,20 +14,26 @@ const columns = [
 
 export default class AssociateList extends LightningElement {
 
+    //data table properties
     columns = columns;
     sortField;
     sortDirection;
-    filters = {};
     count;
+    
+    //properties to be passed into the getAssociates method
+    filters = {};
     @api status = null;
     @api page;
     @api cohortId = null;
+    
     @track
     selectionList;
     
+    //gets all of the associates that meet the specified criteria
     @wire(getAssociates, {cohortId: '$cohortId', filters: '$filters', sortingField: '$sortField', dir: '$sortDirection', pageNum: '$page'})
     associates;
     
+    //gets the total amount of associates that meet the specified criteria
     @wire(getAssociateCount, {filters: '$filters'})
     wiredFunction({ error, data }) {
         if (data) {
@@ -38,7 +44,7 @@ export default class AssociateList extends LightningElement {
         }
     }
 
-
+    //initializes the component with values upon creation
     constructor() {
         super();
         this.sortField = 'Last_Name__c';
@@ -47,6 +53,7 @@ export default class AssociateList extends LightningElement {
         this.page = 1;
     }
 
+    //fires off an event whenever an associate is selected that sends the id to the other components
     showInfo(event) {
         const sendId = new CustomEvent('associateselected', {
             detail: event.detail.row.Id
@@ -56,10 +63,10 @@ export default class AssociateList extends LightningElement {
 
     
 
-    /** Load context for Lightning Messaging Service */
+    // Load context for Lightning Messaging Service
     @wire(MessageContext) messageContext;
 
-    /** Subscription for ProductSelected Lightning message */
+    // Subscription for searchMessage Lightning message
     searchTermSubscription;
 
     connectedCallback() {
@@ -71,6 +78,7 @@ export default class AssociateList extends LightningElement {
         );
     }
 
+    //sets the filters property in this component to the filters sent from the searchFilter component
     handleSearchFilter(message){
         this.filters = { ...message.filters };
         this.page = 1;
@@ -82,6 +90,7 @@ export default class AssociateList extends LightningElement {
         this.sortDirection = event.detail.sortDirection;
     }
 
+    //pagination handlers
     handleFirst(){
         this.page = 1;
         this.clearAssociate();
@@ -103,6 +112,7 @@ export default class AssociateList extends LightningElement {
         }
     }
 
+    //clears the associate info from the other components whenever called
     clearAssociate() {
         const sendId = new CustomEvent('associateselected', {
             detail: null
@@ -110,6 +120,7 @@ export default class AssociateList extends LightningElement {
         this.dispatchEvent(sendId);
     }
 
+    //sends the selected rows to the voucher assignment component
     rowsSelected(event){
         console.log('rows selected');
         //this.dispatchEvent( new CustomEvent('getdemassociates', event ));
