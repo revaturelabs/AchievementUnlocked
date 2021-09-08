@@ -1,12 +1,12 @@
 ////////////////////////////////
 //
-// Mock Data generator V4
+// Mock Data generator V5
 // 
 // for creating random but valid records
 // 
 //
 // created on 8/16/2021
-// last edited 8/26/2021
+// last edited 9/8/2021
 // 
 // Use:
 // MockDataGenerator gen = new MockDataGenerator();
@@ -83,9 +83,10 @@ public class MockDataGenerator {
         String cert1 = getSelection(Certifications);
         String cert2 = getSelection(Certifications);
         while(cert2 == cert1){
-	        cert2 = getSelection(Certifications);            
+            cert2 = getSelection(Certifications);            
         }
-        
+        generateAccounts(numOfAccounts);
+        generateContacts(numOfContacts);
         Cohort__c curCohort = new Cohort__c();
         curCohort.Start_Date__c = startDate;
         curCohort.End_Date__c = endDate;
@@ -99,7 +100,7 @@ public class MockDataGenerator {
     
     public void releaseAssociates(){
         for(Associate__c curAssociate: associateList){
-			integer releaseRand = rollDice(4);
+            integer releaseRand = rollDice(4);
             if(releaseRand == 0){
                 curAssociate.Current_Status__c = 'Released';
                 curAssociate.Release_Reason__c = 'Could not keep up with Cohort';
@@ -113,19 +114,20 @@ public class MockDataGenerator {
             if(Date.today() > curVoucher.Due_Date__c){
                 Integer count = 0;
                 do{
+                    String certTypeStr = curVoucher.Certification_Type__c.replace(' ', '_');
                     Id recordTypeId = Schema.SObjectType.Attempt__c.getRecordTypeInfosByDeveloperName()
-                        .get(curVoucher.Certification_Type__c).getRecordTypeId();
+                        .get(certTypeStr ).getRecordTypeId();
                     Attempt__c curAttempt = new Attempt__c();
                     curAttempt.RecordTypeId = recordTypeId;
                     curAttempt.Voucher__c = curVoucher.Id;
                     curAttempt.Attempt_Type__c = curVoucher.Voucher_Type__c;
                     scoreAttempt(curAttempt, curVoucher);
                     if(count == 0){
-	                    curAttempt.Date__c = curVoucher.Due_Date__c;
+                        curAttempt.Date__c = curVoucher.Due_Date__c;
                     } else if(count == 1){
-	                    curAttempt.Date__c = curVoucher.Due_Date__c + 1;                        
+                        curAttempt.Date__c = curVoucher.Due_Date__c + 1;                        
                     } else{
-	                    curAttempt.Date__c = curVoucher.Due_Date__c + 14;                        
+                        curAttempt.Date__c = curVoucher.Due_Date__c + 14;                        
                     }
                     curVoucher.Status__c = 'Used';
                     attemptList.add(curAttempt);
@@ -156,9 +158,9 @@ public class MockDataGenerator {
                                   (curAttempt.Service_and_Support_Applications__c * .11) +
                                   (curAttempt.Workflow_Process_Automation__c * .16));
             if(totalScore > 64){
-				curAttempt.Passed__c = True;
+                curAttempt.Passed__c = True;
                 if(curVoucher.Voucher_Type__c == 'Certification'){
-	                curVoucher.Certified__c = True;
+                    curVoucher.Certified__c = True;
                 }
             }                
             
@@ -176,9 +178,9 @@ public class MockDataGenerator {
                                   (curAttempt.User_Interface__c * .23) + 
                                   (curAttempt.Testing_Debugging_and_Deployment__c * .17));
             if(totalScore > 64){
-				curAttempt.Passed__c = True;
+                curAttempt.Passed__c = True;
                 if(curVoucher.Voucher_Type__c == 'Certification'){
-	                curVoucher.Certified__c = True;
+                    curVoucher.Certified__c = True;
                 }
             }                
             
@@ -206,9 +208,9 @@ public class MockDataGenerator {
                                   (curAttempt.Analytics_Reports_and_Dashboards__c * .1) + 
                                   (curAttempt.Process_Automation__c * .13));
             if(totalScore > 64){
-				curAttempt.Passed__c = True;
+                curAttempt.Passed__c = True;
                 if(curVoucher.Voucher_Type__c == 'Certification'){
-	                curVoucher.Certified__c = True;
+                    curVoucher.Certified__c = True;
                 }
             }                
          
@@ -233,9 +235,9 @@ public class MockDataGenerator {
                                   (curAttempt.Testing__c * .14) +
                                   (curAttempt.Debug_and_Deployment_Tools__c * .05));
             if(totalScore > 64){
-				curAttempt.Passed__c = True;
+                curAttempt.Passed__c = True;
                 if(curVoucher.Voucher_Type__c == 'Certification'){
-	                curVoucher.Certified__c = True;
+                    curVoucher.Certified__c = True;
                 }
             }                
 
@@ -254,9 +256,9 @@ public class MockDataGenerator {
                                   (curAttempt.User_Interface__c * .17) + 
                                   (curAttempt.App_Deployment__c * .10));
             if(totalScore > 64){
-				curAttempt.Passed__c = True;
+                curAttempt.Passed__c = True;
                 if(curVoucher.Voucher_Type__c == 'Certification'){
-	                curVoucher.Certified__c = True;
+                    curVoucher.Certified__c = True;
                 }
             }                
 
@@ -277,14 +279,14 @@ public class MockDataGenerator {
                                   (curAttempt.Server_Side_JavaScript__c * .08) + 
                                   (curAttempt.Testing__c * .07));
             if(totalScore > 64){
-				curAttempt.Passed__c = True;
+                curAttempt.Passed__c = True;
                 if(curVoucher.Voucher_Type__c == 'Certification'){
-	                curVoucher.Certified__c = True;
+                    curVoucher.Certified__c = True;
                 }
             }                
         }
     }
-	    
+        
     public void generateAssociates(integer maxAssociates, Cohort__c curCohort){
         String status = '';
         if(curCohort.End_Date__c < Date.today()){
@@ -342,7 +344,7 @@ public class MockDataGenerator {
                 curVoucher3.Status__c = 'Pending';
                 curVoucher3.Voucher_Code__c = 'revature_' + GenGib(22);            
                 curVoucher3.Voucher_Type__c = 'Practice';
-				curVoucher3.Certification_Type__c = cert2;
+                curVoucher3.Certification_Type__c = cert2;
                 curVoucher3.Associate__c = curAssociate.Id;
                 voucherList.add(curVoucher3);
                 System.debug(curVoucher3.Voucher_Code__c);
@@ -356,7 +358,7 @@ public class MockDataGenerator {
                 curVoucher4.Status__c = 'Pending';
                 curVoucher4.Voucher_Code__c = GenGibNumbers(16);                
                 curVoucher4.Voucher_Type__c = 'Certification';
-				curVoucher4.Certification_Type__c = cert2;
+                curVoucher4.Certification_Type__c = cert2;
                 curVoucher4.Associate__c = curAssociate.Id;
                 voucherList.add(curVoucher4);
                 System.debug(curVoucher4.Voucher_Code__c);
@@ -403,6 +405,7 @@ public class MockDataGenerator {
     }
                     
     public void generateContacts(integer maxContacts){
+        contactList = new List<Contact>();
         for (integer index = 0; index < maxContacts; index++ ){
             Contact con = new Contact();
             con.FirstName = getSelection( firstNames);
@@ -413,6 +416,7 @@ public class MockDataGenerator {
     }       
 
     public void generateAccounts(integer maxAccounts){
+        accountList = new List<Account>();
         for(integer cur = 0; cur < maxAccounts; cur++){
             Account acc = new Account();
             acc.Name = getEsoName(); //GenGibberish(15);
