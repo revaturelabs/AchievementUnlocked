@@ -72,7 +72,7 @@ export default class SearchFilter extends LightningElement {
         const filterArray = this.filters[event.target.dataset.filter];
         if (event.target.checked) {
             
-            //get current filter value and add it to array
+            //if current value does not contain current event value change add it to filterArray
             if (!filterArray.includes(value)) {
                 filterArray.push(value);
             }
