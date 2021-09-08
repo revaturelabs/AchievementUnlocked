@@ -67,151 +67,302 @@ public class MockDataGenerator {
     public List<Attempt__c> attemptList = new List<Attempt__c>();
     public List<Voucher__c> assignedVouchers = new List<Voucher__c>();
     
-    public void generate(){
-        generateAccounts(numOfAccounts);
-        generateContacts(numOfContacts);
-        generateCohorts(numOfCohorts);
-        generateAssociates(numOfAssociates);
-        generateVouchers(numOfVouchers);
-        assignVouchers();
-        generateAttempts(numOfAttempts);
+    public void generate(Integer cohortNum){
+        // cohorts are ten weeks
+        // there are 10 cohorts
+        // a week is 7 days, a cohort is 70 days long
+        // the first cohort should start 2 weeks ago
+        // 14 days * cohort number
+        // 
+
+        Date startDate = Date.today() - (cohortNum * 14);
+        Date endDate = startDate + 70;
+        System.debug(startDate);
+        System.debug(endDate);
+
+        String cert1 = getSelection(Certifications);
+        String cert2 = getSelection(Certifications);
+        while(cert2 == cert1){
+	        cert2 = getSelection(Certifications);            
+        }
+        
+        Cohort__c curCohort = new Cohort__c();
+        curCohort.Start_Date__c = startDate;
+        curCohort.End_Date__c = endDate;
+        database.insert(curCohort);
+        generateAssociates(10, curCohort);
+        generateVouchers(cert1, cert2);
+        generateAttempts();
+        releaseAssociates();
         
     }
-
-    public void assignVouchers(){
-        integer vouchersToAssign = rollDice(voucherList.size());
-        for (integer index = 0; index < vouchersToAssign; index++){
-            Voucher__c curVoucher = ((Voucher__c) getRandomObject(voucherList));
-            while (assignedVouchers.contains(curVoucher)){
-            	curVoucher = ((Voucher__c) getRandomObject(voucherList));                
-            }
-            Associate__c curAssociate = ((Associate__c) getRandomObject(associateList));
-            while ( duplicateVoucher(curVoucher, curAssociate) ){
-            	curAssociate = ((Associate__c) getRandomObject(associateList));             
-            }
-            curVoucher.Associate__c = curAssociate.Id;
-            assignedVouchers.add(curVoucher);
-        }
-        database.update(assignedVouchers);
-    }
     
-    public boolean duplicateVoucher(Voucher__c curVoucher, Associate__c curAssociate){
-        for (Voucher__c indexVoucher : assignedVouchers){
-            if (indexVoucher.Associate__c == curAssociate.id && indexVoucher.Certification_Type__c == curVoucher.Certification_Type__c && indexVoucher.Voucher_Type__c == curVoucher.Voucher_Type__c ){
-                return true;
+    public void releaseAssociates(){
+        for(Associate__c curAssociate: associateList){
+			integer releaseRand = rollDice(4);
+            if(releaseRand == 0){
+                curAssociate.Current_Status__c = 'Released';
+                curAssociate.Release_Reason__c = 'Could not keep up with Cohort';
             }
         }
-        return false;
+        database.update(associateList);
     }
     
-    public void generateAttempts(integer maxAttempts){
-        for (integer index = 0; index < maxAttempts; index++){
-            Attempt__c curAttempt = new Attempt__c();
-            Voucher__c curVoucher = ((Voucher__c) getRandomObject(assignedVouchers));
-            curAttempt.Voucher__c = curVoucher.id;
-            curAttempt.Attempt_Type__c = curVoucher.Voucher_Type__c ;
-
-            if (curVoucher.Certification_Type__c == 'ADM' ){
-
-                curAttempt.Configuration_and_Setup__c = rollDice(100) ;
-                curAttempt.Data_and_Analytics_Management__c = rollDice(100);
-                curAttempt.Object_Manager_and_Lightning_App_Builder__c = rollDice(100);
-                curAttempt.Productivity_and_Collaboration__c = rollDice(100);
-                curAttempt.Sales_and_Marketing_Applications__c = rollDice(100);
-                curAttempt.Service_and_Support_Applications__c = rollDice(100);
-                curAttempt.Workflow_Process_Automation__c = rollDice(100);
-
-            } else if (curVoucher.Certification_Type__c == 'PD1' ){
-                curAttempt.Salesforce_Fundamentals__c = rollDice(100);
-                curAttempt.Data_Modeling_and_Management__c = rollDice(100);
-                curAttempt.Process_Automation_and_Logic__c = rollDice(100);
-                curAttempt.User_Interface__c = rollDice(100);
-                curAttempt.Testing_Debugging_and_Deployment__c = rollDice(100);
-                
-            } else if (curVoucher.Certification_Type__c == 'Advanced ADM'){           
-                curAttempt.Security_and_Access__c = rollDice(100);
-                curAttempt.Extending_Custom_Objects_and_Application__c = rollDice(100);
-                curAttempt.Auditing_and_Monitoring__c = rollDice(100);
-                curAttempt.Sales_Cloud_Applications__c = rollDice(100);
-                curAttempt.Service_Cloud_Applications__c = rollDice(100);
-                curAttempt.Data_Management__c = rollDice(100);
-                curAttempt.Content_Management__c = rollDice(100);
-                curAttempt.Change_Management__c = rollDice(100);
-                curAttempt.Analytics_Reports_and_Dashboards__c = rollDice(100);
-                curAttempt.Process_Automation__c = rollDice(100);
-                
-            } else if (curVoucher.Certification_Type__c == 'PD2'){
-                curAttempt.Salesforce_Fundamentals__c = rollDice(100);
-                curAttempt.Data_Modeling_and_Management__c = rollDice(100);
-                curAttempt.Process_Automation_and_Logic__c = rollDice(100);
-                curAttempt.User_Interface__c = rollDice(100);
-                curAttempt.Performance__c = rollDice(100);
-                curAttempt.Integration__c = rollDice(100);
-                curAttempt.Testing__c = rollDice(100);
-                curAttempt.Debug_and_Deployment_Tools__c = rollDice(100);
-                
-            } else if (curVoucher.Certification_Type__c == 'Platform App Builder'){
-                curAttempt.Salesforce_Fundamentals__c = rollDice(100);
-                curAttempt.Data_Modeling_and_Management__c = rollDice(100);
-                curAttempt.Business_Logic_and_Process_Automation__c = rollDice(100);
-                curAttempt.User_Interface__c = rollDice(100);
-                curAttempt.App_Deployment__c = rollDice(100);
-                
-            } else if (curVoucher.Certification_Type__c == 'JS Developer 1'){
-                curAttempt.Variables_Types_and_Collections__c = rollDice(100);
-                curAttempt.Objects_Functions_and_Classes__c = rollDice(100);
-                curAttempt.Browser_and_Events__c = rollDice(100);
-                curAttempt.Debugging_and_Error_Handling__c = rollDice(100);
-                curAttempt.Asynchronous_Programming__c = rollDice(100);
-                curAttempt.Server_Side_JavaScript__c = rollDice(100);
-                curAttempt.Testing__c = rollDice(100);
+    public void generateAttempts(){
+        for(Voucher__c curVoucher: voucherList){
+            if(Date.today() > curVoucher.Due_Date__c){
+                Integer count = 0;
+                do{
+                    Id recordTypeId = Schema.SObjectType.Attempt__c.getRecordTypeInfosByDeveloperName()
+                        .get(curVoucher.Certification_Type__c).getRecordTypeId();
+                    Attempt__c curAttempt = new Attempt__c();
+                    curAttempt.RecordTypeId = recordTypeId;
+                    curAttempt.Voucher__c = curVoucher.Id;
+                    curAttempt.Attempt_Type__c = curVoucher.Voucher_Type__c;
+                    scoreAttempt(curAttempt, curVoucher);
+                    if(count == 0){
+	                    curAttempt.Date__c = curVoucher.Due_Date__c;
+                    } else if(count == 1){
+	                    curAttempt.Date__c = curVoucher.Due_Date__c + 1;                        
+                    } else{
+	                    curAttempt.Date__c = curVoucher.Due_Date__c + 14;                        
+                    }
+                    curVoucher.Status__c = 'Used';
+                    attemptList.add(curAttempt);
+                    count ++;
+                }while(count < 3 && curVoucher.Certified__c == False && curVoucher.Voucher_Type__c == 'Certification');
             }
-            attemptList.add(curAttempt);
         }
-        Database.insert(attemptList);
+        database.insert(attemptList);
+        database.update(voucherList);
     }
     
-    public void generateAssociates(integer maxAssociates){
+    public void scoreAttempt(Attempt__c curAttempt, Voucher__c curVoucher){
+        if (curVoucher.Certification_Type__c == 'ADM' ){
+            
+            curAttempt.Configuration_and_Setup__c = rollDice(65) + 35 ;
+            curAttempt.Data_and_Analytics_Management__c = rollDice(65) + 35;
+            curAttempt.Object_Manager_and_Lightning_App_Builder__c = rollDice(65) + 35;
+            curAttempt.Productivity_and_Collaboration__c = rollDice(65) + 35;
+            curAttempt.Sales_and_Marketing_Applications__c = rollDice(65) + 35;
+            curAttempt.Service_and_Support_Applications__c = rollDice(65) + 35;
+            curAttempt.Workflow_Process_Automation__c = rollDice(65) + 35;
+            
+            Decimal totalScore = ((curAttempt.Configuration_and_Setup__c * .2) + 
+                                  (curAttempt.Data_and_Analytics_Management__c * .14) + 
+                                  (curAttempt.Object_Manager_and_Lightning_App_Builder__c * .2) + 
+                                  (curAttempt.Productivity_and_Collaboration__c * .07) + 
+                                  (curAttempt.Sales_and_Marketing_Applications__c * .12) +
+                                  (curAttempt.Service_and_Support_Applications__c * .11) +
+                                  (curAttempt.Workflow_Process_Automation__c * .16));
+            if(totalScore > 64){
+				curAttempt.Passed__c = True;
+                if(curVoucher.Voucher_Type__c == 'Certification'){
+	                curVoucher.Certified__c = True;
+                }
+            }                
+            
+            
+        } else if (curVoucher.Certification_Type__c == 'PD1' ){
+            curAttempt.Salesforce_Fundamentals__c = rollDice(65) + 35;
+            curAttempt.Data_Modeling_and_Management__c = rollDice(65) + 35;
+            curAttempt.Process_Automation_and_Logic__c = rollDice(65) + 35;
+            curAttempt.User_Interface__c = rollDice(65) + 35;
+            curAttempt.Testing_Debugging_and_Deployment__c = rollDice(65) + 35;
+
+            Decimal totalScore = ((curAttempt.Salesforce_Fundamentals__c * .07) + 
+                                  (curAttempt.Data_Modeling_and_Management__c * .13) + 
+                                  (curAttempt.Process_Automation_and_Logic__c * .40) + 
+                                  (curAttempt.User_Interface__c * .23) + 
+                                  (curAttempt.Testing_Debugging_and_Deployment__c * .17));
+            if(totalScore > 64){
+				curAttempt.Passed__c = True;
+                if(curVoucher.Voucher_Type__c == 'Certification'){
+	                curVoucher.Certified__c = True;
+                }
+            }                
+            
+        } else if (curVoucher.Certification_Type__c == 'Advanced ADM'){           
+            curAttempt.Security_and_Access__c = rollDice(65) + 35;
+            curAttempt.Extending_Custom_Objects_and_Application__c = rollDice(65) + 35;
+            curAttempt.Auditing_and_Monitoring__c = rollDice(65) + 35;
+            curAttempt.Sales_Cloud_Applications__c = rollDice(65) + 35;
+            curAttempt.Service_Cloud_Applications__c = rollDice(65) + 35;
+            curAttempt.Data_Management__c = rollDice(65) + 35;
+            curAttempt.Content_Management__c = rollDice(65) + 35;
+            curAttempt.Change_Management__c = rollDice(65) + 35;
+            curAttempt.Analytics_Reports_and_Dashboards__c = rollDice(65) + 35;
+            curAttempt.Process_Automation__c = rollDice(65) + 35;
+
+
+            Decimal totalScore = ((curAttempt.Security_and_Access__c * .20) + 
+                                  (curAttempt.Extending_Custom_Objects_and_Application__c * .08) + 
+                                  (curAttempt.Auditing_and_Monitoring__c * .06) + 
+                                  (curAttempt.Sales_Cloud_Applications__c * .10) + 
+                                  (curAttempt.Service_Cloud_Applications__c * .10) +
+                                  (curAttempt.Data_Management__c * .10) + 
+                                  (curAttempt.Content_Management__c * .03) +
+                                  (curAttempt.Change_Management__c * .1) +
+                                  (curAttempt.Analytics_Reports_and_Dashboards__c * .1) + 
+                                  (curAttempt.Process_Automation__c * .13));
+            if(totalScore > 64){
+				curAttempt.Passed__c = True;
+                if(curVoucher.Voucher_Type__c == 'Certification'){
+	                curVoucher.Certified__c = True;
+                }
+            }                
+         
+
+        } else if (curVoucher.Certification_Type__c == 'PD2'){
+            curAttempt.Salesforce_Fundamentals__c = rollDice(65) + 35;
+            curAttempt.Data_Modeling_and_Management__c = rollDice(65) + 35;
+            curAttempt.Process_Automation_and_Logic__c = rollDice(65) + 35;
+            curAttempt.User_Interface__c = rollDice(65) + 35;
+            curAttempt.Performance__c = rollDice(65) + 35;
+            curAttempt.Integration__c = rollDice(65) + 35;
+            curAttempt.Testing__c = rollDice(65) + 35;
+            curAttempt.Debug_and_Deployment_Tools__c = rollDice(65) + 35;
+            
+            
+            Decimal totalScore = ((curAttempt.Salesforce_Fundamentals__c * .05) + 
+                                  (curAttempt.Data_Modeling_and_Management__c * .06) + 
+                                  (curAttempt.Process_Automation_and_Logic__c * .20) + 
+                                  (curAttempt.User_Interface__c * .19) + 
+                                  (curAttempt.Performance__c * .16) +
+                                  (curAttempt.Integration__c * .15) + 
+                                  (curAttempt.Testing__c * .14) +
+                                  (curAttempt.Debug_and_Deployment_Tools__c * .05));
+            if(totalScore > 64){
+				curAttempt.Passed__c = True;
+                if(curVoucher.Voucher_Type__c == 'Certification'){
+	                curVoucher.Certified__c = True;
+                }
+            }                
+
+            
+        } else if (curVoucher.Certification_Type__c == 'Platform App Builder'){
+            curAttempt.Salesforce_Fundamentals__c = rollDice(65) + 35;
+            curAttempt.Data_Modeling_and_Management__c = rollDice(65) + 35;
+            curAttempt.Business_Logic_and_Process_Automation__c = rollDice(65) + 35;
+            curAttempt.User_Interface__c = rollDice(65) + 35;
+            curAttempt.App_Deployment__c = rollDice(65) + 35;
+            
+            
+            Decimal totalScore = ((curAttempt.Salesforce_Fundamentals__c * .23) + 
+                                  (curAttempt.Data_Modeling_and_Management__c * .22) + 
+                                  (curAttempt.Business_Logic_and_Process_Automation__c * .28) + 
+                                  (curAttempt.User_Interface__c * .17) + 
+                                  (curAttempt.App_Deployment__c * .10));
+            if(totalScore > 64){
+				curAttempt.Passed__c = True;
+                if(curVoucher.Voucher_Type__c == 'Certification'){
+	                curVoucher.Certified__c = True;
+                }
+            }                
+
+            
+        } else if (curVoucher.Certification_Type__c == 'JS Developer 1'){
+            curAttempt.Variables_Types_and_Collections__c = rollDice(65) + 35;
+            curAttempt.Objects_Functions_and_Classes__c = rollDice(65) + 35;
+            curAttempt.Browser_and_Events__c = rollDice(65) + 35;
+            curAttempt.Debugging_and_Error_Handling__c = rollDice(65) + 35;
+            curAttempt.Asynchronous_Programming__c = rollDice(65) + 35;
+            curAttempt.Server_Side_JavaScript__c = rollDice(65) + 35;
+            curAttempt.Testing__c = rollDice(65) + 35;
+            Decimal totalScore = ((curAttempt.Variables_Types_and_Collections__c * .23) + 
+                                  (curAttempt.Objects_Functions_and_Classes__c * .25) + 
+                                  (curAttempt.Browser_and_Events__c * .17) + 
+                                  (curAttempt.Debugging_and_Error_Handling__c * .07) + 
+                                  (curAttempt.Asynchronous_Programming__c * .13) +
+                                  (curAttempt.Server_Side_JavaScript__c * .08) + 
+                                  (curAttempt.Testing__c * .07));
+            if(totalScore > 64){
+				curAttempt.Passed__c = True;
+                if(curVoucher.Voucher_Type__c == 'Certification'){
+	                curVoucher.Certified__c = True;
+                }
+            }                
+        }
+    }
+	    
+    public void generateAssociates(integer maxAssociates, Cohort__c curCohort){
+        String status = '';
+        if(curCohort.End_Date__c < Date.today()){
+            status = getSelection(new List<String>{'Staging', 'Selected'});
+        } else{
+            status = 'Training';
+        }
         for(integer index = 0; index < maxAssociates; index++){
             Associate__c curAssociate = new Associate__c();
-            curAssociate.Account__c = ((Account) getRandomObject(AccountList)).id;
-            curAssociate.Current_Status__c = getSelection( new List<String>{'Training'} ); // , 'Staging', 'Selected', 'Released' 
-            curAssociate.Employment_Start_Date__c = Date.today() - 50;
+            curAssociate.Current_Status__c = status;
+            curAssociate.Employment_Start_Date__c = curCohort.Start_Date__c;
             curAssociate.First_Name__c = getSelection(firstNames);
             curAssociate.Last_Name__c = getSelection(lastNames);
             curAssociate.Email__c = genEmail(curAssociate.First_Name__c + ' ' + curAssociate.Last_Name__c);
-            curAssociate.Cohort__c = ((Cohort__C) getRandomObject(CohortList)).id;
+            curAssociate.Cohort__c = curCohort.Id;
             associateList.add(curAssociate);
         }
         database.insert(associateList);
     }
-    
-    public void generateCohorts(integer maxCohorts){
-        for(integer index = 0; index < maxCohorts; index++){
-            Cohort__c curCohort = new Cohort__c();
-            curCohort.Start_Date__c = Date.today() - 50;
-            curCohort.End_Date__c = Date.today() + 20;
-            cohortList.add(curCohort);
+
+    public void generateVouchers(String cert1, String cert2){
+        for(Associate__c curAssociate : associateList){
+            if(curAssociate.Employment_Start_Date__c < Date.today() - (6 * 7) ){
+                // practice certification 1
+                Voucher__c curVoucher1 = new Voucher__c();
+                curVoucher1.Due_Date__c = curAssociate.Employment_Start_Date__c + (5*7);
+                curVoucher1.Expiration_Date__c = Date.today() + 365;
+                curVoucher1.Status__c = 'Pending';
+                curVoucher1.Voucher_Code__c = 'revature_' + GenGib(22);            
+                curVoucher1.Voucher_Type__c = 'Practice';
+                curVoucher1.Certification_Type__c = cert1;
+                curVoucher1.Associate__c = curAssociate.Id;
+                voucherList.add(curVoucher1);
+                System.debug(curVoucher1.Voucher_Code__c);
+            }
+            if(curAssociate.Employment_Start_Date__c < Date.today() - (5 * 7) ){
+                // full certification 1
+                Voucher__c curVoucher2 = new Voucher__c();
+                curVoucher2.Due_Date__c = curAssociate.Employment_Start_Date__c + (6*7);
+                curVoucher2.Expiration_Date__c = Date.today() + 365;
+                curVoucher2.Status__c = 'Pending';
+                curVoucher2.Voucher_Code__c = GenGibNumbers(16);                
+                curVoucher2.Voucher_Type__c = 'Certification';
+                curVoucher2.Certification_Type__c = cert1;
+                curVoucher2.Associate__c = curAssociate.Id;
+                voucherList.add(curVoucher2);
+                System.debug(curVoucher2.Voucher_Code__c);
+
+            }
+            if(curAssociate.Employment_Start_Date__c < Date.today() - (3 * 7) ){
+                // practice certification 2
+                Voucher__c curVoucher3 = new Voucher__c();
+                curVoucher3.Due_Date__c = curAssociate.Employment_Start_Date__c + (8*7);
+                curVoucher3.Expiration_Date__c = Date.today() + 365;
+                curVoucher3.Status__c = 'Pending';
+                curVoucher3.Voucher_Code__c = 'revature_' + GenGib(22);            
+                curVoucher3.Voucher_Type__c = 'Practice';
+				curVoucher3.Certification_Type__c = cert2;
+                curVoucher3.Associate__c = curAssociate.Id;
+                voucherList.add(curVoucher3);
+                System.debug(curVoucher3.Voucher_Code__c);
+
+            }
+            if(curAssociate.Employment_Start_Date__c < Date.today() - (2 * 7) ){
+                // full certification 2
+                Voucher__c curVoucher4 = new Voucher__c();
+                curVoucher4.Due_Date__c = curAssociate.Employment_Start_Date__c + (9*7);
+                curVoucher4.Expiration_Date__c = Date.today() + 365;
+                curVoucher4.Status__c = 'Pending';
+                curVoucher4.Voucher_Code__c = GenGibNumbers(16);                
+                curVoucher4.Voucher_Type__c = 'Certification';
+				curVoucher4.Certification_Type__c = cert2;
+                curVoucher4.Associate__c = curAssociate.Id;
+                voucherList.add(curVoucher4);
+                System.debug(curVoucher4.Voucher_Code__c);
+
+            }
         }
-        database.insert(cohortList);
-    }
-    
-    public void generateVouchers(integer maxVouchers){
-        for(integer index = 0; index < maxVouchers; index++){
-            Voucher__c curVoucher = new Voucher__c();
-
-            String cert = getSelection(Certifications );
-            String vType = getSelection(new List<String>{'Practice', 'Certification'});
-            
-            curVoucher.Certification_Type__c = cert;
-
-            curVoucher.Due_Date__c = getDate(0);
-            curVoucher.Expiration_Date__c = getDate(1);
-            curVoucher.Status__c = 'Unused';
-            curVoucher.Voucher_Code__c = GenGibNumbers(20);
-            curVoucher.Voucher_Type__c = vType;
-            voucherList.add(curVoucher);
-        }        
         database.insert(voucherList);
         
     }
@@ -239,7 +390,7 @@ public class MockDataGenerator {
         for(String s: splitStr){
             newStr = newStr + s;
         }
-        return 'laughteralan@gmail.com'; //newStr + string.valueof(integer.valueof(math.random() * 2000)) + '@totesfakesite.com';
+        return newStr + string.valueof(integer.valueof(math.random() * 2000)) + '@totesfakesite.com';
     }
 
     public sObject getRandomObject(List<sObject> objList){
@@ -278,13 +429,29 @@ public class MockDataGenerator {
         return getSelection(Adverbs) + ' ' + getSelection(Adjectives) + ' ' + getSelection(Nouns);
     }
     
+    public string GenGib(integer length){
+        //selects the length of the name, min 3, max 15
+        //integer length = Integer.valueof((Math.random()*maxNameLength))+3;
+        //selects if the vowels are the even letters or not
+        final string nums = '1234567890abcdefghijklmnopqrstuvwxyz';
+        string pokeName = '';
+
+        //loops over the length of the name
+        for(integer pos = 0; pos < length; pos++){
+            string letter = '';
+            //if the pos mod 2 doesn't match even then use a random consanant, else use a random vowel
+            integer selection = Integer.valueof((Math.random()*nums.length()));
+            letter = nums.substring(selection, selection+1);
+            pokeName += letter;
+        }
+        return pokeName;
+    }
     
     public string GenGibNumbers(integer length){
         //selects the length of the name, min 3, max 15
         //integer length = Integer.valueof((Math.random()*maxNameLength))+3;
         //selects if the vowels are the even letters or not
-        final string nums = '123456789';
-        final string zero = '0';
+        final string nums = '1234567890';
 
         integer even = Integer.valueof((Math.random()*2));
         string pokeName = '';
@@ -293,13 +460,8 @@ public class MockDataGenerator {
         for(integer pos = 0; pos < length; pos++){
             string letter = '';
             //if the pos mod 2 doesn't match even then use a random consanant, else use a random vowel
-            if (Math.mod(pos, 2) != even){
-                integer selection = Integer.valueof((Math.random()*nums.length()));
-                letter = nums.substring(selection, selection+1);
-            }else{
-                integer selection = Integer.valueof((Math.random()*zero.length()));
-                letter = zero.substring(selection, selection+1);                
-            }
+            integer selection = Integer.valueof((Math.random()*nums.length()));
+            letter = nums.substring(selection, selection+1);
             pokeName += letter;
         }
         return pokeName;
