@@ -113,8 +113,9 @@ public class MockDataGenerator {
             if(Date.today() > curVoucher.Due_Date__c){
                 Integer count = 0;
                 do{
+                    String recordTypeName = curVoucher.Certification_Type__c.replaceAll(' ', '_');
                     Id recordTypeId = Schema.SObjectType.Attempt__c.getRecordTypeInfosByDeveloperName()
-                        .get(curVoucher.Certification_Type__c).getRecordTypeId();
+                        .get(recordTypeName).getRecordTypeId();
                     Attempt__c curAttempt = new Attempt__c();
                     curAttempt.RecordTypeId = recordTypeId;
                     curAttempt.Voucher__c = curVoucher.Id;
