@@ -12,6 +12,7 @@ export default class BaseView extends LightningElement {
         this.page = 1;
     }
 
+    //sets the associateId property to the selected associate in response to an event
     showInfo(event) {
         this.associateId = event.detail;
     }
