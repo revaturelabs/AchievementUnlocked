@@ -16,6 +16,7 @@ private class viewControllerTest {
         Voucher__c v = new Voucher__c();
         v.Associate__c = a.Id;
         v.Certification_Type__c = 'ADM';
+        v.Voucher_Type__c = 'Certification';
         v.Status__c = 'Delivered';
         insert v;
         v = [SELECT Id FROM Voucher__c LIMIT 1];
@@ -105,7 +106,55 @@ private class viewControllerTest {
         List<Cohort__c> cohorts = viewController.getFilteredCohorts('inactive');
         system.assertEquals(5, cohorts.size());
     }
-    
+    @isTest
+    static void getCertsSinglePositive() {
+        singleSetup();
+        Associate__c a = [SELECT Id FROM Associate__c LIMIT 1];
+        List<Attempt__c> certs = viewController.getCertifications(a.Id);
+        system.assertEquals(1, certs.size());
+        system.assertEquals('Certification', certs[0].Attempt_Type__c);
+        system.assertEquals('ADM', certs[0].Voucher__r.Certification_Type__c);
+        system.assert(certs[0].Passed__c);
+    }
+
+    //count testing
+
+    //Tests the getAssociateCount with no filters applied
+    @isTest
+    static void getAssociateCountNoFilters() {
+        singleSetup();
+        Cohort__c c = [SELECT Id FROM Cohort__c LIMIT 1];
+        Associate__c b = new Associate__c();
+        b.Cohort__c = c.Id;
+        b.First_Name__c = 'Guy';
+        b.Last_Name__c = 'Person';
+        b.Current_Status__c = 'Staging';
+        insert b;
+
+        viewController.Filters f = new viewController.Filters();
+
+        system.assertEquals(2, viewController.getAssociateCount(f));
+    }
+
+    //Tests the getAssociateCount with filters applied
+    @isTest
+    static void getAssociateCountWithFilters() {
+        singleSetup();
+        Cohort__c c = [SELECT Id FROM Cohort__c LIMIT 1];
+        Associate__c b = new Associate__c();
+        b.Cohort__c = c.Id;
+        b.First_Name__c = 'Guy';
+        b.Last_Name__c = 'Person';
+        b.Current_Status__c = 'Training';
+        insert b;
+
+        viewController.Filters f = new viewController.Filters();
+        List<String> statuses = new List<String>();
+        statuses.add('Staging');
+        f.statuses = statuses;
+
+        system.assertEquals(1, viewController.getAssociateCount(f));
+    }
     // Associate Testing
     
     // Tests the getAllAssociates method on retrieving a single associate
