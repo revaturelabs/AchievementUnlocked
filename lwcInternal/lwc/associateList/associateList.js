@@ -1,5 +1,5 @@
 import { LightningElement, api, wire, track } from 'lwc';
-import { subscribe, MessageContext } from 'lightning/messageService';
+import { publish, subscribe, MessageContext } from 'lightning/messageService';
 import SEARCH_MESSAGE from '@salesforce/messageChannel/SearchMessage__c';
 import getAssociates from '@salesforce/apex/viewController.getAssociates';
 import getAssociateCount from '@salesforce/apex/viewController.getAssociateCount';
