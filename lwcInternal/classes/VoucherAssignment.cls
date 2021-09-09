@@ -1,6 +1,7 @@
 /////////////////////////////////
 //
 // Voucher Assignment class
+// Created by Richard 'Jerry' Laughter
 // created on: 9/1/2021
 // last edited: 9/5/2021
 //
