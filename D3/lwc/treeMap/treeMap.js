@@ -1,3 +1,22 @@
+
+/*
+ * Name: Jacob Schwartz
+ * Date: September 9, 2021
+ * Project3: Achievement Unlocked
+ * Description: Component displays a treemap of data utilizing the d3 library.
+ *
+ * Goal: The goal with this comonent was to create a treemap view of cohorts that are listed by the most recent date. When a particular cohort(individual tile part of the tree map)
+ * is clicked, it will rerender the bargraphs reflecting data for that particular cohort.
+ *
+ * This component is NOT PRODUCTION READY. Needs to be further tested, but can be referenced. 
+ *
+ * Component was referenced in the d3IndexComponent for testing purposes.
+ *
+ * handlemouse() demonstrates an onclick listener with d3 that sends an event to its parent componet (In this case the parent componet is d3IndexComponent).
+ *
+ * Takes in data similar to the barGraphIndex and displays it accordingly.
+*/  
+
 import { LightningElement, api } from 'lwc';
 import { loadScript, loadStyle } from 'lightning/platformResourceLoader';
 import D3 from '@salesforce/resourceUrl/d3';
