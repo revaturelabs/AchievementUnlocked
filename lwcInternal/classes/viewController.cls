@@ -156,7 +156,7 @@ public with sharing class viewController {
     public static List<Attempt__c> getCertifications(Id associateId) {
         return [SELECT Id, Attempt_Type__c, Voucher__c, Passed__c, Voucher__r.Associate__c, Voucher__r.Certification_Type__c 
         FROM Attempt__c
-        WHERE Voucher__r.Associate__c =: associateId AND Passed__c = true
+        WHERE Voucher__r.Associate__c =: associateId AND Passed__c = true AND Attempt_Type__c = 'Certification'
         ORDER BY Voucher__r.Certification_Type__c];
     }
 
