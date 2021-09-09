@@ -162,7 +162,10 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Attempts</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <searchLayouts>
+        <searchResultsAdditionalFields>Attempt_Type__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

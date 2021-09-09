@@ -3,6 +3,11 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>searchFilter</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>stagingView</componentName>
             </componentInstance>
         </itemInstances>
