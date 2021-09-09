@@ -7,6 +7,11 @@
  * 
  * For Future update: Make individual bars render dynamically based on 
  * input from the array.
+ *
+ * setBarChart() sets the scale of the chart with the data that is passed in.
+ *
+ * setBarFields() sets the actual bar itself that is displayed. For a FUTURE Iteration, the plan was to add a .on(mouseevent) that displays data similar 
+ * to the stackedBarGraph component.
  */
 
 import { LightningElement, api } from 'lwc';
