@@ -22,6 +22,17 @@ A Package Based Application to be utilized by training managers, staging manager
 - Created a way to assign vouchers to multiple associates at a time
 - Created a Staging View to be utilized by staging managers to see how the associates that are in staging and in training are dealing with their certifications
 
+### Experience Site
+- Created an experience site page that contains LWC for the Associates
+- The Associates can log in to the experience site and access the vouchers and attempts that they have been given/taken
+- They can also add the attempts they've made at the certifications or practice exams and have that appear on the certifications and attempts pages
+
+### D3 JavaScript Charts
+- Created charts for the attempts and certifications in order to visually depict how the associates are stacking up against other cohorts
+- There is a Pie Chart to see how many associates have their certifications that can be filtered by Cohort and Certification Type
+- There is a Radar Chart that can see how well each cohort did on any particular exam's topics and a toggle to see how the average associate did
+- There is a connected Stack and Bar Chart in order to see how many attempts a cohort made to pass an exam before actually passing
+
 ## Getting Started
 ### Salesforce Platform
 - Created a new org
