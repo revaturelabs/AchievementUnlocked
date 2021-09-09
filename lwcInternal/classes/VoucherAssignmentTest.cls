@@ -1,7 +1,7 @@
 ///////////////////////////////////
 //
 // Voucher Assignment Test class
-// 
+// Created by Richard 'Jerry' Laughter
 // Created 9/5/2021
 // Last edited 9/5/2021
 // 
