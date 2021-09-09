@@ -1,11 +1,14 @@
 <template>
     <lightning-card style="margin-top: .5em;">
         <div>
+            <!-- An assign button that calls 'handleButtonClick' in the js file -->
             <div class="prettyItem">
                 <div class="button_style">
                     <lightning-button label="Assignment" onclick={handleButtonClick} ></lightning-button>
                 </div>
             </div>
+            <!-- picklist to set the voucher type, uses the types specified in voucherOptions method in the js -->
+            <!-- Calls the handler handleVoucherSelection to set the voucherType variable in the js file -->
             <div  class="prettyItem">
                 <lightning-combobox 
                             name="VoucherType" 
@@ -16,6 +19,8 @@
                             options={voucherOptions} 
                             onchange={handleVoucherSelection} ></lightning-combobox>
             </div>
+            <!-- Picklist to set the certification type using values from the certOptions method in the js file -->
+            <!-- Calls the HandlerCertSelection method in the Js file to set the certValue variable -->
             <div  class="prettyItem">
                 <lightning-combobox 
                             name="CertType" 
@@ -25,11 +30,14 @@
                             options={certOptions} 
                             onchange={handleCertSelection} ></lightning-combobox>
             </div>
+            <!-- Date input field, calls the handleDueDateSelection method to change the dueDate variable in JS -->
             <div class="prettyItem" >
                 <lightning-input type="date" name="DueDate" value={dueDate} label="Due Date" onchange={handleDueDateSelection} ></lightning-input>    
             </div>
         </div>
     </lightning-card>
+    <!-- boilerplate modal, pops up to give you a message regarding the success or failure of the assignment -->
+    <!-- uses the modalResult variable to both determine that it should be shown and to contain the message itself, closing the modal empties this variable -->
     <template if:true={modalResult} >
         <!-- Modal/Popup Box LWC starts here -->
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
