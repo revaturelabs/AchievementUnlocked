@@ -1,3 +1,18 @@
+
+/*
+ * Name: Jacob Schwartz
+ * Date: September 5, 2021
+ * Project3: Achievement Unlocked
+ * Description: Contains the apex controller utilized in the cohortBarGraphIndex component.
+ * getCohortById(), getCohortHelper(), getCohortWrapperConvert are used in retrieving data for the component.
+ * 
+ * The CohortWrapper inner class is a wrapper class that is used as the data format that is returned.
+ *
+ * The getADMOverview() and getCohorts() functions are depracated and were never completed, so they are not safe to use without testing.
+ * 
+ * 
+*/
+
 public with sharing class AttemptChartsController {
 
     @AuraEnabled(cacheable=true)
