@@ -1,9 +1,9 @@
-<!-- Assignment bar component -- >
-<!-- Created by Richard 'Jerry' Laughter -->
-<!-- Created on August 30, 2021 -->
-<!-- Last Edited September 1, 2021 -->
-<!-- Selects a voucher and certification type, due date, and assigns to selected associates where available -->
-<!-- utilizes the voucher assignment class -->
+// Assignment bar component
+// Created by Richard 'Jerry' Laughter
+// Created on August 30, 2021
+// Last Edited September 1, 2021
+// Selects a voucher and certification type, due date, and assigns to selected associates where available
+// utilizes the voucher assignment class
 import { LightningElement, track, api, wire } from 'lwc';
 import Assign from '@salesforce/apex/VoucherAssignment.Assign';
 import { subscribe, MessageContext } from 'lightning/messageService';
@@ -36,8 +36,8 @@ export default class AssignmentBar extends LightningElement {
     potato = null;
     curlist = [];
 
-    <!-- message context and callback to subscribe for a selected rows message -->
-    <!-- message is sent from the AssociateList component on selected rows event -->
+    // message context and callback to subscribe for a selected rows message
+    // message is sent from the AssociateList component on selected rows event
     @wire(MessageContext) messageContext;
 
     selectedRowsSubscription;
@@ -55,7 +55,7 @@ export default class AssignmentBar extends LightningElement {
         this.selectionList = message.selectedList;
     }
 
-    <!-- nullifies the modalResult variable which closes the alert modal on the html page -->
+    // nullifies the modalResult variable which closes the alert modal on the html page
     closeModal(){
         this.modalResult = null;
     }
@@ -84,10 +84,10 @@ export default class AssignmentBar extends LightningElement {
         ];
     }
 
-    <!-- when clicked checks if the voucherType, certType, dueDate and SelectionList are set -->
-    <!-- if not set, do nothing, if set call the assign method in the VoucherAssignment apex class -->
-    <!-- sets the result and modal result values -->
-    <!-- when the modal result is populated the tracked variable opens a modal in the html page giving feedback about the assignment attempt -->
+    // when clicked checks if the voucherType, certType, dueDate and SelectionList are set
+    // if not set, do nothing, if set call the assign method in the VoucherAssignment apex class
+    // sets the result and modal result values
+    // when the modal result is populated the tracked variable opens a modal in the html page giving feedback about the assignment attempt
     handleButtonClick(event){
         if(this.voucherType != null && this.certType != null && this.dueDate != null && this.selectionList != null){
             console.log("button go click");
@@ -106,7 +106,7 @@ export default class AssignmentBar extends LightningElement {
         }
     }
 
-    <!-- event handlers to set the values of the voucherType, the certType, and the dueDate -->
+    // event handlers to set the values of the voucherType, the certType, and the dueDate
     handleVoucherSelection(event){
         this.voucherType = event.detail.value;
         console.log("voucher selected: " + this.voucherType);
