@@ -1,3 +1,8 @@
+/*
+ * Name: cohortList
+ * Author(s): Greg Mannerberg
+ * Description: Client side controller for the cohortList component.
+ */
 import { LightningElement, api, wire } from 'lwc';
 import getFilteredCohorts from '@salesforce/apex/viewController.getFilteredCohorts';
 
