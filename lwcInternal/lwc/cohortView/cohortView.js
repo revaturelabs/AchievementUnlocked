@@ -22,6 +22,7 @@ export default class CohortView extends LightningElement {
     //@wire(MessageContext)
     //messageContext;
     
+    // An event handler for setting filter after the filter combobox changes.
     handleChange(event) {
         this.filter = event.detail.value;
     }
