@@ -13,6 +13,8 @@
 @isTest
 public class VoucherAssignmentTest {
 	@isTest
+    // generates fake voucher codes and inserts them using the newVouchers method
+    // attempts to assign vouchers to an associate generated using the MockDataGenerator
     public static void testVoucherAssignment(){
         MockDataGenerator gen = new MockDataGenerator();
         gen.generate(1);
@@ -24,7 +26,8 @@ public class VoucherAssignmentTest {
         String finAssociates= VoucherAssignment.Assign(gen.associateList, 'Practice' , 'ADM', Date.today() );
         
     }
-    
+    //deliberately attempts to create invalid vouchers
+    //attempts to assign no vouchers to the associates generated using the MockDataGenerator
     @isTest
     public static void testVoucherAssignmentNegative(){
         MockDataGenerator gen = new MockDataGenerator();
