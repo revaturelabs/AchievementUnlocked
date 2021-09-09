@@ -91,6 +91,10 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Certification_Type__c</fields>
+        <fields>Voucher_Type__c</fields>
+        <fields>Number_of_Attempts__c</fields>
+        <fields>Certified__c</fields>
         <relatedList>Voucher__c.Associate__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -118,7 +122,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hJ0000004TonG</masterLabel>
+        <masterLabel>00h5f0000018YJa</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

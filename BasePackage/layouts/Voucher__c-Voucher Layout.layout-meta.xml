@@ -94,6 +94,10 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Attempt_Type__c</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>Date__c</fields>
+        <fields>Passed__c</fields>
         <relatedList>Attempt__c.Voucher__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -121,7 +125,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hJ0000004TonJ</masterLabel>
+        <masterLabel>00h5f0000018YJd</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

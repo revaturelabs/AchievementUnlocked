@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Remaining_Attempts__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <formula>6 -  Number_of_Attempts__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
