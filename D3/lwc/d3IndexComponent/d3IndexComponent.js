@@ -1,3 +1,20 @@
+/*
+ * Name: Jacob Schwartz
+ * Date: September 9, 2021
+ * Project3: Achievement Unlocked
+ * Description: Contains test code for the bargraphs. This component was not intended for a live deployment. Can be used as a reference but not recommended for production.
+ *
+ * setValue()  re-renders the different graphs
+ 
+ * childeEvent() is an event test handler 
+ *
+ * setCohortData() apex callout test
+ *
+ * constructor() does nothing
+ *
+ * setBarChartsFromCohort() sets data for the graphs
+*/
+
 import { LightningElement, api, wire } from 'lwc';
 import getAdmRecords from '@salesforce/apex/AttemptChartsController.getADMOverview';
 import getCohorts from '@salesforce/apex/AttemptChartsController.getCohorts';
