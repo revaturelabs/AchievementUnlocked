@@ -1,3 +1,8 @@
+<!--
+Name: cohortView
+Author(s): Greg Mannerberg, Blake Prescott
+Description: A component for displaying information on cohorts.
+-->
 <template>
   <div class="slds-grid slds-gutters">
     <div class="slds-col slds-size_4-of-5">
@@ -7,7 +12,9 @@
           onsectiontoggle={handleToggleSection}
           active-section-name="cohorts"
         >
+          <!-- Cohort Section -->
           <lightning-accordion-section label="Cohorts" name="cohorts">
+            <!-- Cohort Filter -->
             <lightning-combobox
               name="filter"
               label="Status"
@@ -16,11 +23,13 @@
               onchange={handleChange}
             >
             </lightning-combobox>
+            <!-- Cohort List -->
             <c-cohort-list
               filter={filter}
               oncohortselected={displayCohort}
             ></c-cohort-list>
           </lightning-accordion-section>
+          <!-- Associate Section -->
           <lightning-accordion-section
             if:true={cohortId}
             label="Associates"
@@ -31,6 +40,7 @@
         </lightning-accordion>
     </lightning-card>
     </div>
+    <!-- Assignment Bar -->
     <div class="slds-col slds-size_1-of-5">
         <c-assignment-bar
           cohort-id={cohortId}
@@ -38,6 +48,7 @@
         ></c-assignment-bar>
     </div>
     </div>
+    <!-- Data Visualization -->
     <c-certificates-chart cohort-id={cohortId}></c-certificates-chart>
     <c-carlo-test selected-cohort={cohortId}></c-carlo-test>
     <c-cohort-bar-graph-index cohort-id={cohortId}></c-cohort-bar-graph-index>
