@@ -1,3 +1,13 @@
+/*
+* homepage.js
+* By: Jawad Chowdhury
+* The backend of the homepage which utilizes Apex classes getAttempts and getVouchers from
+* UserAttempt.cls. These methods allow for the Certification Status, Upcoming Exams, and Exam
+* Results to be rendered using Lightning Datatable.
+*/
+
+
+//Import APEX Classes and static resources
 import { LightningElement, wire, track} from 'lwc';
 import { loadStyle } from 'lightning/platformResourceLoader';
 import { getRecord } from 'lightning/uiRecordApi';
@@ -19,7 +29,8 @@ import NAME_FIELD from '@salesforce/schema/Account.Name';
 import REVENUE_FIELD from '@salesforce/schema/Account.AnnualRevenue';
 import INDUSTRY_FIELD from '@salesforce/schema/Account.Industry';
 
-
+//Imported LDS values but ommitted them when switching to APEX due to LDS only
+//reading 1 record at a time when we have to get multiple records
 import ASSOCIATE_OBJECT from '@salesforce/schema/Associate__c';
     import ASSOCIATE_FIRSTNAME from '@salesforce/schema/Associate__c.First_Name__c';
     import ASSOCIATE_LASTNAME from '@salesforce/schema/Associate__c.Last_Name__c';
@@ -34,7 +45,8 @@ import VOUCHER_OBJECT from '@salesforce/schema/Voucher__c';
     import VOUCHER_VOUCHERCODE from '@salesforce/schema/Voucher__c.Voucher_Code__c';
     import VOUCHER_VOUCHERTYPE from '@salesforce/schema/Voucher__c.Voucher_Type__c';
 
-
+//These columns allow for APEX to be shown through a Lightning Datatable once it goes through
+//the methods
 const upcomingExamsColumn = [
     { label: 'Certification', fieldName: 'CertificationType'},
     { label: 'Due Date', fieldName: 'DueDate', type: 'Date'  },
@@ -66,11 +78,11 @@ const certificationColumn = [
 
 
 export default class Homepage extends LightningElement{
-
+//Import style.css through the static resource for animated gradient homepage
     connectedCallback() {
         loadStyle(this, style)
       }
-
+    //Defining images for the homepage to reference when showing Certification Status
     @track adm_logo = ADM_LOGO;
     @track adv_adm_logo = ADVANCED_ADM_LOGO;
     @track js_logo = JAVASCRIPT_LOGO;
@@ -78,15 +90,19 @@ export default class Homepage extends LightningElement{
     @track pd2_logo = PD2;
     @track pab_logo = PAB;
 
+    //Defining colunms so the method can display APEX info through Lightning Datatable
     certificationColumn = certificationColumn;
     upcomingExamsColumn = upcomingExamsColumn;
     examResultsColumn = examResultsColumn;
+    //The user's info stored in Id in order to link his account info to the homepage
     userId = Id;
     //@api Id_test = "a003F000005ETORQA4";
     data;
     error;
     //@wire(getRecord, { recordId: Id_test, fields: [ASSOCIATE_FIRSTNAME, ASSOCIATE_LASTNAME, ASSOCIATE_EMAIL, VOUCHER_CERTIFICATIONTYPE] })
     //associate_test;
+    
+    //This filter forces the data to only show Certifications and no practice exams
     attemptFilterType = "Certification";
     get certifiedAttempts() {
         return [
@@ -94,20 +110,22 @@ export default class Homepage extends LightningElement{
                ];
             }
 
-
+    //track values that will be stored in arrays
     @track currentVoucher;
     @track vouchers;
     @track currentAttempt;
     @track attempts;
+    //Shows Exam Results and only Certified Exams, not Practice
     @wire(getAttempts)
     ShowExamResults({ error, data }) {
         if (data) {
             
             this.attempts = data;
+            //Displays user for the splash screen
             this.userName = data[0].Voucher__r.Associate__r.First_Name__c;
             
             let examResults = [];
-
+            //Loop through apex data and set them to each array of data
             data.forEach(attempt => {
                 
                 let examResult = {};
@@ -118,16 +136,16 @@ export default class Homepage extends LightningElement{
                 examResult.Passed = attempt.Passed__c;
                 examResult.Result = attempt.Weighted__c.toFixed(2) + "%";
              
-                    
+                    //Conditional to see if data is only certification exams rather than practice
                 if(examResult.AttemptType == this.attemptFilterType){
                     examResults.push(examResult);
                 }
                 
             });
-
+            //Display information
             this.attempts = examResults;
             
-
+        //Error handling
         } else if (error) {
             console.log(error);
         }
@@ -140,7 +158,7 @@ export default class Homepage extends LightningElement{
 
     @track currentVoucher;
     @track vouchers;
-    //Get Exam Resultsfron Apex Class
+    //Get Upcoming Exams and use getVouchers APEX Callout
     @wire(getVouchers)
     ShowUpcomingExams({ error, data }) {
         if (data) {
@@ -148,6 +166,8 @@ export default class Homepage extends LightningElement{
             this.vouchers = data;
             
             let voucherResults = [];
+           
+            //Loop through apex data and set them to each array of data
 
             data.forEach(voucher => {
                 
@@ -181,15 +201,19 @@ export default class Homepage extends LightningElement{
 
 
 
-    //ADM Certification Status
+    //Certification Status
     @track currentCert;
     @track certs;
+    //Shows Certification Status to see if the user either passed and Achieved Certification for categories. If not,
+    //then get date from when the attempt would be due and show it as Pending
 @wire (getAttempts) ShowCertStatus({ error, data }) {
         if (data) {
             console.log(data);
             this.certs = data;
            
             let examCerts = [];
+           
+            //Loop through apex data and set them to each array of data
 
             data.forEach(cert => {
                 
@@ -203,7 +227,8 @@ export default class Homepage extends LightningElement{
                 
                 examCert.Passed = cert.Passed__c;
                 examCert.Result = cert.Weighted__c.toFixed(2) + "%";
-
+                //This nested if statement only allows for 1 certification category to be shown and if not achieved,
+                //then it will be shown as "peoding" and show the cohort date assigned to finish the certification 
                   let i = 0;  
                 breakme: if(examCert.AttemptType == this.attemptFilterType){
                     if(examCert.Passed == true){
@@ -235,7 +260,7 @@ export default class Homepage extends LightningElement{
         }
     }
 
-    //Advanced ADM
+
  
 
     

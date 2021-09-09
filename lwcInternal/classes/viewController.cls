@@ -1,3 +1,8 @@
+/*
+Author: Blake Prescott, Gregory Mannerberg
+Last Modify Date: 9/8/21
+Description: The Apex controller for the internal LWCs.
+*/
 public with sharing class viewController {
     
     // Returns a list of all cohorts
