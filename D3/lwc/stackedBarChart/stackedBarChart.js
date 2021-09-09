@@ -1,3 +1,12 @@
+/*
+ * Name: Jacob Schwartz
+ * Date: September 9, 2021
+ * Project3: Achievement Unlocked
+ * Description: Component used for testing purposes in displaying a stacked chart with the D3 library. 
+ *
+ * Can be used as a reference but NOT PRODUCTION READY!!!! 
+*/
+
 import { LightningElement } from 'lwc';
 import { loadScript, loadStyle } from 'lightning/platformResourceLoader';
 import D3 from '@salesforce/resourceUrl/d3';
