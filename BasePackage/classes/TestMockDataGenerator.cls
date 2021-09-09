@@ -5,7 +5,7 @@
 // also tests voucher assignment triggers
 // 
 //  Code Coverage: 94%
-//  
+//  Created by: Richard 'Jerry' Laughter
 //  Created on: 8/26/2021
 //  Last Edited: 8/26/2021
 //  
