@@ -1,7 +1,7 @@
 //////////////////////////////////
 //
 // Attempt Trigger Handler
-// 
+// Created by Richard 'Jerry' Laugher
 // Created on 8/25/2021
 // Last Edited 8/27/2021 
 //
