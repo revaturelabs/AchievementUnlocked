@@ -1,3 +1,12 @@
+/*
+ * Name: Jacob Schwartz
+ * Date: September 9, 2021
+ * Project3: Achievement Unlocked
+ * Description: Test component for creating a hexbin shape.
+ 
+ * Component WAS NOT USED!!!!
+*/
+
 import { LightningElement } from 'lwc';
 import { loadScript, loadStyle } from 'lightning/platformResourceLoader';
 import D3 from '@salesforce/resourceUrl/d3';
