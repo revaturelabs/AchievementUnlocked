@@ -1,0 +1,29 @@
+### Custom Field List
+* Voucher Code - Text
+* Voucher Type - Picklist [Practice, Certification]
+* Status - Picklist [Unused, Delivered, Pending, Used]
+* Certification - Master-Detail (Certification)
+* Assigned To - Lookup (Associate)
+* Expiration Date - Date
+    * current date + 1 year
+
+
+### Purpose
+Contains and coordinates the assignment information
+requires a certification object which will be used to determine the nature of the assignment
+there will be a practice assignment and a certification assignment, they will use the same information however the status of the associate as 'ready' will be dependent on a practice assignment made and the status of the associate as 'certified' will be dependent on the certification assignment, a certification assignment can only be made after an initial practice attempt has been made
+
+### Record Types
+
+### Page Layouts
+
+### Related Lists
+* Attempts
+
+### Structure
+
+### List Views
+
+### Assignment Creation Form
+![Creation form](/revaturelabs/AchievementUnlocked/blob/main/images/wiki-images/Assignment%20Creation%20Form.png)
+

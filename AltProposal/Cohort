@@ -1,0 +1,22 @@
+### Custom Field List
+* Program - Master-Detail (Program)
+* Start Date - Date
+* End Date - Formula (Program.length + Start_Date)
+
+### Purpose
+Groups all associates in a cohort and tracks the project runtime, used as a related object to track everything for the cohort view
+
+### Record Types
+
+### Page Layouts
+
+### Related Lists
+* Associates
+
+### Structure
+
+### List Views
+* Cohort View
+
+### Related Experience Site Pages
+
